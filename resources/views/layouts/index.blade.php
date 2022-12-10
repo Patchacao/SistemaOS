@@ -46,24 +46,24 @@
     -->
                     
                         <li class="navi-link">
-                            <a href="#">
+                            <a href='home'>
                                 <i class='bx bx-home-alt icon' ></i>
-                                <span class="text nav-text">Dashboard</span>
+                                <span class="text nav-text">Pagina Inicial</span>
                             </a>
                         </li>
     
                         <li class="navi-link">
-                            <a href="#">
+                            <a href='clients'>
                                 
                                 <i class='bx bx-clipboard icon'></i>
-                                <span class="text nav-text">Revenue</span>
+                                <span class="text nav-text">Clientes</span>
                             </a>
                         </li>
     
                         <li class="navi-link">
-                            <a href="#">
+                            <a href='service-order'>
                                 <i class='bx bx-bell icon'></i>
-                                <span class="text nav-text">Notifications</span>
+                                <span class="text nav-text">Ordens de Serviço</span>
                             </a>
                         </li>
     
@@ -85,18 +85,22 @@
     
                     
                 </div>
-    
+                <form class="" method="POST" action="{{ route('logout') }}">
+                    @csrf
                 <div class="bottom-content">
                     <li class="">
-                        <a href="#">
+                        <a href="route('logout')"
+                        onclick="event.preventDefault();
+                                    this.closest('form').submit();">
                             <i class='bx bx-log-out icon' ></i>
                             <span class="text nav-text">Logout</span>
                         </a>
                     </li>
-    
+                </div>  
+                </form>        
                     
                     
-                </div>
+               
             </div>
     
         </nav>
