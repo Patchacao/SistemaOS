@@ -1,0 +1,1 @@
+<h1>view user pos</h1>
