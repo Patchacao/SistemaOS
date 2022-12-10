@@ -28,8 +28,8 @@
                     </span>
     
                     <div class="text logo-text">
-                        <span class="name">Codinglab</span>
-                        <span class="profession">Web developer</span>
+                        <span class="name">SistemaOS</span>
+                        <span class="profession">Oficina de Panelas</span>
                     </div>
                 </div>
     
@@ -38,12 +38,12 @@
     
             <div class="menu-bar">
                 <div class="menu">
-    
+    <!--
                     <li class="search-box">
                         <i class='bx bx-search icon'></i>
                         <input type="text" placeholder="Search...">
                     </li>
-    
+    -->
                     
                         <li class="navi-link">
                             <a href="#">
@@ -74,12 +74,7 @@
                             </a>
                         </li>
     
-                        <li class="navi-link">
-                            <a href="#">
-                                <i class='bx bx-heart icon' ></i>
-                                <span class="text nav-text">Likes</span>
-                            </a>
-                        </li>
+                        
     
                         <li class="navi-link">
                             <a href="#">
@@ -99,17 +94,7 @@
                         </a>
                     </li>
     
-                    <li class="mode">
-                        <div class="sun-moon">
-                            <i class='bx bx-moon icon moon'></i>
-                            <i class='bx bx-sun icon sun'></i>
-                        </div>
-                        <span class="mode-text text">Dark mode</span>
-    
-                        <div class="toggle-switch">
-                            <span class="switch"></span>
-                        </div>
-                    </li>
+                    
                     
                 </div>
             </div>
