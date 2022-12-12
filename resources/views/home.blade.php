@@ -5,10 +5,7 @@
 
 @section('content')
     
-
-    
-
-    <h1> teste css</h1>            
+               
                 @can('user_POS')
 
                 @include('layouts.home-custom.home-userPOS')

@@ -1,7 +1,15 @@
 @extends('layouts.index')
 
+@section('title','SistemaOS - Clientes')
+
 @section('content')
-    <h1>view clientes</h1>
+
+<div>
+  <h3>Clientes</h3>
+  <hr class="border border-primary border-3 opacity-75">
+</div>
+
+    
     <a class="btn btn-primary" data-bs-toggle="offcanvas" href="#offcanvasExample" role="button" aria-controls="offcanvasExample">
         Link with href
       </a>
