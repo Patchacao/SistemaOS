@@ -35,6 +35,10 @@ Route::get('/service-order',  function () {
     return view('service-order');
 })->middleware(['auth', 'verified'])->name('service-order');
 
+Route::get('/create-service-order',  function () {
+    return view('create-service-order');
+})->middleware(['auth', 'verified'])->name('create-service-order');
+
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
