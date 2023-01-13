@@ -89,41 +89,40 @@
                 </div>
             </div>
         <div class="offcanvas-body">
-            <div class="row-cols-auto">
-                <div class="mb-1">
-                    <label for="exampleFormControlInput1" class="form-label">Telefone*</label>
-                    <input type="phonenumber" class="form-control" id="cellphone" placeholder="Número do Telefone">
-                    <div class="form-check">
-                        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-                        <label class="form-check-label" for="flexCheckDefault">
-                          Whatsapp
-                        </label>
-                      </div>
-                </div>
-
-                  
-                  <div class="mb-1">
-                    <label for="exampleFormControlInput1" class="form-label">Nome*</label>
-                    <input type="name" class="form-control" id="name" placeholder="Primeiro Nome">
-                  </div>
-                  <div class="mb-1">
-                    <label for="exampleFormControlInput1" class="form-label">Sobrenome*</label>
-                    <input type="name" class="form-control" id="last_name" placeholder="Sobrenome">
-                  </div>
-                  <div class="mb-1">
-                    <label for="exampleFormControlInput1" class="form-label">Apelido</label>
-                    <input type="name" class="form-control" id="nickname" placeholder="Apelido">
-                  </div>
-                  <div class="mb-1">
-                    <label for="exampleFormControlInput1" class="form-label">CPF</label>
-                    <input type="string" class="form-control" id="cpf" placeholder="Número do CPF">
-                  </div>
-                  <div class="mb-1">
-                    <button type="button" class="btn btn-success btn-lg" data-bs-toggle="offcanvas"
-                            data-bs-target="#offcanvasExample" aria-controls="offcanvasExample">Próximo </button>
-                  </div>
+            
+                <div class="row-cols-auto">
+                    <div class="mb-1">
+                        <label for="exampleFormControlInput1" class="form-label">Telefone*</label>
+                        <input type="phonenumber" class="form-control" id="cellphone" placeholder="Número do Telefone">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="" id="whatsapp">
+                            <label class="form-check-label" for="flexCheckDefault">
+                            Whatsapp
+                            </label>
+                        </div>
+                    </div>
+                        <div class="mb-1">
+                        <label for="exampleFormControlInput1" class="form-label">Nome*</label>
+                        <input type="name" class="form-control" id="name" placeholder="Primeiro Nome">
+                    </div>
+                    <div class="mb-1">
+                        <label for="exampleFormControlInput1" class="form-label">Sobrenome*</label>
+                        <input type="name" class="form-control" id="last_name" placeholder="Sobrenome">
+                    </div>
+                    <div class="mb-1">
+                        <label for="exampleFormControlInput1" class="form-label">Apelido</label>
+                        <input type="name" class="form-control" id="nickname" placeholder="Apelido">
+                    </div>
+                    <div class="mb-1">
+                        <label for="exampleFormControlInput1" class="form-label">CPF</label>
+                        <input type="string" class="form-control" id="cpf" placeholder="Número do CPF">
+                    </div>
                 
-            </div>
+                    <button onclick="customer.salvarCliente()" type="submit" class="btn btn-success btn-lg" data-bs-toggle="offcanvas"
+                                data-bs-target="#offcanvasExample" aria-controls="offcanvasExample">Salvar
+                    </button>
+                </div>
+            
         </div>
     </div>
 
@@ -186,8 +185,7 @@
 
     <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasRepair" aria-labelledby="offcanvasExampleLabel">
         <div class="offcanvas-header">
-            <h6 class="offcanvas-title" id="offcanvasExampleLabel">Existem Objetos vinculados?</h6>
-            <button type="button" class="btn btn-success">Não</button>
+            <h6 class="offcanvas-title" id="offcanvasExampleLabel">Ordem de serviço Individual</h6>
             <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
         </div>
         <div class="offcanvas-body">
@@ -197,12 +195,11 @@
                     <input type="name" class="form-control" id="first-name" placeholder="Código do Objeto">
                     <label for="floatingInput">Código do Objeto</label>
                 </div>
-                <select class="form-select mb-1" aria-label="Default select example">
-                    <option selected>Selecione o Objeto</option>
-                    <option value="1">One</option>
-                    <option value="2">Two</option>
-                    <option value="3">Three</option>
-                  </select>
+                <div class="form-floating mb-1">
+                    <input type="name" class="form-control" id="first-name" placeholder="Código do Objeto">
+                    <label for="floatingInput">Tipo do Objeto</label>
+                </div>
+                
                   <div class="d-grid gap-2">
                     <button type="button" class="btn btn-success"> Cadastrar Objeto</button>
                 </div>
@@ -213,4 +210,5 @@
     </div>
     </div>
 
+    <script src="/build/assets/createSO.js"></script>
 @endsection
