@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ClientController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -31,11 +32,17 @@ Route::get('/clients',  function () {
     return view('clients');
 })->middleware(['auth', 'verified'])->name('clients');
 
+Route::get('/clients/create',  function () {
+    return view('create-clients');
+})->middleware(['auth', 'verified'])->name('create-clients');
+
+Route::post('/clients/create', [ClientController::class, 'store'])->middleware(['auth', 'verified']);
+
 Route::get('/service-order',  function () {
     return view('service-order');
 })->middleware(['auth', 'verified'])->name('service-order');
 
-Route::get('/create-service-order',  function () {
+Route::get('/service-order/create',  function () {
     return view('create-service-order');
 })->middleware(['auth', 'verified'])->name('create-service-order');
 

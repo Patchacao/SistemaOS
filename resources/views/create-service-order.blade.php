@@ -119,7 +119,7 @@
                     </div>
                 
                     <button onclick="customer.salvarCliente()" type="submit" class="btn btn-success btn-lg" data-bs-toggle="offcanvas"
-                                data-bs-target="#offcanvasExample" aria-controls="offcanvasExample">Salvar
+                                data-bs-target="#offcanvasExample" aria-controls="offcanvasExample">Próximo
                     </button>
                 </div>
             

@@ -50,14 +50,14 @@
     -->
                     
                         <li class="navi-link">
-                            <a href='home'>
+                            <a href='/home'>
                                 <i class='bx bx-home-alt icon' ></i>
                                 <span class="text nav-text">Pagina Inicial</span>
                             </a>
                         </li>
     
                         <li class="navi-link">
-                            <a href='clients'>
+                            <a href='/clients'>
                                 
                                 <i class='bx bx-clipboard icon'></i>
                                 <span class="text nav-text">Clientes</span>
@@ -65,7 +65,7 @@
                         </li>
     
                         <li class="navi-link">
-                            <a href='service-order'>
+                            <a href='/service-order'>
                                 <i class='bx bx-bell icon'></i>
                                 <span class="text nav-text">Ordens de Serviço</span>
                             </a>
