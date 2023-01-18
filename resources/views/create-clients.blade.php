@@ -4,6 +4,16 @@
 
 @section('content')
 
+@if ($errors->any())
+    
+    <ul>
+        @foreach ($errors->all() as $error)
+            <li>{{$error}}</li>
+        @endforeach
+    </ul>
+    
+@endif
+
 <form action="/clients/create" method="post">
     @csrf
     <div class="container-fluid">
@@ -19,15 +29,16 @@
                 <div class="col-4">
                     <div class="mb-1">
                         <label for="exampleFormControlInput1" class="form-label">Telefone*</label>
-                        <input type="phonenumber" class="form-control" name="cellphone" placeholder="Pesquisar Número do Telefone">
+                        <input type="phonenumber" class="form-control" name="phone_number" placeholder="Pesquisar Número do Telefone">
                     </div>
                 </div> 
                     <div class="form-check">
-                        <input class="form-check-input" type="checkbox" value="1" default="0" name="whatsapp">
+                        <input class="form-check-input" type="checkbox" value="0"  name="whatsapp" checked>
                         <label class="form-check-label" for="flexCheckDefault">
                         Whatsapp
                         </label>
                     </div>   
+                    
                
             </div>    
 
