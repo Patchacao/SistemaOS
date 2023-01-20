@@ -73,29 +73,19 @@
             <h5 class="offcanvas-title" id="offcanvasExampleLabel">Dados do Cliente</h5>
             <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
         </div>
-            <div class="row">
-                <div class="col-4">
-                    <a class="add-icon" data-bs-toggle="#" data-bs-target="#">
-                        <i class='bx bx-search'></i>
-                        <span class="mg-text">Pesquisar</span>
-                    </a>
-                </div>
+      
+    <span id="success_message"></span>
 
-                <div class="col-4">
-                    <a class="add-icon" data-bs-toggle="#" data-bs-target="#">
-                        <i class='bx bx-save'></i>
-                        <span class="mg-text">Salvar</span>
-                    </a>
-                </div>
-            </div>
-        <div class="offcanvas-body">
+    <div class="offcanvas-body">
             
+            <form action="/clients/create" method="post">
+                @csrf
                 <div class="row-cols-auto">
                     <div class="mb-1">
                         <label for="exampleFormControlInput1" class="form-label">Telefone*</label>
-                        <input type="phonenumber" class="form-control" id="cellphone" placeholder="Número do Telefone">
+                        <input type="tel" class="form-control" name="phone_number" id="phone_number" required placeholder="Número do Telefone">
                         <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="" id="whatsapp">
+                            <input class="form-check-input" type="checkbox" value="1" name="whatsapp" id="whatsapp" checked>
                             <label class="form-check-label" for="flexCheckDefault">
                             Whatsapp
                             </label>
@@ -103,25 +93,24 @@
                     </div>
                         <div class="mb-1">
                         <label for="exampleFormControlInput1" class="form-label">Nome*</label>
-                        <input type="name" class="form-control" id="name" placeholder="Primeiro Nome">
+                        <input type="name" class="form-control" name="name" id="name" required placeholder="Primeiro Nome">
                     </div>
                     <div class="mb-1">
                         <label for="exampleFormControlInput1" class="form-label">Sobrenome*</label>
-                        <input type="name" class="form-control" id="last_name" placeholder="Sobrenome">
+                        <input type="name" class="form-control" name="last_name" id="last_name" required placeholder="Sobrenome">
                     </div>
                     <div class="mb-1">
                         <label for="exampleFormControlInput1" class="form-label">Apelido</label>
-                        <input type="name" class="form-control" id="nickname" placeholder="Apelido">
+                        <input type="name" class="form-control" name="nickname" id="nickname" placeholder="Apelido">
                     </div>
                     <div class="mb-1">
                         <label for="exampleFormControlInput1" class="form-label">CPF</label>
-                        <input type="string" class="form-control" id="cpf" placeholder="Número do CPF">
+                        <input type="string" class="form-control" name="cpf" id="cpf" placeholder="Número do CPF">
                     </div>
                 
-                    <button onclick="customer.salvarCliente()" type="submit" class="btn btn-success btn-lg" data-bs-toggle="offcanvas"
-                                data-bs-target="#offcanvasExample" aria-controls="offcanvasExample">Próximo
-                    </button>
+                    <input type="submit" class="btn btn-primary add_client" value="Salvar">
                 </div>
+            </form> 
             
         </div>
     </div>
@@ -209,6 +198,71 @@
 
     </div>
     </div>
+    <script>
 
-    <script src="/build/assets/createSO.js"></script>
-@endsection
+$(document).ready(function () {
+
+    
+
+$(document).on('click', '.add_client', function (e) {
+    e.preventDefault();
+
+    $(this).text('Sending..');
+
+    var data = {
+        'phone_number': $('#phone_number').val(),
+        'whatsapp': $('#whatsapp').val(),
+        'name': $('#name').val(),
+        'last_name': $('#last_name').val(),
+        'nickname': $('#nickname').val(),
+        'cpf': $('#cpf').val(),
+        
+        
+    }
+
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+
+    $.ajax({
+        type: "POST",
+        url: "/clients/create",
+        data: data,
+        dataType: "json",
+        success: function(data){
+         //console.log(data);
+         
+         $('span').remove(".error_msg");
+         $('#success_message').html(data.message);
+    },
+    error: function (err) {
+        if (err.status == 422) { // when status code is 422, it's a validation issue
+            console.log(err.responseJSON);
+            
+            
+            // you can loop through the errors object and show it to the user
+            console.warn(err.responseJSON.errors);
+            // display errors on each form field
+            $('#success_message').html("");
+            $('span').remove(".error_msg");
+            
+            $.each(err.responseJSON.errors, function (i, error) {
+                
+              var el = $(document).find('[name="'+i+'"]');
+                el.after($('<span class="error_msg" id="error_msg" style="color: red;">'+error[0]+'</span>'));
+                
+            });
+        }
+    }
+        })
+    });
+
+});
+
+</script>
+
+    
+
+    @endsection

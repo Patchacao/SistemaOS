@@ -30,6 +30,7 @@ class StoreUpdateClientFormRequest extends FormRequest
                 'unique:customers',
                 'min:10',
                 'max:11',
+                
             ],
             'whatsapp' => [
                 'required',

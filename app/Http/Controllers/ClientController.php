@@ -8,8 +8,10 @@ use App\Http\Requests\StoreUpdateClientFormRequest;
 
 class ClientController extends Controller
 {
-    public function store(StoreUpdateClientFormRequest $request) {
-        
+    
+
+    public function store(StoreUpdateClientFormRequest $request)
+    {
         $customer = new Customer;
         
         $customer->phone_number = $request->phone_number;
@@ -21,7 +23,15 @@ class ClientController extends Controller
         $customer->created_by = auth()->user()->name;
         
         $customer->save();
-
-        return redirect('/clients');
+            return response()->json([
+                'status'=>200,
+                'message'=>'Cliente Cadastrado com Sucesso.'
+            ]);
     }
-}
+       
+           
+        
+
+    }
+
+    
