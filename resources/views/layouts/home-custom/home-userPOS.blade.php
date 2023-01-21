@@ -18,7 +18,7 @@
                     </div>
                     <div class="row mt-4 g-1 px-4 mb-5">
                         <div class="col">
-                            <a href="create-service-order">
+                            <a href="/service-order/create">
                             <div class="card-inner p-3 d-flex flex-column align-items-center"> <img
                                     src="https://i.imgur.com/Mb8kaPV.png" width="50">
                                 <div class="text-center mg-text"> <span class="mg-text">Cadastrar OS</span> </div>

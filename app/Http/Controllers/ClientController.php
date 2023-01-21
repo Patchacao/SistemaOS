@@ -28,7 +28,11 @@ class ClientController extends Controller
                 'message'=>'Cliente Cadastrado com Sucesso.'
             ]);
     }
-       
+      
+    public function search(Request $request)
+    {
+        
+    }
            
         
 

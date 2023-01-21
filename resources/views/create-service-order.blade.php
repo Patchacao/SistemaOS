@@ -11,7 +11,7 @@
             </div>
         
             <div class="col-2">
-                <a class="add-icon" data-bs-toggle="offcanvas" data-bs-target="#offcanvasCustomer">
+                <a class="add-icon" data-bs-toggle="offcanvas" data-bs-target="#offcanvasSelectCustomer">
                     <i class='bx bx-plus-circle'></i>
                 </a>
             </div>  
@@ -19,9 +19,6 @@
             <hr class="border border-primary border-3 opacity-75">
             <div class="w-70 d-flex justify-content-center h-100"></div> 
                
-            
-        
-
         <div class="container mb-3 py-3">
             <div class="container-customer-infos">
                 <h5>Informações do Cliente</h5>
@@ -67,6 +64,39 @@
     </div>
 
     <!----===== Offcanvas Select Customer ===== -->
+
+    <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasSelectCustomer" aria-labelledby="offcanvasSelectCustomer">
+        <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="offcanvasExampleLabel">Selecione o Cliente</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+      
+        <div class="offcanvas-body">
+            <div class="container">
+                <span>Pesquise pelo Telefone ou pelo Nome:</span>
+                <input type="search" name="searchClient" id="searchClient"
+                placeholder="Digite para pesquisar" class="form-control">
+
+                <table class="table">
+                    <tbody>
+                        <th scope="row">1</th>
+                        <td>Mark</td>
+                        <td>Otto</td>
+                        <td>@mdo</td>
+                      </tr>
+                      <tr>
+                        <th scope="row">2</th>
+                        <td>Jacob</td>
+                        <td>Thornton</td>
+                        <td>@fat</td>
+                      </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!----===== Offcanvas Create Customer ===== -->
 
     <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasCustomer" aria-labelledby="offcanvasCustomer">
         <div class="offcanvas-header">
@@ -198,71 +228,5 @@
 
     </div>
     </div>
-    <script>
-
-$(document).ready(function () {
-
-    
-
-$(document).on('click', '.add_client', function (e) {
-    e.preventDefault();
-
-    $(this).text('Sending..');
-
-    var data = {
-        'phone_number': $('#phone_number').val(),
-        'whatsapp': $('#whatsapp').val(),
-        'name': $('#name').val(),
-        'last_name': $('#last_name').val(),
-        'nickname': $('#nickname').val(),
-        'cpf': $('#cpf').val(),
-        
-        
-    }
-
-    $.ajaxSetup({
-        headers: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        }
-    });
-
-    $.ajax({
-        type: "POST",
-        url: "/clients/create",
-        data: data,
-        dataType: "json",
-        success: function(data){
-         //console.log(data);
-         
-         $('span').remove(".error_msg");
-         $('#success_message').html(data.message);
-    },
-    error: function (err) {
-        if (err.status == 422) { // when status code is 422, it's a validation issue
-            console.log(err.responseJSON);
-            
-            
-            // you can loop through the errors object and show it to the user
-            console.warn(err.responseJSON.errors);
-            // display errors on each form field
-            $('#success_message').html("");
-            $('span').remove(".error_msg");
-            
-            $.each(err.responseJSON.errors, function (i, error) {
-                
-              var el = $(document).find('[name="'+i+'"]');
-                el.after($('<span class="error_msg" id="error_msg" style="color: red;">'+error[0]+'</span>'));
-                
-            });
-        }
-    }
-        })
-    });
-
-});
-
-</script>
-
-    
-
+   
     @endsection
