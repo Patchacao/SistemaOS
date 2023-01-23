@@ -31,11 +31,21 @@ class ClientController extends Controller
       
     public function search(Request $request)
     {
+        $clientSearch = "";
         
+        if ($request->search!="") {
+            
+            $clientSearch=Customer::where('name', 'Like', '%'.$request->search. '%' )->orWhere
+        ( 'last_name', 'Like', '%' .$request->search. '%' )->orWhere
+        ( 'nickname', 'Like', '%'.$request->search.'%')->get();
+        }
+        
+        
+        return response($clientSearch);
     }
            
         
 
-    }
+}
 
     
