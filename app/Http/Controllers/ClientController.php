@@ -23,13 +23,30 @@ class ClientController extends Controller
         $customer->created_by = auth()->user()->name;
         
         $customer->save();
+         
             return response()->json([
                 'status'=>200,
-                'message'=>'Cliente Cadastrado com Sucesso.'
+                'message'=>'Cliente Cadastrado com Sucesso.',
+                'id'=>$customer->id,
             ]);
     }
       
     public function search(Request $request)
+    {
+        $clientSearch = "";
+        
+        if ($request->search!="") {
+            
+            $clientSearch=Customer::where('name', 'Like', '%'.$request->search. '%' )->orWhere
+        ( 'last_name', 'Like', '%' .$request->search. '%' )->orWhere
+        ( 'nickname', 'Like', '%'.$request->search.'%')->get();
+        }
+        
+        
+        return response($clientSearch);
+    }
+
+    public function fetchClient(Request $request)
     {
         $clientSearch = "";
         

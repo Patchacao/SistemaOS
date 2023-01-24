@@ -9,6 +9,7 @@
             <div class="col-4">
                 <h3>Ordem de Serviço</h3>
             </div>
+            <button type="button" id="btnteste"class="btn btn-success btn-lg">teste </button>
         
             <div class="col-2">
                 <a class="add-icon" data-bs-toggle="offcanvas" data-bs-target="#offcanvasSelectCustomer">
@@ -67,7 +68,11 @@
 
     <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasSelectCustomer" aria-labelledby="offcanvasSelectCustomer">
         <div class="offcanvas-header">
-            <h5 class="offcanvas-title" id="offcanvasExampleLabel">Selecione o Cliente</h5>
+            <h5 class="offcanvas-title" id="offcanvasExampleLabel">Selecione o Cliente
+                <a class="add-icon" data-bs-toggle="offcanvas" data-bs-target="#offcanvasCustomer">
+                    <i class='bx bx-plus-circle'></i>
+                </a>
+            </h5>
             <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
         </div>
       
@@ -98,12 +103,12 @@
 
     <div class="offcanvas-body">
             
-            <form action="/clients/create" method="post">
+            <form id="createClienteForm"action="/clients/create" method="post">
                 @csrf
                 <div class="row-cols-auto">
                     <div class="mb-1">
                         <label for="exampleFormControlInput1" class="form-label">Telefone*</label>
-                        <input type="tel" class="form-control" name="phone_number" id="phone_number" required placeholder="Número do Telefone">
+                        <input type="tel" class="form-control" name="phone_number" id="phone_number" required placeholder="(00) 00000-0000">
                         <div class="form-check">
                             <input class="form-check-input" type="checkbox" value="1" name="whatsapp" id="whatsapp" checked>
                             <label class="form-check-label" for="flexCheckDefault">

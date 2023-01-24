@@ -40,19 +40,20 @@ class StoreUpdateClientFormRequest extends FormRequest
                 'required',
                 'min:2',
                 'max:50',
-                'alpha',
+                
             ],
             'last_name' => [
                 'required',
                 'min:2',
                 'max:100',
-                'alpha',
+                
             ],
             'nickname' => [
                 'min:2',
                 'max:25',
-                'alpha',
                 'nullable',
+                
+                
             ],
             'cpf' => [
                 'min:11',
