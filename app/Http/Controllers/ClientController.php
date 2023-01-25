@@ -46,19 +46,18 @@ class ClientController extends Controller
         return response($clientSearch);
     }
 
-    public function fetchClient(Request $request)
+    public function PhoneVerification(Request $request)
     {
-        $clientSearch = "";
+        $PhoneSearch = "";
         
+       
         if ($request->search!="") {
             
-            $clientSearch=Customer::where('name', 'Like', '%'.$request->search. '%' )->orWhere
-        ( 'last_name', 'Like', '%' .$request->search. '%' )->orWhere
-        ( 'nickname', 'Like', '%'.$request->search.'%')->get();
+            $PhoneSearch=Customer::where('phone_number', $request->search)->get();
         }
         
-        
-        return response($clientSearch);
+      return response($PhoneSearch);
+    
     }
            
         

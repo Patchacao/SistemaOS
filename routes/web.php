@@ -37,7 +37,7 @@ Route::get('/clients/create',  function () {
 })->middleware(['auth', 'verified'])->name('create-clients');
 
 Route::get('/clients/search', [ClientController::class, 'search'])->middleware(['auth', 'verified']);
-
+Route::get('/clients/phone-verification', [ClientController::class, 'PhoneVerification'])->middleware(['auth', 'verified']);
 Route::post('/clients/create', [ClientController::class, 'store'])->middleware(['auth', 'verified']);
 
 Route::get('/service-order',  function () {

@@ -9,8 +9,7 @@
             <div class="col-4">
                 <h3>Ordem de Serviço</h3>
             </div>
-            <button type="button" id="btnteste"class="btn btn-success btn-lg">teste </button>
-        
+           
             <div class="col-2">
                 <a class="add-icon" data-bs-toggle="offcanvas" data-bs-target="#offcanvasSelectCustomer">
                     <i class='bx bx-plus-circle'></i>
@@ -27,20 +26,20 @@
                     <div class="row mb-0 g-1">
                         <div class="col-sm-3">
                             <div class="form-floating mb-1">
-                                <input type="name" class="form-control" id="first-name" placeholder="Primeiro Nome" disabled>
+                                <input type="name" class="form-control" id="nameInput" placeholder="Primeiro Nome" disabled>
                                 <label for="floatingInput">Primeiro Nome</label>
                             </div>
                             
                         </div>
                         <div class="col-6">
                             <div class="form-floating mb-1">
-                                <input type="name" class="form-control" id="last-name" placeholder="Sobrenome" disabled>
+                                <input type="name" class="form-control" id="last-nameInput" placeholder="Sobrenome" disabled>
                                 <label for="floatingInput">Sobrenome</label>
                             </div>
                         </div>
                         <div class="col-3">
                             <div class="form-floating mb-1">
-                                <input type="name" class="form-control" id="last-name" placeholder="Sobrenome" disabled>
+                                <input type="name" class="form-control" id="phone-numberInput" placeholder="Sobrenome" disabled>
                                 <label for="floatingInput">Telefone</label>
                             </div>
                         </div>
@@ -73,12 +72,12 @@
                     <i class='bx bx-plus-circle'></i>
                 </a>
             </h5>
-            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+            <button type="button" id="SelectClientOffcanvas" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
         </div>
       
         <div class="offcanvas-body">
             <div class="container">
-                <span>Pesquise pelo Telefone ou pelo Nome:</span>
+                <span>Pesquise pelo Nome:</span>
                 <input type="search" name="searchClient" id="searchClient"
                 placeholder="Digite para pesquisar" class="form-control">
 
@@ -109,6 +108,7 @@
                     <div class="mb-1">
                         <label for="exampleFormControlInput1" class="form-label">Telefone*</label>
                         <input type="tel" class="form-control" name="phone_number" id="phone_number" required placeholder="(00) 00000-0000">
+                        <span id="phoneSearchIcon"></span>
                         <div class="form-check">
                             <input class="form-check-input" type="checkbox" value="1" name="whatsapp" id="whatsapp" checked>
                             <label class="form-check-label" for="flexCheckDefault">
