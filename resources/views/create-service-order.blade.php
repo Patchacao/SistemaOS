@@ -63,7 +63,7 @@
         </div>
     </div>
 
-    <!----===== Offcanvas Select Customer ===== -->
+    <!----===== Offcanvas Select Client ===== -->
 
     <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasSelectCustomer" aria-labelledby="offcanvasSelectCustomer">
         <div class="offcanvas-header">
@@ -79,18 +79,21 @@
             <div class="container">
                 <span>Pesquise pelo Nome:</span>
                 <input type="search" name="searchClient" id="searchClient"
-                placeholder="Digite para pesquisar" class="form-control">
+                placeholder="Digite para pesquisar" class="form-control"
+                style="text-transform:capitalize">
 
                 <table class="table table-hover">
                     <tbody id="searchContent">
                     </tbody>
                 </table>
                 <span id="noClientFound"></span>
+                <button id="createClienteBtn" class="btn btn-success btn-lg" style="display: none;"
+                data-bs-toggle="offcanvas" data-bs-target="#offcanvasCustomer">Cadastrar Novo Cliente</button>
             </div>
         </div>
     </div>
 
-    <!----===== Offcanvas Create Customer ===== -->
+    <!----===== Offcanvas Create Client ===== -->
 
     <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasCustomer" aria-labelledby="offcanvasCustomer">
         <div class="offcanvas-header">
@@ -118,22 +121,25 @@
                     </div>
                         <div class="mb-1">
                         <label for="exampleFormControlInput1" class="form-label">Nome*</label>
-                        <input type="name" class="form-control" name="name" id="name" required placeholder="Primeiro Nome">
+                        <input type="name" class="form-control" name="name" id="name" required 
+                        oninput="toUpperCase(this)" placeholder="Primeiro Nome">
                     </div>
                     <div class="mb-1">
                         <label for="exampleFormControlInput1" class="form-label">Sobrenome*</label>
-                        <input type="name" class="form-control" name="last_name" id="last_name" required placeholder="Sobrenome">
+                        <input type="name" class="form-control" name="last_name" id="last_name" required 
+                        oninput="toUpperCase(this)" placeholder="Sobrenome">
                     </div>
                     <div class="mb-1">
                         <label for="exampleFormControlInput1" class="form-label">Apelido</label>
-                        <input type="name" class="form-control" name="nickname" id="nickname" placeholder="Apelido">
+                        <input type="name" class="form-control" name="nickname" id="nickname" 
+                        oninput="toUpperCase(this)" placeholder="Apelido">
                     </div>
                     <div class="mb-1">
                         <label for="exampleFormControlInput1" class="form-label">CPF</label>
                         <input type="string" class="form-control" name="cpf" id="cpf" placeholder="Número do CPF">
                     </div>
                 
-                    <input type="submit" class="btn btn-primary add_client" value="Salvar">
+                    <input type="submit" class="btn btn-primary add_client" value="Salvar" data-bs-dismiss="offcanvas">
                 </div>
             </form> 
             
