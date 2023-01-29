@@ -1,5 +1,6 @@
 var clientinfos //variavel que recebe as informaçoes do cliente selecionado
 var clientsSearchList //variavel que recebe alista de clientes que atendem a busca
+
 // Ajax Jquery create client
 
 
@@ -215,3 +216,33 @@ function InsertClientInfo () {
     $('#last-nameInput').val(clientinfos.last_name);
     $('#phone-numberInput').val(clientinfos.phone_number);
 }
+
+// Função que lida com o escaneamento do codigo OS
+
+$('#searchOS').on('keypress',function(e) {
+    
+    $value=$(this).val();
+    
+    if(e.which == 13) {
+
+  
+$.ajax({
+    type: "get",
+    url: "/service-order/create/searchos",
+    data: {'search':$value},
+    dataType: "json",
+    success: function (response){
+
+        console.log(response);
+        
+       if ($.trim(response) == '' ) {
+        
+        $('#offcanvasSelectCustomer').offcanvas('show');
+        
+       } 
+    }
+    });
+}
+        
+    
+});

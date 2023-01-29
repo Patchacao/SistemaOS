@@ -5,17 +5,19 @@
 @section('content')
 
     <div class="container-fluid">
-        <div class="row mb-0 g-1">
+        <div class="d-flex">
             <div class="col-4">
                 <h3>Ordem de Serviço</h3>
             </div>
+            <div class="col-4">
+                <input type="search" name="searchOS" id="searchOS"
+                placeholder="Escaneie o código da OS" class="form-control me-2 m-auto">
+             </div>
+              
+                <button  class="btn btn-success btn-lg" 
+                data-bs-toggle="offcanvas" data-bs-target="#offcanvasSelectCustomer">Cadastrar OS</button>
             
-            
-              <div class="col-2">
-                <a class="add-icon" data-bs-toggle="offcanvas" data-bs-target="#offcanvasSelectCustomer">
-                    <i class='bx bx-plus-circle'></i>
-                </a>
-            </div>  
+               
         </div>
             <hr class="border border-primary border-3 opacity-75">
             <div class="w-70 d-flex justify-content-center h-100"></div> 

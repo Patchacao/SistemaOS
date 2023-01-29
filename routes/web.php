@@ -1,8 +1,9 @@
 <?php
 
-use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\ClientController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ClientController;
+use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ServiceOrderController;
 
 /*
 |--------------------------------------------------------------------------
@@ -51,6 +52,8 @@ Route::get('/service-order',  function () {
 Route::get('/service-order/create',  function () {
     return view('create-service-order');
 })->middleware(['auth', 'verified'])->name('create-service-order');
+
+Route::get('/service-order/create/searchos', [ServiceOrderController::class, 'ServiceOrderVerification'])->middleware(['auth', 'verified']);
 
 
 Route::middleware('auth')->group(function () {
