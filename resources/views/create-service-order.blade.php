@@ -9,8 +9,9 @@
             <div class="col-4">
                 <h3>Ordem de Serviço</h3>
             </div>
-           
-            <div class="col-2">
+            
+            
+              <div class="col-2">
                 <a class="add-icon" data-bs-toggle="offcanvas" data-bs-target="#offcanvasSelectCustomer">
                     <i class='bx bx-plus-circle'></i>
                 </a>
@@ -89,6 +90,9 @@
                 <span id="noClientFound"></span>
                 <button id="createClienteBtn" class="btn btn-success btn-lg" style="display: none;"
                 data-bs-toggle="offcanvas" data-bs-target="#offcanvasCustomer">Cadastrar Novo Cliente</button>
+                <div class="paginacao">
+                  
+                </div>
             </div>
         </div>
     </div>
@@ -139,13 +143,35 @@
                         <input type="string" class="form-control" name="cpf" id="cpf" placeholder="Número do CPF">
                     </div>
                 
-                    <input type="submit" class="btn btn-primary add_client" value="Salvar" data-bs-dismiss="offcanvas">
+                    <input type="submit" class="btn btn-primary add_client" value="Salvar" >
                 </div>
             </form> 
             
         </div>
     </div>
 
+    <div class="toast bg-success text-white fade" id="createClientToast" 
+    style="position: absolute; top: 10px; right: 10px;">
+        <div class="d-flex">
+            <div class="toast-body">
+            Cliente cadastrado com sucesso!
+            </div>
+            <button type="button" class="btn-close btn-close-white me-2 m-auto" 
+            data-bs-dismiss="toast"
+            ></button>
+        </div>
+    </div>
+    <!----===== Offcanvas Create Client ===== 
+    <div class="toast" id="createClientToast" 
+    style="position: absolute; top: 10px; right: 10px;" aria-live="assertive" aria-atomic="true">
+        <div class="d-flex text-bg-success border-0">
+          <div class="toast-body">
+            Cliente salvo com sucesso!
+          </div>
+          <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+    </div>
+-->
     <!----===== Offcanvas Select item ===== -->
 
     <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">

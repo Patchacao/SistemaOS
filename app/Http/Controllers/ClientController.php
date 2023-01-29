@@ -39,7 +39,7 @@ class ClientController extends Controller
             
             $clientSearch=Customer::where('name', 'Like', '%'.$request->search. '%' )->orWhere
         ( 'last_name', 'Like', '%' .$request->search. '%' )->orWhere
-        ( 'nickname', 'Like', '%'.$request->search.'%')->get();
+        ( 'nickname', 'Like', '%'.$request->search.'%')->limit(20)->get();
         }
         
         
@@ -50,8 +50,7 @@ class ClientController extends Controller
     {
         $PhoneSearch = "";
         
-       
-        if ($request->search!="") {
+       if ($request->search!="") {
             
             $PhoneSearch=Customer::where('phone_number', $request->search)->get();
         }
