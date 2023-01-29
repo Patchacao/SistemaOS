@@ -19,6 +19,10 @@ Route::get('/',  function () {
     return view('auth.login');
 })->name('welcome');
 
+Route::get('/registro',  function () {
+    return view('auth.register');
+});
+
 
 Route::get('/dashboard', function () {
     return view('dashboard');
