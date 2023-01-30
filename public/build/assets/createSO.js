@@ -243,6 +243,34 @@ $.ajax({
     }
     });
 }
+});
+
+// Função que lida com o escaneamento do codigo do Objeto
+
+$('#searchOSI').on('keypress',function(e) {
+    
+    $value=$(this).val();
+    
+    if(e.which == 13) {
+
+  
+$.ajax({
+    type: "get",
+    url: "/service-order/create/searchobject",
+    data: {'search':$value},
+    dataType: "json",
+    success: function (response){
+
+        console.log(response);
+        
+       if ($.trim(response) == '' ) {
+        
+        $('#offcanvasSelectItem').offcanvas('show');
+        
+       } 
+    }
+    });
+}
         
     
 });

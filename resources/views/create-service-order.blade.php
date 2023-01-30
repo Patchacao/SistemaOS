@@ -163,20 +163,11 @@
             ></button>
         </div>
     </div>
-    <!----===== Offcanvas Create Client ===== 
-    <div class="toast" id="createClientToast" 
-    style="position: absolute; top: 10px; right: 10px;" aria-live="assertive" aria-atomic="true">
-        <div class="d-flex text-bg-success border-0">
-          <div class="toast-body">
-            Cliente salvo com sucesso!
-          </div>
-          <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
-        </div>
-    </div>
--->
+    
+
     <!----===== Offcanvas Select item ===== -->
 
-    <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
+    <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasSelectItem" aria-labelledby="offcanvasExampleLabel">
         <div class="offcanvas-header">
             <h5 class="offcanvas-title" id="offcanvasExampleLabel">Selecione o item:</h5>
             <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
