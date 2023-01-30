@@ -51,15 +51,15 @@
                     
                 </form>
             </div>
-            <div class="container-service-info">
-                <div class="row">
-                    <div class="col-5">
+                <div class="container-service-info">
+                    <div class="d-flex">
+                        
                         <h5>Ordens de Serviço Individuais</h5>
-                    </div>
-                    <div class="col-7">
+                        <input type="search" name="searchOSI" id="searchOSI"
+                        placeholder="Escaneie o código do Objeto" class="form-control me-2 m-auto">
                         <button type="button" class="btn btn-success btn-lg" data-bs-toggle="offcanvas"
-                            data-bs-target="#offcanvasExample" aria-controls="offcanvasExample">Adicionar Ordem de Serviço
-                            Individual </button>
+                          data-bs-target="#offcanvasExample" aria-controls="offcanvasExample">Add OSI
+                        </button>
                     </div>
                 </div>
             </div>
