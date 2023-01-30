@@ -56,7 +56,7 @@
                         
                         <h5>Ordens de Serviço Individuais</h5>
                         <input type="search" name="searchOSI" id="searchOSI"
-                        placeholder="Escaneie o código do Objeto" class="form-control me-2 m-auto">
+                        placeholder="Escaneie o código do Objeto" class="form-control me-2 m-auto" disabled>
                         <button type="button" class="btn btn-success btn-lg" data-bs-toggle="offcanvas"
                           data-bs-target="#offcanvasExample" aria-controls="offcanvasExample">Add OSI
                         </button>

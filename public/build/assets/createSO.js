@@ -215,6 +215,8 @@ function InsertClientInfo () {
     $('#nameInput').val(clientinfos.name);
     $('#last-nameInput').val(clientinfos.last_name);
     $('#phone-numberInput').val(clientinfos.phone_number);
+    $('#searchOSI').focus();
+
 }
 
 // Função que lida com o escaneamento do codigo OS
@@ -238,6 +240,8 @@ $.ajax({
        if ($.trim(response) == '' ) {
         
         $('#offcanvasSelectCustomer').offcanvas('show');
+        $('#searchOSI').prop('disabled', false);
+        $('#searchClient').focus();
         
        } 
     }
