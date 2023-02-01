@@ -11,9 +11,12 @@ class ServiceOrderController extends Controller
         $OsSearch = "";
         
        if ($request->search!="") {
-            
-        $OsSearch=ServiceOrder::where('OS_Number', $request->search)->get();
-        }
+
+       
+           
+       $OsSearch=ServiceOrder::where('OS_Number', $request->search)->get();
+       
+      }
         
       return response($OsSearch);
     

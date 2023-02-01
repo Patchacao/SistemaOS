@@ -188,9 +188,7 @@ $.ajax({
         
         
        if ($.trim(response) == '' ) {
-        
-        
-        
+        alert("teste");
        } else {
         
         $(response).each(function(index, element) {
@@ -219,15 +217,17 @@ function InsertClientInfo () {
 
 }
 
-// Função que lida com o escaneamento do codigo OS
+// Função que lida com o escaneamento dos codigos OS
 
-$('#searchOS').on('keypress',function(e) {
-    
-    $value=$(this).val();
-    
-    if(e.which == 13) {
-
+$('#searchOSi').on('keypress',function(e)
+{
+   $value=$(this).val();
   
+  
+  if(e.which == 13) {
+  
+  if ($value != '') {
+   
 $.ajax({
     type: "get",
     url: "/service-order/create/searchos",
@@ -235,46 +235,102 @@ $.ajax({
     dataType: "json",
     success: function (response){
 
-        console.log(response);
-        
        if ($.trim(response) == '' ) {
+       
+       } else {
         
-        $('#offcanvasSelectCustomer').offcanvas('show');
-        $('#searchOSI').prop('disabled', false);
-        $('#searchClient').focus();
-        
-       } 
+        }
     }
     });
 }
-});
+}
+})
 
 // Função que lida com o escaneamento do codigo do Objeto
 
-$('#searchOSI').on('keypress',function(e) {
+$('#searchOS').on('keypress',function(e) {
     
     $value=$(this).val();
     
     if(e.which == 13) {
 
-  
-$.ajax({
-    type: "get",
-    url: "/service-order/create/searchobject",
-    data: {'search':$value},
-    dataType: "json",
-    success: function (response){
+        checkScan($value);
+console.log($checkResult);
 
-        console.log(response);
-        
-       if ($.trim(response) == '' ) {
-        
-        $('#offcanvasSelectItem').offcanvas('show');
-        
-       } 
-    }
-    });
-}
-        
-    
+    }  
 });
+
+
+function checkScanOS(r) {
+
+    $value= r;
+    $retOS = '';
+    console.log(r);
+    if ($value != '') {
+        
+            $.ajax({
+                type: "get",
+                url: "/service-order/create/searchos",
+                data: {'search':$value},
+                dataType: "json",
+                success: function (response){
+            
+                    $retOS = ($.trim(response));
+                }
+        });
+    
+    return $retOS
+  }
+    
+}
+
+function checkScanOSI(r) {
+
+    $value= r;
+    $retOSI = '';
+    
+    if ($value != '') {
+        
+            $.ajax({
+                type: "get",
+                url: "/service-order/create/searchobject",
+                data: {'search':$value},
+                dataType: "json",
+                success: function (response){
+            
+                    $retOSI = ($.trim(response));
+                }
+        });
+    
+    return $retOSI
+  }
+    
+}
+
+function checkScan(r) {
+
+   $checkResult = '';
+   
+    checkScanOS(r);
+    console.log($retOS);
+    
+    if ($retOS == '') {
+
+        checkScanOSI(r)
+        console.log($retOSI);
+
+        if ($retOSI == '') {
+            
+            $checkResult = 'notFound'
+
+            return $checkResult
+        } else {
+            alert('teste2');
+        }
+        
+    } else{
+        alert('teste3');
+    }
+    
+    
+}
