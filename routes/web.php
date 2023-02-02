@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ClientController;
+use App\Http\Controllers\ItemController;
 use App\Http\Controllers\ObjectController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ServiceOrderController;
@@ -56,6 +57,7 @@ Route::get('/service-order/create',  function () {
 
 Route::get('/service-order/create/searchos', [ServiceOrderController::class, 'ServiceOrderVerification'])->middleware(['auth', 'verified']);
 Route::get('/service-order/create/searchobject', [ObjectController::class, 'ObjectVerification'])->middleware(['auth', 'verified']);
+Route::get('/service-order/create/listItems', [ItemController::class, 'fetchItems'])->middleware(['auth', 'verified']);
 
 
 Route::middleware('auth')->group(function () {

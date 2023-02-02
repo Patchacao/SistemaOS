@@ -226,27 +226,27 @@ $('#searchOSi').on('keypress',function(e)
   
   if(e.which == 13) {
   
-  if ($value != '') {
+    if ($value != '') {
    
-$.ajax({
-    type: "get",
-    url: "/service-order/create/searchos",
-    data: {'search':$value},
-    dataType: "json",
-    success: function (response){
+        $.ajax({
+            type: "get",
+            url: "/service-order/create/searchos",
+            data: {'search':$value},
+            dataType: "json",
+            success: function (response){
 
-       if ($.trim(response) == '' ) {
-       
-       } else {
-        
-        }
+            if ($.trim(response) == '' ) {
+            
+            } else {
+                
+                }
     }
     });
 }
 }
 })
 
-// Função que lida com o escaneamento do codigo do Objeto
+// Função que lida com o escaneamento do codigo da OS
 
 $('#searchOS').on('keypress',function(e) {
     
@@ -254,18 +254,43 @@ $('#searchOS').on('keypress',function(e) {
     
     if(e.which == 13) {
 
-        checkScan($value);
-console.log($checkResult);
+        if (checkScan($value) == 'notFound') {
+        $('#searchOS').prop('disabled', true);   
+        $('#offcanvasSelectCustomer').offcanvas('show');
+        $('#searchOSI').prop('disabled', false);
+        $('#searchClient').focus();
 
+        } else {
+            alert("Esse código já esta em uso. Por favor, escolha outro!");
+        }
+    }  
+});
+
+// Função que lida com o escaneamento do codigo do Objeto
+
+$('#searchOSI').on('keypress',function(e) {
+    
+    $value=$(this).val();
+    
+    if(e.which == 13) {
+
+        if (checkScan($value) == 'notFound' && $value != $('#searchOS').val() ) {
+            
+        $('#offcanvasSelectItem').offcanvas('show');
+        $('#searchOSI').prop('disabled', true);
+       
+        } else {
+            alert("Esse código já esta em uso. Por favor, escolha outro!");
+            $('#searchOSI').val('');
+        }
     }  
 });
 
 
 function checkScanOS(r) {
 
+    let retOS = ""
     $value= r;
-    $retOS = '';
-    console.log(r);
     if ($value != '') {
         
             $.ajax({
@@ -273,22 +298,22 @@ function checkScanOS(r) {
                 url: "/service-order/create/searchos",
                 data: {'search':$value},
                 dataType: "json",
+                async: false,
                 success: function (response){
             
-                    $retOS = ($.trim(response));
+                    retOS = ($.trim(response));
                 }
         });
     
-    return $retOS
+    return retOS;
   }
     
 }
 
 function checkScanOSI(r) {
-
-    $value= r;
-    $retOSI = '';
     
+    let retOSI;
+    $value= r;
     if ($value != '') {
         
             $.ajax({
@@ -296,13 +321,14 @@ function checkScanOSI(r) {
                 url: "/service-order/create/searchobject",
                 data: {'search':$value},
                 dataType: "json",
+                async: false,
                 success: function (response){
             
-                    $retOSI = ($.trim(response));
+                    retOSI = ($.trim(response));
                 }
         });
     
-    return $retOSI
+    return retOSI;
   }
     
 }
@@ -311,26 +337,49 @@ function checkScan(r) {
 
    $checkResult = '';
    
-    checkScanOS(r);
-    console.log($retOS);
-    
-    if ($retOS == '') {
+   if (checkScanOS(r) =='') {
 
-        checkScanOSI(r)
-        console.log($retOSI);
-
-        if ($retOSI == '') {
+        if (checkScanOSI(r) =='') {
             
-            $checkResult = 'notFound'
+            $checkResult = 'notFound';
 
-            return $checkResult
         } else {
-            alert('teste2');
+           $checkResult = 'Found';
         }
         
     } else{
-        alert('teste3');
+       
+        $checkResult = 'Found';
     }
     
-    
+    return $checkResult;
 }
+
+// Função que busca e constroi a lista de itens no offcanvas
+
+$( document ).ready(function() {
+    
+$.ajax({
+    type: "get",
+    url: "/service-order/create/listItems",
+    //data: {'search':$value},
+    dataType: "json",
+    success: function (response){
+
+        console.log(response);
+        
+        $(response).each(function(index, element) {
+            
+         $('#itens_list').append(
+            '<div class=" itemCard card-inner p-4 mb-1 d-flex flex-column align-items-center"\
+             data-bs-toggle="offcanvas"\
+             value="'+element.item+'"\
+             data-bs-target="#offcanvasObjects">\
+             <div class="text-center mg-text"> <span style="font-size: 17px">' +element.item+ '</span> </div>\
+            </div>');
+          });
+        }
+    
+     });
+    
+})

@@ -58,10 +58,23 @@
                         <input type="search" name="searchOSI" id="searchOSI"
                         placeholder="Escaneie o código do Objeto" class="form-control me-2 m-auto" disabled>
                         <button type="button" class="btn btn-success btn-lg" data-bs-toggle="offcanvas"
-                          data-bs-target="#offcanvasExample" aria-controls="offcanvasExample">Add OSI
+                          data-bs-target="#offcanvasSelectItem" aria-controls="offcanvasSelectItem">Add OSI
                         </button>
                     </div>
                 </div>
+                <p>
+                    <a class="btn btn-primary" data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+                      Link with href
+                    </a>
+                    <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+                      Button with data-bs-target
+                    </button>
+                  </p>
+                  <div class="collapse" id="collapseExample">
+                    <div class="card card-body">
+                      Some placeholder content for the collapse component. This panel is hidden by default but revealed when the user activates the relevant trigger.
+                    </div>
+                  </div>
             </div>
         </div>
     </div>
@@ -173,20 +186,8 @@
             <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
         </div>
         <div class="offcanvas-body">
-            <div class="row-cols-auto">
+            <div class="row-cols-auto" id="itens_list">
 
-
-                <div class="card-inner p-3 d-flex flex-column align-items-center" data-bs-toggle="offcanvas"
-                data-bs-target="#offcanvasObjects">
-                    
-                    <div class="text-center mg-text"> <span class="mg-text">Leiteira</span> </div>
-                </div>
-                <div class="card-inner p-3 d-flex flex-column align-items-center">
-                    <div class="text-center mg-text"> <span class="mg-text">Caçarola</span> </div>
-                </div>
-                <div class="card-inner p-3 d-flex flex-column align-items-center">
-                    <div class="text-center mg-text"> <span class="mg-text">Panela de Pressão</span> </div>
-                </div>
             </div>
         </div>
     </div>
