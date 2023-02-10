@@ -1,5 +1,9 @@
 var clientinfos //variavel que recebe as informaçoes do cliente selecionado
-var clientsSearchList //variavel que recebe alista de clientes que atendem a busca
+var clientsSearchList //variavel que recebe a lista de clientes que atendem a busca
+var itens = {}; //variavel que recebe os dados dos itens cadastrados
+var item = {}; //variavel que recebe os dados do item cadastrado
+var linked_objects = {}; //variavel que recebe os dados dos objetos relacionados
+var object_repairs = {}; //variavel que recebe os dados dos reparos a serem realizados no objeto
 
 // Ajax Jquery create client
 
@@ -128,7 +132,7 @@ $(document).on('click', '.SelectClientBtn', function () {
 
     var searchId = $(this).val();
     
-   console.log(searchId);
+   //console.log(searchId);
 
       clientinfos = clientsSearchList.find(element => element.id == searchId);
       
@@ -372,14 +376,24 @@ $.ajax({
             
          $('#itens_list').append(
             '<div class=" itemCard card-inner p-4 mb-1 d-flex flex-column align-items-center"\
-             data-bs-toggle="offcanvas"\
-             value="'+element.item+'"\
+             value ="teste" data-bs-toggle="offcanvas"\
              data-bs-target="#offcanvasObjects">\
-             <div class="text-center mg-text"> <span style="font-size: 17px">' +element.item+ '</span> </div>\
+             <div class="text-center mg-text"> <span class="itemName" style="font-size: 17px">'+element.item+'</span> </div>\
             </div>');
           });
         }
+    });
+})
+
+$(document).on('click', '.itemCard', function () {
+
+    var selectedItem = $(this).text().trim();
     
-     });
-    
+    //itens.push(selectedItem);
+
+   console.log(selectedItem);
+   //console.log(itens);
+
+      
+      
 })
