@@ -4,6 +4,7 @@ var itens = {}; //variavel que recebe os dados dos itens cadastrados
 var item = {}; //variavel que recebe os dados do item cadastrado
 var linked_objects = {}; //variavel que recebe os dados dos objetos relacionados
 var object_repairs = {}; //variavel que recebe os dados dos reparos a serem realizados no objeto
+const ScannedObjectNumbers = []; // variavel que recebe os codigos de objetos que foram escaneados
 
 // Ajax Jquery create client
 
@@ -136,8 +137,8 @@ $(document).on('click', '.SelectClientBtn', function () {
 
       clientinfos = clientsSearchList.find(element => element.id == searchId);
       
-        console.log(clientinfos); 
-      console.log(clientsSearchList);
+        //console.log(clientinfos); 
+      //console.log(clientsSearchList);
       InsertClientInfo();
       
 })
@@ -263,6 +264,8 @@ $('#searchOS').on('keypress',function(e) {
         $('#offcanvasSelectCustomer').offcanvas('show');
         $('#searchOSI').prop('disabled', false);
         $('#searchClient').focus();
+        ScannedObjectNumbers.push($value);
+        console.log(ScannedObjectNumbers);
 
         } else {
             alert("Esse código já esta em uso. Por favor, escolha outro!");
@@ -278,10 +281,12 @@ $('#searchOSI').on('keypress',function(e) {
     
     if(e.which == 13) {
 
-        if (checkScan($value) == 'notFound' && $value != $('#searchOS').val() ) {
+        if (checkScan($value) == 'notFound') {
             
         $('#offcanvasSelectItem').offcanvas('show');
         $('#searchOSI').prop('disabled', true);
+        ScannedObjectNumbers.push($value);
+        console.log(ScannedObjectNumbers);  
        
         } else {
             alert("Esse código já esta em uso. Por favor, escolha outro!");
@@ -290,73 +295,70 @@ $('#searchOSI').on('keypress',function(e) {
     }  
 });
 
+// Função que lida com o escaneamento do codigo do Objeto Linkado
 
-function checkScanOS(r) {
+$('#LinkedObject_Number').on('keypress',function(e) {
+    
+    $value=$(this).val();
+    
+    if(e.which == 13) {
 
-    let retOS = ""
+        if (checkScan($value) == 'notFound') {
+            
+        ScannedObjectNumbers.push($value);
+       console.log(ScannedObjectNumbers);       
+
+        } else {
+            alert("Esse código já esta em uso. Por favor, escolha outro!");
+            $('#LinkedObject_Number').val('');
+        }
+    }  
+});
+
+function checkObjectNumberScan(r) {
+
+    let ObjectNumberScan = ""
     $value= r;
     if ($value != '') {
         
             $.ajax({
                 type: "get",
-                url: "/service-order/create/searchos",
+                url: "/service-order/create/checkObjectNumber",
                 data: {'search':$value},
                 dataType: "json",
                 async: false,
                 success: function (response){
             
-                    retOS = ($.trim(response));
+                    ObjectNumberScan = ($.trim(response));
                 }
         });
     
-    return retOS;
+    return ObjectNumberScan;
   }
     
 }
 
-function checkScanOSI(r) {
-    
-    let retOSI;
-    $value= r;
-    if ($value != '') {
-        
-            $.ajax({
-                type: "get",
-                url: "/service-order/create/searchobject",
-                data: {'search':$value},
-                dataType: "json",
-                async: false,
-                success: function (response){
-            
-                    retOSI = ($.trim(response));
-                }
-        });
-    
-    return retOSI;
-  }
-    
-}
-
-function checkScan(r) {
+function checkScan(r) { //Funçao que verifica se já o codigo escaneado ja está cadastrado no banco
 
    $checkResult = '';
    
-   if (checkScanOS(r) =='') {
+   if (jQuery.inArray(r, ScannedObjectNumbers) == '-1') {
 
-        if (checkScanOSI(r) =='') {
-            
-            $checkResult = 'notFound';
+    if (checkObjectNumberScan(r) =='') {
+
+        $checkResult = 'notFound';
 
         } else {
            $checkResult = 'Found';
         }
-        
-    } else{
-       
-        $checkResult = 'Found';
-    }
     
-    return $checkResult;
+   } else {
+    
+    $checkResult = 'Found';
+
+   }
+   
+   return $checkResult;
 }
 
 // Função que busca e constroi a lista de itens no offcanvas
@@ -376,7 +378,7 @@ $.ajax({
             
          $('#itens_list').append(
             '<div class=" itemCard card-inner p-4 mb-1 d-flex flex-column align-items-center"\
-             value ="teste" data-bs-toggle="offcanvas"\
+             value ='+element.id+' data-bs-toggle="offcanvas"\
              data-bs-target="#offcanvasObjects">\
              <div class="text-center mg-text"> <span class="itemName" style="font-size: 17px">'+element.item+'</span> </div>\
             </div>');
@@ -385,15 +387,16 @@ $.ajax({
     });
 })
 
-$(document).on('click', '.itemCard', function () {
+$(document).on('click', '.itemCard', function () { // joga as informaçoes do item selecionado para o objeto
 
-    var selectedItem = $(this).text().trim();
+   
+    var selectedItem = {
+        'item' :$(this).text().trim(),
+        'id' : $(this).attr("value"),
+    };
     
-    //itens.push(selectedItem);
-
-   console.log(selectedItem);
-   //console.log(itens);
-
-      
-      
+   
+console.log(selectedItem);
+   
 })
+

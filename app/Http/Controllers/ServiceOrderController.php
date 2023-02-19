@@ -4,9 +4,10 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\ServiceOrder;
+
 class ServiceOrderController extends Controller
 {
-    public function ServiceOrderVerification(Request $request)
+   /* public function ServiceOrderVerification(Request $request)
     {
         $OsSearch = "";
         
@@ -20,5 +21,7 @@ class ServiceOrderController extends Controller
         
       return response($OsSearch);
     
-    }
+    }*/
+
+    
 }

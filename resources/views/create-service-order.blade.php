@@ -205,7 +205,7 @@
             <div class="row-cols-auto">
 
                 <div class="form-floating mb-1">
-                    <input type="text" class="form-control" id="object-barcode" placeholder="Código do Objeto">
+                    <input type="text" class="form-control" id="LinkedObject_Number" placeholder="Código do Objeto">
                     <label for="floatingInput">Código do Objeto</label>
                 </div>
                 <select class="form-select mb-1" id="object" aria-label="Default select example">
