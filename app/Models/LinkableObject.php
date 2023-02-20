@@ -5,14 +5,14 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Item extends Model
+class LinkableObject extends Model
 {
     use HasFactory;
 
-    public function linkable_objects()
+    public function items()
     {
 
-        return $this->belongsToMany('App\Models\LinkableObject');
+        return $this->belongsToMany('App\Models\Item');
 
     }
 }

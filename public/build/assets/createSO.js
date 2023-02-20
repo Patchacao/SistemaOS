@@ -400,3 +400,48 @@ console.log(selectedItem);
    
 })
 
+
+$('#searchClient').on('keyup',function(s) //Carrega os objetos relacionaveis
+{
+    $value=item.id;
+    
+      
+   $('tr').remove(".searchReturn");
+
+ $.ajax({
+    type: "get",
+    url: "/service-order/create/LoadLinkableObjects",
+    data: {'search':$value},
+    dataType: "json",
+    success: function (response){
+
+        console.log(response);
+        
+        $('#searchContent').html("");
+        $(".searchRow").remove();
+        
+       if ($.trim(response) == '' ) {
+        clientsSearchList = "";
+        $('#noClientFound').html('Nenhum cliente com esse nome');
+        $('#createClienteBtn').show();
+          
+       } else {
+        
+        clientsSearchList = response;
+        $('#noClientFound').html("");
+        $('#createClienteBtn').hide();
+        
+        $(response).each(function(index, element) {
+            
+         $('#searchContent').append(
+            '<tr class="searchRow">\
+            <td>' + element.name + '</td>\
+            <td>' + element.last_name + '</td>\
+            <td><button type="button" value="' + element.id + '" class="btn btn-primary SelectClientBtn btn-sm" data-bs-dismiss="offcanvas">Edit</button></td>\
+          </tr>');
+          });
+        }
+    }
+     });
+    }, ms);
+})

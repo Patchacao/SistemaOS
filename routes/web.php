@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ClientController;
 use App\Http\Controllers\ItemController;
+use App\Http\Controllers\LinkableObjectController;
 use App\Http\Controllers\ObjectController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ServiceOrderController;
@@ -60,7 +61,7 @@ Route::get('/service-order/create/searchos', [ServiceOrderController::class, 'Se
 Route::get('/service-order/create/searchobject', [ObjectController::class, 'ObjectVerification'])->middleware(['auth', 'verified']);
 Route::get('/service-order/create/listItems', [ItemController::class, 'fetchItems'])->middleware(['auth', 'verified']);
 Route::get('/service-order/create/checkObjectNumber', [ObjectNumberController::class, 'ObjectNumberVBerification'])->middleware(['auth', 'verified']);
-
+Route::get('/service-order/create/LoadLinkableObjects', [LinkableObjectController::class, 'LoadLinkableObjects'])->middleware(['auth', 'verified']);
 
 
 Route::middleware('auth')->group(function () {
