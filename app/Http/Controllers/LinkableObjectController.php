@@ -12,9 +12,10 @@ class LinkableObjectController extends Controller
     public function LoadLinkableObjects(Request $request)
     {
         
-        $linkedObjects = Item::with('linkable_objects')->first();
-        dd($linkedObjects->linkable_objects);
+        $linkableObjects = Item::with('linkable_objects')->find($request->search);
+        $linkableObjectsList =  $linkableObjects->linkable_objects->toArray();
 
+        return response($linkableObjectsList);
     }
 }
 

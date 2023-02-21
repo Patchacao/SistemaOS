@@ -204,19 +204,20 @@
         <div class="offcanvas-body">
             <div class="row-cols-auto">
 
-                <div class="form-floating mb-1">
-                    <input type="text" class="form-control" id="LinkedObject_Number" placeholder="Código do Objeto">
-                    <label for="floatingInput">Código do Objeto</label>
+                <div class="d-grid mb-1">
+                <span class="mb-2">Código do Objeto</span>
+                <input type="search"  id="searchLinkedObjectNumber"
+                placeholder="Escaneie o código" class="form-control">
                 </div>
-                <select class="form-select mb-1" id="object" aria-label="Default select example">
-                    <option selected>Selecione o Objeto</option>
-                    <option value="1">One</option>
-                    <option value="2">Two</option>
-                    <option value="3">Three</option>
-                  </select>
+                <select class="form-select mb-1" id="LinkableObjectsList" placeholder="Selecione o Objeto1" hidden> </select>
+                
                   <div class="d-grid gap-2">
-                    <button type="button" class="btn btn-success"> Cadastrar Objeto</button>
+                    <button id = "addLinkedObject"type="button" class="btn btn-success" hidden> Cadastrar Objeto</button>
                 </div>
+                <table class="table table-hover">
+                    <tbody id="LinkedObjectTable">
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>

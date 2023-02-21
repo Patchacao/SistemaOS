@@ -2,7 +2,8 @@ var clientinfos //variavel que recebe as informaçoes do cliente selecionado
 var clientsSearchList //variavel que recebe a lista de clientes que atendem a busca
 var itens = {}; //variavel que recebe os dados dos itens cadastrados
 var item = {}; //variavel que recebe os dados do item cadastrado
-var linked_objects = {}; //variavel que recebe os dados dos objetos relacionados
+var selectedItem; // variavel que receve os dados do item selecionado durante o cadastro
+var linked_objects = []; //variavel que recebe os dados dos objetos relacionados
 var object_repairs = {}; //variavel que recebe os dados dos reparos a serem realizados no objeto
 const ScannedObjectNumbers = []; // variavel que recebe os codigos de objetos que foram escaneados
 
@@ -295,9 +296,10 @@ $('#searchOSI').on('keypress',function(e) {
     }  
 });
 
-// Função que lida com o escaneamento do codigo do Objeto Linkado
 
-$('#LinkedObject_Number').on('keypress',function(e) {
+// Função que lida com o escaneamento do codigo do Objeto Relacionado
+
+$('#searchLinkedObjectNumber').on('keypress',function(e) {
     
     $value=$(this).val();
     
@@ -305,12 +307,16 @@ $('#LinkedObject_Number').on('keypress',function(e) {
 
         if (checkScan($value) == 'notFound') {
             
-        ScannedObjectNumbers.push($value);
-       console.log(ScannedObjectNumbers);       
-
+            $('#LinkableObjectsList').prop('hidden', false);
+            $('#searchLinkedObjectNumber').prop('disabled', true);
+            $('#LinkableObjectsList').focus(); 
+            $('#addLinkedObject').prop('hidden', false);
+            
+            ScannedObjectNumbers.push($value);
+        
         } else {
             alert("Esse código já esta em uso. Por favor, escolha outro!");
-            $('#LinkedObject_Number').val('');
+            $('#searchLinkedObjectNumber').val('');
         }
     }  
 });
@@ -389,59 +395,80 @@ $.ajax({
 
 $(document).on('click', '.itemCard', function () { // joga as informaçoes do item selecionado para o objeto
 
-   
-    var selectedItem = {
+    selectedItem = "";
+     selectedItem = {
         'item' :$(this).text().trim(),
         'id' : $(this).attr("value"),
     };
     
-   
-console.log(selectedItem);
-   
+    LoadLinkableObjects();
+  
 })
 
 
-$('#searchClient').on('keyup',function(s) //Carrega os objetos relacionaveis
+function LoadLinkableObjects(s) //Carrega os objetos relacionaveis
 {
-    $value=item.id;
+    $value=selectedItem.id;
     
-      
-   $('tr').remove(".searchReturn");
-
  $.ajax({
     type: "get",
     url: "/service-order/create/LoadLinkableObjects",
     data: {'search':$value},
     dataType: "json",
     success: function (response){
-
-        console.log(response);
-        
-        $('#searchContent').html("");
-        $(".searchRow").remove();
-        
-       if ($.trim(response) == '' ) {
-        clientsSearchList = "";
-        $('#noClientFound').html('Nenhum cliente com esse nome');
-        $('#createClienteBtn').show();
-          
-       } else {
-        
-        clientsSearchList = response;
-        $('#noClientFound').html("");
-        $('#createClienteBtn').hide();
+    
+        $('#LinkableObjectsList').html("<option value='0' selected>Selecione o Objeto</option>");
         
         $(response).each(function(index, element) {
             
-         $('#searchContent').append(
-            '<tr class="searchRow">\
-            <td>' + element.name + '</td>\
-            <td>' + element.last_name + '</td>\
-            <td><button type="button" value="' + element.id + '" class="btn btn-primary SelectClientBtn btn-sm" data-bs-dismiss="offcanvas">Edit</button></td>\
-          </tr>');
+         $('#LinkableObjectsList').append(
+           '<option value="'+ element.id +'">'+ element.linkable_object +'</option>'
+            );
+            console.log(element.id);
           });
         }
+    });
+}
+
+$('#addLinkedObject').on('click',function(e) { // Funçao que adiciona o objeto escolhido ao array
+    
+    if ($('#LinkableObjectsList').val() != "0" && $('#searchLinkedObjectNumber').val() !='') {
+        
+        $selectedLinkedObject = {
+            
+            'item' : $('#LinkableObjectsList').find(":selected").text(),
+            'id' : $('#LinkableObjectsList').find(":selected").val(),
+        };
+        
+        $('#addLinkedObject').prop('hidden', true);
+        $('#LinkableObjectsList').prop('hidden', true);
+        $('#LinkableObjectsList').val("0");
+        $('#searchLinkedObjectNumber').prop('disabled', false); 
+        $('#searchLinkedObjectNumber').focus(); 
+        $('#searchLinkedObjectNumber').val(""); 
+        
+        linked_objects.push( $selectedLinkedObject);
+        LoadLinkedObjectTable()
+        
+        console.log(linked_objects);
+    } else {
+        
+        alert("Selecione o Objeto");
     }
-     });
-    }, ms);
-})
+   
+});
+
+function LoadLinkedObjectTable(){
+    
+    $('#LinkedObjectTable').html("");
+    
+    $(linked_objects).each(function(index, element) {
+            
+        $('#LinkedObjectTable').append(
+           '<tr class="LinkedObjectRow">\
+           <td>' + element.id + '</td>\
+           <td>' + element.item + '</td>\
+           <td><button type="button" value="' + element.id + '" class="btn btn-primary LinkedObjectRowBtn btn-sm">Edit</button></td>\
+         </tr>');
+         });
+}
