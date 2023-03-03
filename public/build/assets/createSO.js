@@ -393,7 +393,10 @@ $.ajax({
     });
 })
 
-$(document).on('click', '.itemCard', function () { // joga as informaçoes do item selecionado para o objeto
+
+// joga as informaçoes do item selecionado para o objeto
+
+$(document).on('click', '.itemCard', function () { 
 
     selectedItem = "";
      selectedItem = {
@@ -406,7 +409,9 @@ $(document).on('click', '.itemCard', function () { // joga as informaçoes do it
 })
 
 
-function LoadLinkableObjects(s) //Carrega os objetos relacionaveis
+//Carrega os objetos relacionaveis
+
+function LoadLinkableObjects(s) 
 {
     $value=selectedItem.id;
     
@@ -430,7 +435,9 @@ function LoadLinkableObjects(s) //Carrega os objetos relacionaveis
     });
 }
 
-$('#addLinkedObject').on('click',function(e) { // Funçao que adiciona o objeto escolhido ao array
+// Funçao que adiciona o objeto escolhido ao array
+
+$('#addLinkedObject').on('click',function(e) { 
     
     if ($('#LinkableObjectsList').val() != "0" && $('#searchLinkedObjectNumber').val() !='') {
         
@@ -471,4 +478,30 @@ function LoadLinkedObjectTable(){
            <td><button type="button" value="' + element.id + '" class="btn btn-primary LinkedObjectRowBtn btn-sm">Edit</button></td>\
          </tr>');
          });
+}
+
+//Carrega os serviços para a seleçao
+
+function LoadServices(s) 
+{
+    $value=selectedItem.id;
+    
+ $.ajax({
+    type: "get",
+    url: "/service-order/create/LoadLinkableObjects",
+    data: {'search':$value},
+    dataType: "json",
+    success: function (response){
+    
+        $('#LinkableObjectsList').html("<option value='0' selected>Selecione o Objeto</option>");
+        
+        $(response).each(function(index, element) {
+            
+         $('#LinkableObjectsList').append(
+           '<option value="'+ element.id +'">'+ element.linkable_object +'</option>'
+            );
+            console.log(element.id);
+          });
+        }
+    });
 }

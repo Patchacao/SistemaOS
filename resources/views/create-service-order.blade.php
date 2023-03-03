@@ -230,20 +230,30 @@
             <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
         </div>
         <div class="offcanvas-body">
-            <div class="row-cols-auto">
-
-                <div class="form-floating mb-1">
-                    <input type="name" class="form-control" id="first-name" placeholder="Código do Objeto">
-                    <label for="floatingInput">Código do Objeto</label>
+            <div class="container container text-center g-1">
+                
+                <div class="row mb-1 g-2">
+                    <div class="col-4">
+                        <button type="button" class="btn btn-success"> Todos</button>
+                    </div>
+                    <div class="col-4">
+                        <button type="button" class="btn btn-success"> Orçamento</button>
+                    </div>
+                    <div class="col-4">
+                        <span>Valor</span>
+                    </div>
                 </div>
-                <div class="form-floating mb-1">
-                    <input type="name" class="form-control" id="first-name" placeholder="Código do Objeto">
-                    <label for="floatingInput">Tipo do Objeto</label>
+                <div class="row mb-1 g-1">
+                    <div class="col-8">
+                        <input type="search" name="searchClient" id="searchClient"
+                        placeholder="Digite para pesquisar" class="form-control">
+                    </div>
+                    <div class="col-4">
+                        <input type="search" name="totalPrice" id="totalPrice"
+                         class="form-control" disabled>
+                    </div>
                 </div>
                 
-                  <div class="d-grid gap-2">
-                    <button type="button" class="btn btn-success"> Cadastrar Objeto</button>
-                </div>
             </div>
         </div>
     </div>

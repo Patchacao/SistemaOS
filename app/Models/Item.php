@@ -15,4 +15,11 @@ class Item extends Model
         return $this->belongsToMany('App\Models\LinkableObject');
 
     }
+
+    public function services()
+    {
+
+        return $this->belongsToMany('App\Models\Service');
+
+    }
 }
