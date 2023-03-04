@@ -62,7 +62,7 @@ Route::get('/service-order/create/searchobject', [ObjectController::class, 'Obje
 Route::get('/service-order/create/listItems', [ItemController::class, 'fetchItems'])->middleware(['auth', 'verified']);
 Route::get('/service-order/create/checkObjectNumber', [ObjectNumberController::class, 'ObjectNumberVBerification'])->middleware(['auth', 'verified']);
 Route::get('/service-order/create/LoadLinkableObjects', [LinkableObjectController::class, 'LoadLinkableObjects'])->middleware(['auth', 'verified']);
-
+Route::get('/service-order/create/LoadServices', [ServiceController::class, 'LoadServices'])->middleware(['auth', 'verified']);
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
