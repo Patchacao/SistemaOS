@@ -226,33 +226,30 @@
 
     <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasRepair" aria-labelledby="offcanvasExampleLabel">
         <div class="offcanvas-header">
-            <h6 class="offcanvas-title" id="offcanvasExampleLabel">Ordem de serviço Individual</h6>
+            <h6 class="offcanvas-title" id="offcanvasExampleLabel">Selecione os reparos a serem feitos</h6>
             <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
         </div>
         <div class="offcanvas-body">
             <div class="container container text-center g-1">
                 
                 <div class="row mb-1 g-2">
-                    <div class="col-4">
-                        <button type="button" class="btn btn-success"> Todos</button>
+                    <div class="col-7">
+                        <button type="button" class="btn btn-success">Apenas Orçamento</button>
                     </div>
-                    <div class="col-4">
-                        <button type="button" class="btn btn-success"> Orçamento</button>
-                    </div>
-                    <div class="col-4">
+                    <div class="col-2">
                         <span>Valor</span>
                     </div>
-                </div>
-                <div class="row mb-1 g-1">
-                    <div class="col-8">
-                        <input type="search" name="searchClient" id="searchClient"
-                        placeholder="Digite para pesquisar" class="form-control">
-                    </div>
-                    <div class="col-4">
+                    <div class="col-3">
                         <input type="search" name="totalPrice" id="totalPrice"
                          class="form-control" disabled>
                     </div>
                 </div>
+
+                <table class="table table-hover">
+                    <tbody id="RepairContent">
+                    </tbody>
+                </table>
+                
                 
             </div>
         </div>

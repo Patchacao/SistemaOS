@@ -8,6 +8,7 @@ use App\Http\Controllers\ObjectController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ServiceOrderController;
 use App\Http\Controllers\ObjectNumberController;
+use App\Http\Controllers\ServiceController;
 
 /*
 |--------------------------------------------------------------------------

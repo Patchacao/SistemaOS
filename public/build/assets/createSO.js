@@ -405,7 +405,7 @@ $(document).on('click', '.itemCard', function () {
     };
     
     LoadLinkableObjects();
-  
+    LoadServices();
 })
 
 
@@ -488,20 +488,22 @@ function LoadServices(s)
     
  $.ajax({
     type: "get",
-    url: "/service-order/create/LoadLinkableObjects",
+    url: "/service-order/create/LoadServices",
     data: {'search':$value},
     dataType: "json",
     success: function (response){
     
-        $('#LinkableObjectsList').html("<option value='0' selected>Selecione o Objeto</option>");
+        $('#RepairContent').html("");
         
         $(response).each(function(index, element) {
             
-         $('#LinkableObjectsList').append(
-           '<option value="'+ element.id +'">'+ element.linkable_object +'</option>'
-            );
-            console.log(element.id);
+            $('#RepairContent').append(
+                '<tr class="RepairRow">\
+                <td>' + element.service + '</td>\
+                <td>' + 'R$' + element.price + '</td>\
+                <td><button type="button" value="' + element.id + '" class="btn btn-primary SelectRepairBtn btn-sm">Edit</button></td>\
+              </tr>');
           });
-        }
+        } 
     });
 }
