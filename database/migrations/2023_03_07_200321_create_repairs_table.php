@@ -13,9 +13,15 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('object_numbers', function (Blueprint $table) {
+        Schema::create('repairs', function (Blueprint $table) {
             $table->id();
-            $table->string('Object_Number')->unique();
+            $table->foreignId('object_orders_id')->constrained('object_orders');
+            $table->string('repair');
+            $table->decimal('price', 9, 2);
+            $table->string('status');
+            $table->string('last_status');
+            $table->string('created_by');
+            $table->text('details');
             $table->timestamps();
         });
     }
@@ -27,6 +33,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('object_numbers');
+        Schema::dropIfExists('repairs');
     }
 };

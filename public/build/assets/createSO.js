@@ -1,10 +1,11 @@
 var clientinfos //variavel que recebe as informaçoes do cliente selecionado
 var clientsSearchList //variavel que recebe a lista de clientes que atendem a busca
 var itens = {}; //variavel que recebe os dados dos itens cadastrados
-var item = {}; //variavel que recebe os dados do item cadastrado
+var item = []; //variavel que recebe os dados do item cadastrado
 var selectedItem; // variavel que receve os dados do item selecionado durante o cadastro
 var linked_objects = []; //variavel que recebe os dados dos objetos relacionados
-var object_repairs = {}; //variavel que recebe os dados dos reparos a serem realizados no objeto
+var object_repairs = []; //variavel que recebe os dados dos reparos a serem realizados no objeto
+var RepairsList //variavel que recebe a lista de reparos disponiveis para o item selecionado
 const ScannedObjectNumbers = []; // variavel que recebe os codigos de objetos que foram escaneados
 
 // Ajax Jquery create client
@@ -223,34 +224,6 @@ function InsertClientInfo () {
 
 }
 
-// Função que lida com o escaneamento dos codigos OS
-
-$('#searchOSi').on('keypress',function(e)
-{
-   $value=$(this).val();
-  
-  
-  if(e.which == 13) {
-  
-    if ($value != '') {
-   
-        $.ajax({
-            type: "get",
-            url: "/service-order/create/searchos",
-            data: {'search':$value},
-            dataType: "json",
-            success: function (response){
-
-            if ($.trim(response) == '' ) {
-            
-            } else {
-                
-                }
-    }
-    });
-}
-}
-})
 
 // Função que lida com o escaneamento do codigo da OS
 
@@ -265,8 +238,10 @@ $('#searchOS').on('keypress',function(e) {
         $('#offcanvasSelectCustomer').offcanvas('show');
         $('#searchOSI').prop('disabled', false);
         $('#searchClient').focus();
+        
         ScannedObjectNumbers.push($value);
-        console.log(ScannedObjectNumbers);
+        //console.log(ScannedObjectNumbers);
+       
 
         } else {
             alert("Esse código já esta em uso. Por favor, escolha outro!");
@@ -287,7 +262,7 @@ $('#searchOSI').on('keypress',function(e) {
         $('#offcanvasSelectItem').offcanvas('show');
         $('#searchOSI').prop('disabled', true);
         ScannedObjectNumbers.push($value);
-        console.log(ScannedObjectNumbers);  
+        //console.log(ScannedObjectNumbers);  
        
         } else {
             alert("Esse código já esta em uso. Por favor, escolha outro!");
@@ -429,13 +404,13 @@ function LoadLinkableObjects(s)
          $('#LinkableObjectsList').append(
            '<option value="'+ element.id +'">'+ element.linkable_object +'</option>'
             );
-            console.log(element.id);
+            
           });
         }
     });
 }
 
-// Funçao que adiciona o objeto escolhido ao array
+// Funçao que adiciona o objeto vinculado escolhido ao array
 
 $('#addLinkedObject').on('click',function(e) { 
     
@@ -465,6 +440,8 @@ $('#addLinkedObject').on('click',function(e) {
    
 });
 
+//Função que constroi a lista de objetos linkados selecionados
+
 function LoadLinkedObjectTable(){
     
     $('#LinkedObjectTable').html("");
@@ -480,12 +457,20 @@ function LoadLinkedObjectTable(){
          });
 }
 
+// Função que insere os objetos linkados ao array item
+
+$('#btnSaveLinkedObjects').on('click',function(e) { 
+
+    item.push(linked_objects);
+    console.log(item);
+})
+
 //Carrega os serviços para a seleçao
 
 function LoadServices(s) 
 {
     $value=selectedItem.id;
-    
+    RepairsList = "";
  $.ajax({
     type: "get",
     url: "/service-order/create/LoadServices",
@@ -494,7 +479,8 @@ function LoadServices(s)
     success: function (response){
     
         $('#RepairContent').html("");
-        
+        RepairsList = response;
+
         $(response).each(function(index, element) {
             
             $('#RepairContent').append(
@@ -507,3 +493,22 @@ function LoadServices(s)
         } 
     });
 }
+
+
+// joga as informaçoes do reparo selecionado para o objeto
+
+$(document).on('click', '.SelectRepairBtn', function () { 
+
+    searchId = $(this).attr("value");
+
+    selectedRepair = RepairsList.find(element => element.id == searchId);
+     selectedRepair = {
+        'service' :selectedRepair.service,
+        'id' : selectedRepair.id,
+        'price' : selectedRepair.price,
+    };
+    
+    object_repairs.push(selectedRepair);
+
+    console.log(object_repairs);
+})

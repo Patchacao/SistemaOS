@@ -199,6 +199,8 @@
             <h6 class="offcanvas-title" id="offcanvasExampleLabel">Existem Objetos vinculados?</h6>
             <button type="button" class="btn btn-success" data-bs-toggle="offcanvas"
             data-bs-target="#offcanvasRepair">Não</button>
+            <button type="button" class="btn btn-success" id="btnSaveLinkedObjects" data-bs-toggle="offcanvas"
+            data-bs-target="#offcanvasRepair">Salvar</button>
             <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
         </div>
         <div class="offcanvas-body">

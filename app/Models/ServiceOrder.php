@@ -27,6 +27,6 @@ class ServiceOrder extends Model
 
     public function ObjectOrders()
     {
-        return $this->hasMany(ObjectOrder::class,'service_orders_id','id');
+        return $this->hasMany(ObjectOrder::class, 'service_orders_id', 'id');
     }
 }
