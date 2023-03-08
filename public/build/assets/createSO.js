@@ -1,6 +1,6 @@
 var clientinfos //variavel que recebe as informaçoes do cliente selecionado
 var clientsSearchList //variavel que recebe a lista de clientes que atendem a busca
-var itens = {}; //variavel que recebe os dados dos itens cadastrados
+var itens = []; //variavel que recebe os dados dos itens cadastrados
 var item = {}; //variavel que recebe os dados do item cadastrado
 var selectedItem; // variavel que receve os dados do item selecionado durante o cadastro
 var linked_objects = []; //variavel que recebe os dados dos objetos relacionados
@@ -519,9 +519,31 @@ $(document).on('click', '.SelectRepairBtn', function () {
 })
 
 
+// joga os reparos selecionados no objeto com as informaçoes do item
 
 $(document).on('click', '#btnSaveServices', function () { 
 
     item["repairs"] = object_repairs;
-    console.log(item);
+    itens.push(item);
+    $('#searchOSI').val("");
+    $('#searchOSI').prop('disabled', false);
+
+    item = {};
+    object_repairs = [];
+    linked_objects = [];
+    $('#serviceList').html("");
+    $(itens).each(function(index, element) {
+            
+        $('#serviceList').append(
+            '<div class="card w-90">\
+            <div class="card-body">\
+              <h5 class="card-title">Card title</h5>\
+              <p class="card-text">...</p>\
+              <a href="#" class="btn btn-primary">Button</a>\
+            </div>\
+          </div>');
+      });
+
+    console.log(itens);
 })
+
