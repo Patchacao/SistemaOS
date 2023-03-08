@@ -229,6 +229,7 @@
     <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasRepair" aria-labelledby="offcanvasExampleLabel">
         <div class="offcanvas-header">
             <h6 class="offcanvas-title" id="offcanvasExampleLabel">Selecione os reparos a serem feitos</h6>
+            <button type="button" class="btn btn-success" id="btnSaveServices">Salvar</button>
             <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
         </div>
         <div class="offcanvas-body">

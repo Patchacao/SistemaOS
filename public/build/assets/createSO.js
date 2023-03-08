@@ -1,7 +1,7 @@
 var clientinfos //variavel que recebe as informaçoes do cliente selecionado
 var clientsSearchList //variavel que recebe a lista de clientes que atendem a busca
 var itens = {}; //variavel que recebe os dados dos itens cadastrados
-var item = []; //variavel que recebe os dados do item cadastrado
+var item = {}; //variavel que recebe os dados do item cadastrado
 var selectedItem; // variavel que receve os dados do item selecionado durante o cadastro
 var linked_objects = []; //variavel que recebe os dados dos objetos relacionados
 var object_repairs = []; //variavel que recebe os dados dos reparos a serem realizados no objeto
@@ -262,7 +262,8 @@ $('#searchOSI').on('keypress',function(e) {
         $('#offcanvasSelectItem').offcanvas('show');
         $('#searchOSI').prop('disabled', true);
         ScannedObjectNumbers.push($value);
-        //console.log(ScannedObjectNumbers);  
+        item["objectNumber"] = $value;
+        
        
         } else {
             alert("Esse código já esta em uso. Por favor, escolha outro!");
@@ -287,7 +288,7 @@ $('#searchLinkedObjectNumber').on('keypress',function(e) {
             $('#LinkableObjectsList').focus(); 
             $('#addLinkedObject').prop('hidden', false);
             
-            ScannedObjectNumbers.push($value);
+            //ScannedObjectNumbers.push($value);
         
         } else {
             alert("Esse código já esta em uso. Por favor, escolha outro!");
@@ -415,9 +416,10 @@ function LoadLinkableObjects(s)
 $('#addLinkedObject').on('click',function(e) { 
     
     if ($('#LinkableObjectsList').val() != "0" && $('#searchLinkedObjectNumber').val() !='') {
-        
+        $objectNumber = $('#searchLinkedObjectNumber').val();
         $selectedLinkedObject = {
             
+            'objectNumber' : $('#searchLinkedObjectNumber').val(),
             'item' : $('#LinkableObjectsList').find(":selected").text(),
             'id' : $('#LinkableObjectsList').find(":selected").val(),
         };
@@ -430,9 +432,11 @@ $('#addLinkedObject').on('click',function(e) {
         $('#searchLinkedObjectNumber').val(""); 
         
         linked_objects.push( $selectedLinkedObject);
+        ScannedObjectNumbers.push($objectNumber);
         LoadLinkedObjectTable()
         
         console.log(linked_objects);
+        console.log(ScannedObjectNumbers);
     } else {
         
         alert("Selecione o Objeto");
@@ -461,7 +465,8 @@ function LoadLinkedObjectTable(){
 
 $('#btnSaveLinkedObjects').on('click',function(e) { 
 
-    item.push(linked_objects);
+   // item.push(linked_objects);
+   item["linkedObjects"] = linked_objects;
     console.log(item);
 })
 
@@ -511,4 +516,12 @@ $(document).on('click', '.SelectRepairBtn', function () {
     object_repairs.push(selectedRepair);
 
     console.log(object_repairs);
+})
+
+
+
+$(document).on('click', '#btnSaveServices', function () { 
+
+    item["repairs"] = object_repairs;
+    console.log(item);
 })

@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\ObjectOrder;
 
 class Service extends Model
 {
@@ -12,7 +13,7 @@ class Service extends Model
     public function items()
     {
 
-        return $this->belongsToMany('App\Models\Item');
+        return $this->belongsToMany(ObjectOrder::class);
 
     }
 }
