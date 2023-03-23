@@ -360,8 +360,8 @@ $.ajax({
             
          $('#itens_list').append(
             '<div class=" itemCard card-inner p-4 mb-1 d-flex flex-column align-items-center"\
-             value ='+element.id+' data-bs-toggle="offcanvas"\
-             data-bs-target="#offcanvasObjects">\
+             value ='+element.id+'\
+             href="#repairs">\
              <div class="text-center mg-text"> <span class="itemName" style="font-size: 17px">'+element.item+'</span> </div>\
             </div>');
           });
@@ -369,6 +369,18 @@ $.ajax({
     });
 })
 
+// Função que faz a transiçao ao selecionar o item
+
+$(document).ready(function(){
+    $(".itemCard").click(function(){
+      $("#itens_list").animate({
+        left: '250px',
+        opacity: 'hide',
+        width: '150px',
+        
+      });
+    });
+  });
 
 // joga as informaçoes do item selecionado para o objeto
 
@@ -535,7 +547,7 @@ $(document).on('click', '#btnSaveServices', function () {
     $(itens).each(function(index, element) {
             
         $('#serviceList').append(
-            '<div class="card w-90">\
+            '<div class="card w-90 mb-1">\
             <div class="card-body">\
               <h5 class="card-title">Card title</h5>\
               <p class="card-text">...</p>\

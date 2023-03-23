@@ -57,8 +57,7 @@
                         <h5>Ordens de Serviço Individuais</h5>
                         <input type="search" name="searchOSI" id="searchOSI"
                         placeholder="Escaneie o código do Objeto" class="form-control me-2 m-auto" disabled>
-                        <button type="button" class="btn btn-success btn-lg" data-bs-toggle="offcanvas"
-                          data-bs-target="#offcanvasSelectItem" aria-controls="offcanvasSelectItem">Add OSI
+                        <button type="button" class="btn btn-success btn-lg" data-bs-toggle="modal" data-bs-target="#exampleModal" aria-controls="offcanvasSelectItem">Add OSI
                         </button>
                     </div>
                 </div>
@@ -70,6 +69,7 @@
         </div>
     </div>
 
+    <x-modal-create-os/>
     <!----===== Offcanvas Select Client ===== -->
 
     <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasSelectCustomer" aria-labelledby="offcanvasSelectCustomer">
@@ -177,9 +177,7 @@
             <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
         </div>
         <div class="offcanvas-body">
-            <div class="row-cols-auto" id="itens_list">
-
-            </div>
+            <div class="row-cols-auto" id="itens_list"></div>
         </div>
     </div>
 
@@ -240,8 +238,7 @@
                 </div>
 
                 <table class="table table-hover">
-                    <tbody id="RepairContent">
-                    </tbody>
+                    <tbody id="RepairContent"></tbody>
                 </table>
                 
                 
