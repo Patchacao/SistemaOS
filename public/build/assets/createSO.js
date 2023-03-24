@@ -372,8 +372,8 @@ $.ajax({
 // Função que faz a transiçao ao selecionar o item
 
 $(document).ready(function(){
-    $(".itemCard").click(function(){
-      $("#itens_list").animate({
+    $('.itemCard').on('click', function(){
+      $('#itens_list').animate({
         left: '250px',
         opacity: 'hide',
         width: '150px',
@@ -381,7 +381,9 @@ $(document).ready(function(){
       });
     });
   });
-
+  $(document).ready(function() {
+    $('#container').delay(1000).fadeOut('fast');
+});
 // joga as informaçoes do item selecionado para o objeto
 
 $(document).on('click', '.itemCard', function () { 
@@ -394,6 +396,8 @@ $(document).on('click', '.itemCard', function () {
     
     LoadLinkableObjects();
     LoadServices();
+
+    $('#itens_list').toggle();
 })
 
 
@@ -526,6 +530,10 @@ $(document).on('click', '.SelectRepairBtn', function () {
     };
     
     object_repairs.push(selectedRepair);
+
+    $('#itens_list').animate({
+        opacity: 'toggle',
+       });
 
     console.log(object_repairs);
 })
