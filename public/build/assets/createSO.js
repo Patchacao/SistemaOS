@@ -343,7 +343,18 @@ function checkScan(r) { //Funçao que verifica se já o codigo escaneado ja est�
    return $checkResult;
 }
 
-// Função que busca e constroi a lista de itens no offcanvas
+
+// Lógica do Modal Create OS
+
+$('#btnSaveServices').click( function () {
+    
+    AddRepairInfo();
+    $('#itens_list').toggle(); // Função que mostra a lista de itens
+    $('#repairList').toggle(); // Função que mostra a lista de reparos
+})
+
+
+// Função que busca e constroi a lista de itens 
 
 $( document ).ready(function() {
     
@@ -369,21 +380,7 @@ $.ajax({
     });
 })
 
-// Função que faz a transiçao ao selecionar o item
 
-$(document).ready(function(){
-    $('.itemCard').on('click', function(){
-      $('#itens_list').animate({
-        left: '250px',
-        opacity: 'hide',
-        width: '150px',
-        
-      });
-    });
-  });
-  $(document).ready(function() {
-    $('#container').delay(1000).fadeOut('fast');
-});
 // joga as informaçoes do item selecionado para o objeto
 
 $(document).on('click', '.itemCard', function () { 
@@ -394,10 +391,10 @@ $(document).on('click', '.itemCard', function () {
         'id' : $(this).attr("value"),
     };
     
-    LoadLinkableObjects();
+    //LoadLinkableObjects();
     LoadServices();
 
-    $('#itens_list').toggle();
+    $('#itens_list').toggle(); // Função que faz a transiçao ao selecionar o item
 })
 
 
@@ -531,17 +528,14 @@ $(document).on('click', '.SelectRepairBtn', function () {
     
     object_repairs.push(selectedRepair);
 
-    $('#itens_list').animate({
-        opacity: 'toggle',
-       });
-
+    
     console.log(object_repairs);
 })
 
 
 // joga os reparos selecionados no objeto com as informaçoes do item
 
-$(document).on('click', '#btnSaveServices', function () { 
+function AddRepairInfo () {
 
     item["repairs"] = object_repairs;
     itens.push(item);
@@ -565,5 +559,5 @@ $(document).on('click', '#btnSaveServices', function () {
       });
 
     console.log(itens);
-})
 
+}
