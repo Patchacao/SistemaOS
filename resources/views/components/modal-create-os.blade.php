@@ -18,8 +18,25 @@
         </div>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Sair</button>
-          <button type="button" class="btn btn-primary" id="btnSaveServices">Adicionar</button>
+          <div class="container-fluid"> 
+            <div class="row">
+              <div class="col-sm-2">
+              <button type="button" class="btn btn-secondary" id="returnBtn" style="display: none;">Voltar</button>
+              </div>
+              <div class="col-sm-2">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Sair</button>
+              </div>
+              <div class="col-sm-3">
+              <button type="button" class="btn btn-primary" id="btnSaveServices">Adicionar</button>
+              </div>
+              <div class="col-sm-5">
+              <div class="form-floating mb-1">
+                <input type="name" class="form-control" id="total_price" disabled>
+                  <label for="floatingInput">Valor Total</label>
+              </div>
+              </div>
+            </div> 
+          </div>
         </div>
       </div>
     </div>

@@ -1,7 +1,7 @@
 var clientinfos //variavel que recebe as informaçoes do cliente selecionado
 var clientsSearchList //variavel que recebe a lista de clientes que atendem a busca
 var itens = []; //variavel que recebe os dados dos itens cadastrados
-var item = {}; //variavel que recebe os dados do item cadastrado
+var item = []; //variavel que recebe os dados do item cadastrado
 var selectedItem; // variavel que receve os dados do item selecionado durante o cadastro
 var linked_objects = []; //variavel que recebe os dados dos objetos relacionados
 var object_repairs = []; //variavel que recebe os dados dos reparos a serem realizados no objeto
@@ -344,14 +344,43 @@ function checkScan(r) { //Funçao que verifica se já o codigo escaneado ja est�
 }
 
 
-// Lógica do Modal Create OS
+// -------------------------------------- Lógica do Modal Create OS ----------------------------------------------------------
+
+
 
 $('#btnSaveServices').click( function () {
     
+    if (object_repairs.length != 0) {  
+    
     AddRepairInfo();
-    $('#itens_list').toggle(); // Função que mostra a lista de itens
-    $('#repairList').toggle(); // Função que mostra a lista de reparos
+
+    $('#itens_list').show(); // Função que mostra a lista de itens
+    $('#repairList').hide(); // Função que mostra a lista de reparos
+    $('#total_price').val("");
+    $('#returnBtn').hide();// esconde o btn voltar
+    } else {
+        alert("Selecione pelo menos um reparo antes de salvar.");
+    }
+
 })
+
+$('#returnBtn').click( function () {
+    $('#itens_list').show(); // Função que mostra a lista de itens
+    $('#repairList').hide(); // Função que mostra a lista de reparos
+    $('#returnBtn').hide();// esconde o btn voltar
+})
+
+
+$(document).on('click', '.itemCard', function () {
+
+    select_item($(this));
+    $('#itens_list').hide(); // esconde a lista de itens
+    $('#repairList').show(); // mostra a lista de servicos
+    $('#returnBtn').show();// mostra o btn voltar
+    
+})
+
+// ------------------------------------------------------------------------------------------------------------------------
 
 
 // Função que busca e constroi a lista de itens 
@@ -381,28 +410,22 @@ $.ajax({
 })
 
 
-// joga as informaçoes do item selecionado para o objeto
 
-$(document).on('click', '.itemCard', function () { 
+// -------------- Logica Objetos relacinaveis------------------------------------------
 
-    selectedItem = "";
-     selectedItem = {
-        'item' :$(this).text().trim(),
-        'id' : $(this).attr("value"),
-    };
-    
-    //LoadLinkableObjects();
-    LoadServices();
 
-    $('#itens_list').toggle(); // Função que faz a transiçao ao selecionar o item
-})
 
+$(document).on('click', '.btnAddLinkedObject',function(e) {
+
+    LoadLinkableObjects();
+   
+});
 
 //Carrega os objetos relacionaveis
 
 function LoadLinkableObjects(s) 
 {
-    $value=selectedItem.id;
+    $value=$('#btnAddLinkedObject').val();
     
  $.ajax({
     type: "get",
@@ -478,16 +501,33 @@ function LoadLinkedObjectTable(){
 
 $('#btnSaveLinkedObjects').on('click',function(e) { 
 
-   // item.push(linked_objects);
-   item["linkedObjects"] = linked_objects;
-    console.log(item);
+    var position = $('#btnSaveLinkedObjects').val();
+   //itens.position(,0,linked_objects);
+    //itens[$('#btnSaveLinkedObjects').val()].push(linked_objects);
+   Constructor_ServiceList ();
+    console.log(itensposition);
 })
+
+// joga as informaçoes do item selecionado para o objeto
+
+function select_item(e) { 
+
+    selectedItem = "";
+     selectedItem = {
+        'item' :$(e).text().trim(),
+        'id_item' : $(e).attr("value"),
+    };
+    
+    //LoadLinkableObjects();
+    LoadServices();
+
+}
 
 //Carrega os serviços para a seleçao
 
 function LoadServices(s) 
 {
-    $value=selectedItem.id;
+    $value=selectedItem.id_item;
     RepairsList = "";
  $.ajax({
     type: "get",
@@ -523,41 +563,129 @@ $(document).on('click', '.SelectRepairBtn', function () {
      selectedRepair = {
         'service' :selectedRepair.service,
         'id' : selectedRepair.id,
-        'price' : selectedRepair.price,
+        'price' : parseInt(selectedRepair.price),
     };
     
     object_repairs.push(selectedRepair);
 
-    
     console.log(object_repairs);
+    sum_price();
+    $('#total_price').val(sum_price());
 })
 
+// Soma do preco dos servicos
+
+function sum_price () {
+
+    var sum = 0; 
+    
+    for(var i =0;i<object_repairs.length;i++){ 
+      sum+=object_repairs[i].price; 
+    } 
+    
+    return sum;
+  }
+
+  
 
 // joga os reparos selecionados no objeto com as informaçoes do item
 
 function AddRepairInfo () {
 
-    item["repairs"] = object_repairs;
+   
+
+    item["item"] = selectedItem.item;
+    item["id_item"] = selectedItem.id_item;
+    item["total_price"] = sum_price ();
+    item["repairs"] = object_repairs; // adciona os reparo selecionados ao item
     itens.push(item);
-    $('#searchOSI').val("");
-    $('#searchOSI').prop('disabled', false);
+    
+    Constructor_ServiceList ();
 
     item = {};
     object_repairs = [];
     linked_objects = [];
-    $('#serviceList').html("");
-    $(itens).each(function(index, element) {
-            
-        $('#serviceList').append(
-            '<div class="card w-90 mb-1">\
-            <div class="card-body">\
-              <h5 class="card-title">Card title</h5>\
-              <p class="card-text">...</p>\
-              <a href="#" class="btn btn-primary">Button</a>\
-            </div>\
-          </div>');
-      });
+    
 
     console.log(itens);
+
+}
+
+function Constructor_ServiceList (){
+
+    $('#serviceList').html("");  // limpa o html da lista de itens selecionados
+    console.log(itens);
+    console.log(item);
+    $(itens).each(function(index, element) { 
+            
+        var item_position = itens.indexOf(element);
+        var repairs = element.repairs;
+        var lkd_Objects = element.linkedObjects; // 
+
+        console.log(lkd_Objects);
+
+        $('#serviceList').append(
+            '<div class="card w-90 mb-1">\
+                <div class="card-body">\
+                    <h5 class="card-title"><input type="search" name="searchOSI" id="searchOSI"\
+                    placeholder="Escaneie o código do Objeto" class="form-control me-2 m-auto"></h5>\
+                    <p class="card-text"> ' + element.item + '</p>\
+                    <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#CollapseRepairs' + item_position+'">\
+                    Reparos</button>\
+                    <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#CollapseLinkedObjects' + item_position+'">\
+                    Objetos Associados</button>\
+              <div class="row">\
+                <div class="col">\
+                    <div class="collapse multi-collapse" id="CollapseRepairs' + item_position+'">\
+                    <div class="card card-body" >\
+                    <table class="table table-hover">\
+                    <h5>Reparos</h5>\
+                    <tbody id="CollapseRepairsList'+ item_position +'"></tbody>\
+                </table>\
+                    </div>\
+                    </div>\
+                </div>\
+                <div class="col">\
+                    <div class="collapse multi-collapse" id="CollapseLinkedObjects' + item_position+'">\
+                    <div class="card card-body" id="CollapseLinkedObjectsList">\
+                <table class="table table-hover">\
+                <div class="row">\
+                <div class="col-sm-6">\
+                <h5>Objetos Associados</h5>\
+                    </div>\
+                    <div class="col-sm-1">\
+                    <button type="button" class=" btnAddLinkedObject btn btn-success" data-bs-toggle="offcanvas"\
+                    data-bs-target="#offcanvasObjects" id="btnAddLinkedObject" value="'+ element.id_item +'">+</button>\
+                    </div>\
+                    </div>\
+                    <tbody id="CollapseLinkedObjects' + item_position+'"></tbody>\
+                </table>\
+                    </div>\
+                    </div>\
+                </div>\
+                </div>\
+            </div>\
+          </div>');
+
+          $(repairs).each(function(index, element) {
+
+            $('#CollapseRepairsList'+ item_position +'').append(
+            '<tr class="RepairRow_Collapse">\
+                <td>' + element.service + '</td>\
+                <td>' + 'R$' + element.price + '</td>\
+                <td><button type="button" value="' + element.id + '" class="btn btn-primary SelectRepairBtn btn-sm">Edit</button></td>\
+              </tr>');
+        });
+
+        $(lkd_Objects).each(function(index, element) {
+
+            $('#CollapseLinkedObjects' + item_position+'').append(
+                '<tr class="LinkedObjectRow">\
+                <td>' + element.id + '</td>\
+                <td>' + element.item + '</td>\
+                <td><button type="button" value="' + element.id + '" class="btn btn-primary btn-sm">Edit</button></td>\
+              </tr>');
+        });
+      });
 
 }
