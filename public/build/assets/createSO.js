@@ -414,10 +414,14 @@ $.ajax({
 // -------------- Logica Objetos relacinaveis------------------------------------------
 
 
+var position_on_array; // recebe o indice de posiçao do item no array
 
 $(document).on('click', '.btnAddLinkedObject',function(e) {
 
-    LoadLinkableObjects();
+    position_on_array = $(this).val() // posiçao no array do item que vai receber os objetos linkados
+    var item_id = itens[position_on_array].id_item;
+    console.log(item_id);
+    LoadLinkableObjects(item_id);
    
 });
 
@@ -425,7 +429,7 @@ $(document).on('click', '.btnAddLinkedObject',function(e) {
 
 function LoadLinkableObjects(s) 
 {
-    $value=$('#btnAddLinkedObject').val();
+    $value=s; // ID DO ITEM SELECIONADO
     
  $.ajax({
     type: "get",
@@ -451,6 +455,8 @@ function LoadLinkableObjects(s)
 
 $('#addLinkedObject').on('click',function(e) { 
     
+   
+
     if ($('#LinkableObjectsList').val() != "0" && $('#searchLinkedObjectNumber').val() !='') {
         $objectNumber = $('#searchLinkedObjectNumber').val();
         $selectedLinkedObject = {
@@ -471,8 +477,7 @@ $('#addLinkedObject').on('click',function(e) {
         ScannedObjectNumbers.push($objectNumber);
         LoadLinkedObjectTable()
         
-        console.log(linked_objects);
-        console.log(ScannedObjectNumbers);
+        
     } else {
         
         alert("Selecione o Objeto");
@@ -480,7 +485,7 @@ $('#addLinkedObject').on('click',function(e) {
    
 });
 
-//Função que constroi a lista de objetos linkados selecionados
+//Função que constroi a lista de objetos linkados selecionados no offcanvas
 
 function LoadLinkedObjectTable(){
     
@@ -501,11 +506,15 @@ function LoadLinkedObjectTable(){
 
 $('#btnSaveLinkedObjects').on('click',function(e) { 
 
-    var position = $('#btnSaveLinkedObjects').val();
-   //itens.position(,0,linked_objects);
-    //itens[$('#btnSaveLinkedObjects').val()].push(linked_objects);
+   item = itens[position_on_array];
+   item["linked_objects"] = linked_objects;
+    
+    itens[position_on_array] = item;
+
+    linked_objects = [];
+
    Constructor_ServiceList ();
-    console.log(itensposition);
+  
 })
 
 // joga as informaçoes do item selecionado para o objeto
@@ -593,36 +602,35 @@ function sum_price () {
 function AddRepairInfo () {
 
    
-
     item["item"] = selectedItem.item;
     item["id_item"] = selectedItem.id_item;
     item["total_price"] = sum_price ();
     item["repairs"] = object_repairs; // adciona os reparo selecionados ao item
+  
     itens.push(item);
     
     Constructor_ServiceList ();
 
-    item = {};
-    object_repairs = [];
-    linked_objects = [];
-    
-
-    console.log(itens);
-
+ 
 }
 
 function Constructor_ServiceList (){
+   
+    item = [];
+    object_repairs = [];
+    linked_objects = [];
 
     $('#serviceList').html("");  // limpa o html da lista de itens selecionados
-    console.log(itens);
-    console.log(item);
+    
+    
     $(itens).each(function(index, element) { 
             
-        var item_position = itens.indexOf(element);
+        
+         item_position = itens.indexOf(element);
         var repairs = element.repairs;
-        var lkd_Objects = element.linkedObjects; // 
+        var lkd_Objects = element.linked_objects; // 
 
-        console.log(lkd_Objects);
+        
 
         $('#serviceList').append(
             '<div class="card w-90 mb-1">\
@@ -648,18 +656,18 @@ function Constructor_ServiceList (){
                 <div class="col">\
                     <div class="collapse multi-collapse" id="CollapseLinkedObjects' + item_position+'">\
                     <div class="card card-body" id="CollapseLinkedObjectsList">\
-                <table class="table table-hover">\
-                <div class="row">\
-                <div class="col-sm-6">\
-                <h5>Objetos Associados</h5>\
-                    </div>\
-                    <div class="col-sm-1">\
-                    <button type="button" class=" btnAddLinkedObject btn btn-success" data-bs-toggle="offcanvas"\
-                    data-bs-target="#offcanvasObjects" id="btnAddLinkedObject" value="'+ element.id_item +'">+</button>\
-                    </div>\
-                    </div>\
-                    <tbody id="CollapseLinkedObjects' + item_position+'"></tbody>\
-                </table>\
+                        <div class="row">\
+                            <div class="col-sm-6">\
+                                <h5>Objetos Associados</h5>\
+                            </div>\
+                            <div class="col-sm-1">\
+                                <button type="button" class=" btnAddLinkedObject btn btn-success" data-bs-toggle="offcanvas"\
+                                data-bs-target="#offcanvasObjects" value="'+ item_position +'">+</button>\
+                            </div>\
+                        </div>\
+                        <table class="table table-hover">\
+                            <tbody id="CollapseLinkedObjects'+ item_position +'"></tbody>\
+                        </table>\
                     </div>\
                     </div>\
                 </div>\
@@ -677,10 +685,11 @@ function Constructor_ServiceList (){
               </tr>');
         });
 
+        /// resolver problema tabela linked objt
         $(lkd_Objects).each(function(index, element) {
-
-            $('#CollapseLinkedObjects' + item_position+'').append(
-                '<tr class="LinkedObjectRow">\
+            console.log('CollapseLinkedObjects'+ item_position +'');
+            $('#CollapseLinkedObjects' + item_position +'').append(
+                '<tr class="LinkedObject_Collapse">\
                 <td>' + element.id + '</td>\
                 <td>' + element.item + '</td>\
                 <td><button type="button" value="' + element.id + '" class="btn btn-primary btn-sm">Edit</button></td>\
