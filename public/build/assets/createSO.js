@@ -454,10 +454,8 @@ function LoadLinkableObjects(s)
 // Funçao que adiciona o objeto vinculado escolhido ao array
 
 $('#addLinkedObject').on('click',function(e) { 
-    
    
-
-    if ($('#LinkableObjectsList').val() != "0" && $('#searchLinkedObjectNumber').val() !='') {
+   if ($('#LinkableObjectsList').val() != "0" && $('#searchLinkedObjectNumber').val() !='') {
         $objectNumber = $('#searchLinkedObjectNumber').val();
         $selectedLinkedObject = {
             
@@ -508,13 +506,17 @@ $('#btnSaveLinkedObjects').on('click',function(e) {
 
    item = itens[position_on_array];
    item["linked_objects"] = linked_objects;
-    
+   
     itens[position_on_array] = item;
 
-    linked_objects = [];
+   
+    
+    //Constructor_ServiceList ();
+    Constructor_CollapseLinkedObjects (linked_objects, position_on_array);
 
-   Constructor_ServiceList ();
-  
+    linked_objects = [];
+    item = [];
+    position_on_array = "";
 })
 
 // joga as informaçoes do item selecionado para o objeto
@@ -527,7 +529,6 @@ function select_item(e) {
         'id_item' : $(e).attr("value"),
     };
     
-    //LoadLinkableObjects();
     LoadServices();
 
 }
@@ -548,25 +549,43 @@ function LoadServices(s)
         $('#RepairContent').html("");
         RepairsList = response;
 
-        $(response).each(function(index, element) {
-            
-            $('#RepairContent').append(
-                '<tr class="RepairRow">\
-                <td>' + element.service + '</td>\
-                <td>' + 'R$' + element.price + '</td>\
-                <td><button type="button" value="' + element.id + '" class="btn btn-primary SelectRepairBtn btn-sm">Edit</button></td>\
-              </tr>');
-          });
+        LoadRepairsTable(response);
+        
+        console.log(response);
         } 
     });
 }
 
+// Carrega os itens selecionados na tabela de serviços
+
+function LoadSelectedRepairsTable(selectedRepairs) { 
+    
+    $(selectedRepairs).each(function(index, element) {
+            
+        $('#RepairContent').prepend($('.selectedRepair'));
+      });     
+}
+
+function LoadRepairsTable(response) {
+    
+    $(response).each(function(index, element) {
+            
+        $('#RepairContent').append(
+            '<tr class="RepairRow">\
+            <td>' + element.service + '</td>\
+            <td>' + 'R$' + element.price + '</td>\
+            <td><button type="button" value="' + element.id + '" class="btn btn-primary SelectRepairBtn btn-sm">Edit</button></td>\
+          </tr>');
+      });
+}
 
 // joga as informaçoes do reparo selecionado para o objeto
 
 $(document).on('click', '.SelectRepairBtn', function () { 
 
     searchId = $(this).attr("value");
+
+    $(this).parents("tr").addClass("selectedRepair"); // adciona o classe selectedRepair ao tr selecionado, assim é possivel enviar o tr para o topo da tabelas
 
     selectedRepair = RepairsList.find(element => element.id == searchId);
      selectedRepair = {
@@ -577,7 +596,10 @@ $(document).on('click', '.SelectRepairBtn', function () {
     
     object_repairs.push(selectedRepair);
 
-    console.log(object_repairs);
+   
+
+    LoadSelectedRepairsTable(object_repairs);
+    //LoadRepairsTable(RepairsList);
     sum_price();
     $('#total_price').val(sum_price());
 })
@@ -625,76 +647,86 @@ function Constructor_ServiceList (){
     
     $(itens).each(function(index, element) { 
             
-        
-         item_position = itens.indexOf(element);
+        item_position = itens.indexOf(element);
         var repairs = element.repairs;
         var lkd_Objects = element.linked_objects; // 
 
         
-
         $('#serviceList').append(
             '<div class="card w-90 mb-1">\
-                <div class="card-body">\
-                    <h5 class="card-title"><input type="search" name="searchOSI" id="searchOSI"\
-                    placeholder="Escaneie o código do Objeto" class="form-control me-2 m-auto"></h5>\
-                    <p class="card-text"> ' + element.item + '</p>\
-                    <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#CollapseRepairs' + item_position+'">\
-                    Reparos</button>\
-                    <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#CollapseLinkedObjects' + item_position+'">\
-                    Objetos Associados</button>\
-              <div class="row">\
-                <div class="col">\
-                    <div class="collapse multi-collapse" id="CollapseRepairs' + item_position+'">\
-                    <div class="card card-body" >\
-                    <table class="table table-hover">\
-                    <h5>Reparos</h5>\
-                    <tbody id="CollapseRepairsList'+ item_position +'"></tbody>\
-                </table>\
-                    </div>\
-                    </div>\
-                </div>\
-                <div class="col">\
-                    <div class="collapse multi-collapse" id="CollapseLinkedObjects' + item_position+'">\
-                    <div class="card card-body" id="CollapseLinkedObjectsList">\
-                        <div class="row">\
-                            <div class="col-sm-6">\
-                                <h5>Objetos Associados</h5>\
-                            </div>\
-                            <div class="col-sm-1">\
-                                <button type="button" class=" btnAddLinkedObject btn btn-success" data-bs-toggle="offcanvas"\
-                                data-bs-target="#offcanvasObjects" value="'+ item_position +'">+</button>\
-                            </div>\
-                        </div>\
+    <div class="card-body">\
+        <h5 class="card-title"><input type="search" name="searchOSI" id="searchOSI"\
+                placeholder="Escaneie o código do Objeto" class="form-control me-2 m-auto"></h5>\
+        <p class="card-text"> ' + element.item + '</p>\
+        <button class="btn btn-primary" type="button" data-bs-toggle="collapse"\
+            data-bs-target="#CollapseRepairs' + item_position+'">\
+            Reparos</button>\
+        <button class="btn btn-primary" type="button" data-bs-toggle="collapse"\
+            data-bs-target="#CollapseLinkedObjects' + item_position+'">\
+            Objetos Associados</button>\
+        <div class="row">\
+            <div class="col">\
+                <div class="collapse multi-collapse" id="CollapseRepairs' + item_position+'">\
+                    <div class="card card-body">\
                         <table class="table table-hover">\
-                            <tbody id="CollapseLinkedObjects'+ item_position +'"></tbody>\
+                            <h5>Reparos</h5>\
+                            <tbody id="CollapseRepairsList'+ item_position +'"></tbody>\
                         </table>\
                     </div>\
-                    </div>\
-                </div>\
                 </div>\
             </div>\
-          </div>');
+            <div class="col">\
+                <div class="collapse multi-collapse" id="CollapseLinkedObjects' + item_position+'">\
+                    <div class="card card-body" id="CollapseLinkedObjectsList">\
+                        <table class="table table-hover">\
+                            <div class="row">\
+                                <div class="col-sm-6">\
+                                    <h5>Objetos Associados</h5>\
+                                </div>\
+                                <div class="col-sm-1">\
+                                    <button type="button" class=" btnAddLinkedObject btn btn-success"\
+                                        data-bs-toggle="offcanvas"\ data-bs-target="#offcanvasObjects"\
+                                        value="'+ item_position +'">+</button>\
+                                </div>\
+                            </div>\
+                            <tbody id="CollapseLinkedObjectsList'+ item_position +'"></tbody>\
+                        </table>\
+                    </div>\
+                </div>\
+            </div>\
+        </div>\
+    </div>\
+</div>');
 
-          $(repairs).each(function(index, element) {
+    Constructor_CollapseRepairsList (repairs,item_position);
+    Constructor_CollapseLinkedObjects (lkd_Objects,item_position);
+
+});
+}
+
+    function Constructor_CollapseRepairsList (repairs,item_position){
+
+        $(repairs).each(function(index, element) {
 
             $('#CollapseRepairsList'+ item_position +'').append(
-            '<tr class="RepairRow_Collapse">\
+            '<tr>\
                 <td>' + element.service + '</td>\
                 <td>' + 'R$' + element.price + '</td>\
                 <td><button type="button" value="' + element.id + '" class="btn btn-primary SelectRepairBtn btn-sm">Edit</button></td>\
               </tr>');
         });
+    }
+    
+    function Constructor_CollapseLinkedObjects (lkd_Objects,item_position){
 
-        /// resolver problema tabela linked objt
+console.log(lkd_Objects);
         $(lkd_Objects).each(function(index, element) {
-            console.log('CollapseLinkedObjects'+ item_position +'');
-            $('#CollapseLinkedObjects' + item_position +'').append(
-                '<tr class="LinkedObject_Collapse">\
-                <td>' + element.id + '</td>\
+            
+            $('#CollapseLinkedObjectsList' + item_position +'').append(
+                '<tr>\
+                <td>' + element.objectNumber + '</td>\
                 <td>' + element.item + '</td>\
                 <td><button type="button" value="' + element.id + '" class="btn btn-primary btn-sm">Edit</button></td>\
               </tr>');
         });
-      });
-
-}
+    }
