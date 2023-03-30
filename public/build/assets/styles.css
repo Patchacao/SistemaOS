@@ -123,4 +123,10 @@ body{
 
     /*-- View Create-service-order-- */
 
-    
+    .selectedRepair{
+
+      background: #0ece1e;
+    }
+    .selectedRepair:hover{
+      background: #b10909;
+    }

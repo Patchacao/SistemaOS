@@ -379,6 +379,18 @@ $(document).on('click', '.itemCard', function () {
     $('#returnBtn').show();// mostra o btn voltar
     
 })
+ 
+// Funçao que lida com o click  no botao de editar/adicionar reparos
+
+$(document).on('click', '.btnAddRepair', function () {
+    $('#itens_list').hide(); 
+    $('#repairList').show();
+    $('#returnBtn').hide();
+    
+    LoadSelectedRepairs($(this).val());
+   
+})
+
 
 // ------------------------------------------------------------------------------------------------------------------------
 
@@ -509,15 +521,16 @@ $('#btnSaveLinkedObjects').on('click',function(e) {
    
     itens[position_on_array] = item;
 
-   
-    
-    //Constructor_ServiceList ();
-    Constructor_CollapseLinkedObjects (linked_objects, position_on_array);
+   Constructor_CollapseLinkedObjects (linked_objects, position_on_array);
 
     linked_objects = [];
     item = [];
     position_on_array = "";
 })
+
+
+// ----------------------- Lógica Seleçao de Itens e Serviços -----------------------
+
 
 // joga as informaçoes do item selecionado para o objeto
 
@@ -529,7 +542,7 @@ function select_item(e) {
         'id_item' : $(e).attr("value"),
     };
     
-    LoadServices();
+    LoadServices(selectedItem.id_item);
 
 }
 
@@ -537,22 +550,22 @@ function select_item(e) {
 
 function LoadServices(s) 
 {
-    $value=selectedItem.id_item;
+    $('#RepairContent').html("");
+    $value=s;
     RepairsList = "";
- $.ajax({
+ 
+$.ajax({
     type: "get",
     url: "/service-order/create/LoadServices",
     data: {'search':$value},
     dataType: "json",
     success: function (response){
     
-        $('#RepairContent').html("");
         RepairsList = response;
 
         LoadRepairsTable(response);
         
-        console.log(response);
-        } 
+       } 
     });
 }
 
@@ -562,21 +575,43 @@ function LoadSelectedRepairsTable(selectedRepairs) {
     
     $(selectedRepairs).each(function(index, element) {
             
-        $('#RepairContent').prepend($('.selectedRepair'));
-      });     
+        
+        $('#selectedRepair'+ element.id +'').addClass("selectedRepair");
+        $('#RepairContent').prepend($('#selectedRepair'+ element.id +''));
+        console.log("teste");
+      });    
+      
 }
 
 function LoadRepairsTable(response) {
     
+    
     $(response).each(function(index, element) {
             
         $('#RepairContent').append(
-            '<tr class="RepairRow">\
+            '<tr class="RepairRow"  id="selectedRepair'+ element.id +'">\
             <td>' + element.service + '</td>\
             <td>' + 'R$' + element.price + '</td>\
-            <td><button type="button" value="' + element.id + '" class="btn btn-primary SelectRepairBtn btn-sm">Edit</button></td>\
+            <td><button type="button" value="'+ element.id +'" class="btn btn-primary SelectRepairBtn btn-sm">Edit</button></td>\
           </tr>');
       });
+}
+
+ // Função que busca os reparos selecionados para o item
+    
+ function LoadSelectedRepairs(e) {
+        
+    object_repairs = [];
+
+    selectedItem = itens[e];
+    object_repairs = selectedItem.repairs;
+
+    
+    LoadServices(selectedItem.id_item);
+    
+    
+    
+  
 }
 
 // joga as informaçoes do reparo selecionado para o objeto
@@ -585,7 +620,7 @@ $(document).on('click', '.SelectRepairBtn', function () {
 
     searchId = $(this).attr("value");
 
-    $(this).parents("tr").addClass("selectedRepair"); // adciona o classe selectedRepair ao tr selecionado, assim é possivel enviar o tr para o topo da tabelas
+    //$(this).parents("tr").addClass("selectedRepair"); // adciona o classe selectedRepair ao tr selecionado, assim é possivel enviar o tr para o topo da tabelas
 
     selectedRepair = RepairsList.find(element => element.id == searchId);
      selectedRepair = {
@@ -596,10 +631,7 @@ $(document).on('click', '.SelectRepairBtn', function () {
     
     object_repairs.push(selectedRepair);
 
-   
-
     LoadSelectedRepairsTable(object_repairs);
-    //LoadRepairsTable(RepairsList);
     sum_price();
     $('#total_price').val(sum_price());
 })
@@ -633,7 +665,6 @@ function AddRepairInfo () {
     
     Constructor_ServiceList ();
 
- 
 }
 
 function Constructor_ServiceList (){
@@ -669,7 +700,16 @@ function Constructor_ServiceList (){
                 <div class="collapse multi-collapse" id="CollapseRepairs' + item_position+'">\
                     <div class="card card-body">\
                         <table class="table table-hover">\
-                            <h5>Reparos</h5>\
+                            <div class="row">\
+                                <div class="col-sm-6">\
+                                    <h5>Reparos</h5>\
+                                </div>\
+                                <div class="col-sm-1">\
+                                    <button type="button" class=" btnAddRepair btn btn-success"\
+                                    data-bs-toggle="modal" data-bs-target="#CreateOsiModal"\
+                                        value="'+ item_position +'">+</button>\
+                                </div>\
+                            </div>\
                             <tbody id="CollapseRepairsList'+ item_position +'"></tbody>\
                         </table>\
                     </div>\
@@ -700,7 +740,7 @@ function Constructor_ServiceList (){
 
     Constructor_CollapseRepairsList (repairs,item_position);
     Constructor_CollapseLinkedObjects (lkd_Objects,item_position);
-
+ 
 });
 }
 
@@ -712,14 +752,12 @@ function Constructor_ServiceList (){
             '<tr>\
                 <td>' + element.service + '</td>\
                 <td>' + 'R$' + element.price + '</td>\
-                <td><button type="button" value="' + element.id + '" class="btn btn-primary SelectRepairBtn btn-sm">Edit</button></td>\
-              </tr>');
+             </tr>');
         });
     }
     
     function Constructor_CollapseLinkedObjects (lkd_Objects,item_position){
 
-console.log(lkd_Objects);
         $(lkd_Objects).each(function(index, element) {
             
             $('#CollapseLinkedObjectsList' + item_position +'').append(
@@ -730,3 +768,5 @@ console.log(lkd_Objects);
               </tr>');
         });
     }
+
+   

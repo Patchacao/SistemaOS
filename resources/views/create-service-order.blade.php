@@ -61,7 +61,7 @@
                     <input type="search" name="searchOSI" id="searchOSI" placeholder="Escaneie o código do Objeto"
                         class="form-control me-2 m-auto" disabled>
                     <button type="button" class="btn btn-success btn-lg" data-bs-toggle="modal"
-                        data-bs-target="#exampleModal" aria-controls="offcanvasSelectItem">Add OSI
+                        data-bs-target="#CreateOsiModal" aria-controls="offcanvasSelectItem">Add OSI
                     </button>
                 </div>
             </div>
