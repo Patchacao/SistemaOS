@@ -242,7 +242,7 @@
                 </div>
 
                 <table class="table table-hover">
-                    <tbody id="RepairContent"></tbody>
+                    <tbody id="RepairContent1"></tbody>
                 </table>
 
 
