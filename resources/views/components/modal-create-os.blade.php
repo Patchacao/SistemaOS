@@ -29,7 +29,7 @@
               <div class="col-sm-3">
               <button type="button" class="btn btn-primary" id="btnSaveServices">Salvar</button>
               <button type="button" class="btn btn-primary" id="btnEditServices" 
-                style="display: none;" data-bs-dismiss="modal">Editar</button>
+                style="display: none;" data-bs-dismiss="modal">Salvar alteração</button>
               </div>
               <div class="col-sm-5">
               <div class="form-floating mb-1">
