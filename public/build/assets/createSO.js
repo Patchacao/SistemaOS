@@ -563,7 +563,7 @@ $('#btnSaveLinkedObjects').on('click',function(e) {
    item = itens[position_on_array];
    item["linked_objects"] = linked_objects;
    itens[position_on_array] = item;
-
+   $('#LinkedObjectTable').html("");
    Constructor_CollapseLinkedObjects (linked_objects, position_on_array);
 
     linked_objects = [];
@@ -634,6 +634,8 @@ function LoadSelectedRepairsTable(selectedRepairs) {
             
         $('#selectedRepair'+ element.id +'').addClass("selectedRepair");
         $('#RepairContent').prepend($('#selectedRepair'+ element.id +''));
+        //$('#deleteRepairbtn'+ searchId +'').show();
+        //$('#addRepairbtn'+ searchId +'').hide();
         
       });    
       
@@ -648,15 +650,16 @@ function LoadRepairsTable(response) {
             '<tr class="RepairRow"  id="selectedRepair'+ element.id +'">\
             <td>' + element.service + '</td>\
             <td>' + 'R$' + element.price + '</td>\
-            <td><button type="button" value="'+ element.id +'" class="btn btn-primary SelectRepairBtn btn-sm">Edit</button></td>\
+            <td><button type="button" value="'+ element.id +'" id="addRepairbtn'+ element.id +'" class="btn btn-primary SelectRepairBtn btn-sm">+</button></td>\
+            <td><button type="button" value="'+ element.id +'" id="deleteRepairbtn'+ element.id +'" class="btn btn-primary DeleteRepairBtn btn-sm" style="display: none;">-</button></td>\
           </tr>');
-      });
+      }); 
 }
 
  // Função que busca os reparos selecionados para o item
     
  function LoadSelectedRepairs(e) {
-        
+    
     object_repairs = [];
 
     selectedItem = itens[e];
@@ -666,7 +669,6 @@ function LoadRepairsTable(response) {
         
     
      LoadServices(selectedItem.id_item);
-     
      
 }
 }
@@ -686,11 +688,39 @@ $(document).on('click', '.SelectRepairBtn', function () {
     
     object_repairs.push(selectedRepair);
 
-    console.log(object_repairs);
+    $(this).hide();
+    $('#deleteRepairbtn'+ searchId +'').show();
 
     LoadSelectedRepairsTable(object_repairs);
     sum_price();
     $('#total_price').val(sum_price());
+})
+
+// Funcao que exclui o reparo selecioando da lista
+
+$(document).on('click', '.DeleteRepairBtn', function () { 
+
+    searchId = "";
+    searchId = $(this).attr("value");
+
+    selectedRepair = RepairsList.find(element => element.id == searchId);
+
+    $('#selectedRepair'+ searchId +'').removeClass("selectedRepair");
+    //$('#RepairContent').html(""); 
+    object_repairs.splice(selectedRepair,1);
+
+
+    console.log(RepairsList);
+    $(this).hide();
+    $('#addRepairbtn'+ searchId +'').show();
+    
+
+    //LoadRepairsTable(RepairsList);
+    //LoadSelectedRepairsTable(object_repairs);
+    sum_price();
+    $('#total_price').val(sum_price());
+
+    
 })
 
 // Soma do preco dos servicos
