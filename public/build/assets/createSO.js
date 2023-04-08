@@ -379,7 +379,6 @@ $('#btnEditServices').click( function () {
 $('#returnBtn').click( function () {
     
     refreshModal();
-
 })
 
 
@@ -388,7 +387,6 @@ $(document).on('click', '.itemCard', function () {
     select_item($(this));
     
     showRepairsModal();
-    
 })
  
 
@@ -396,7 +394,6 @@ $(document).on('click', '.exitBtn', function () {
 
     refreshModal();
     CleanAllValues();
-    
 })
 
 // Funçao que lida com o click  no botao de editar/adicionar reparos
@@ -413,7 +410,6 @@ $(document).on('click', '.btnAddRepair', function () {
     position_on_array = $(this).val();
    
     LoadSelectedRepairs(position_on_array);
-
 })
 
 function refreshModal() {
@@ -424,7 +420,6 @@ function refreshModal() {
     $('#returnBtn').hide();// esconde o btn voltar
     $('#btnSaveServices').show();
     $('#btnEditServices').hide();
-
 }
 
 function showRepairsModal() {
@@ -434,7 +429,6 @@ function showRepairsModal() {
     $('#returnBtn').hide();
     $('#btnSaveServices').show();
     $('#btnEditServices').hide();
-
 }
 // ------------------------------------------------------------------------------------------------------------------------
 
@@ -478,7 +472,6 @@ $(document).on('click', '.btnAddLinkedObject',function(e) {
     var item_id = itens[position_on_array].id_item;
     console.log(item_id);
     LoadLinkableObjects(item_id);
-   
 });
 
 //Carrega os objetos relacionaveis
@@ -533,10 +526,8 @@ $('#addLinkedObject').on('click',function(e) {
         
         
     } else {
-        
         alert("Selecione o Objeto");
     }
-   
 });
 
 //Função que constroi a lista de objetos linkados selecionados no offcanvas
@@ -598,7 +589,6 @@ function select_item(e) {
     };
     
     LoadServices(selectedItem.id_item);
-
 }
 
 //Carrega os serviços para a seleçao
@@ -618,12 +608,11 @@ $.ajax({
     
         RepairsList = response;
 
-        LoadRepairsTable(response);
-        console.log("teste")
+        LoadRepairsTable(RepairsList);
+        LoadSelectedRepairsTable(object_repairs);
+
        } 
     });
-    
-    LoadSelectedRepairsTable(object_repairs);
 }
 
 // Carrega os itens selecionados na tabela de serviços
@@ -634,11 +623,10 @@ function LoadSelectedRepairsTable(selectedRepairs) {
             
         $('#selectedRepair'+ element.id +'').addClass("selectedRepair");
         $('#RepairContent').prepend($('#selectedRepair'+ element.id +''));
-        //$('#deleteRepairbtn'+ searchId +'').show();
-        //$('#addRepairbtn'+ searchId +'').hide();
+        $('#deleteRepairbtn'+ element.id +'').show();
+        $('#addRepairbtn'+ element.id +'').hide();
         
       });    
-      
 }
 
 function LoadRepairsTable(response) {
@@ -658,19 +646,15 @@ function LoadRepairsTable(response) {
 
  // Função que busca os reparos selecionados para o item
     
- function LoadSelectedRepairs(e) {
+function LoadSelectedRepairs(e) {
     
     object_repairs = [];
 
     selectedItem = itens[e];
     object_repairs = selectedItem.repairs;
 
-    function CarregaServiçosSelecionados() {
-        
-    
-     LoadServices(selectedItem.id_item);
+    LoadServices(selectedItem.id_item);
      
-}
 }
 
 // joga as informaçoes do reparo selecionado para o objeto
@@ -705,21 +689,32 @@ $(document).on('click', '.DeleteRepairBtn', function () {
 
     selectedRepair = RepairsList.find(element => element.id == searchId);
 
-    $('#selectedRepair'+ searchId +'').removeClass("selectedRepair");
-    //$('#RepairContent').html(""); 
     object_repairs.splice(selectedRepair,1);
+    $('#RepairContent').html("");
 
+    LoadRepairsTable(RepairsList);
 
-    console.log(RepairsList);
-    $(this).hide();
-    $('#addRepairbtn'+ searchId +'').show();
-    
+    LoadSelectedRepairsTable(object_repairs);
 
-    //LoadRepairsTable(RepairsList);
-    //LoadSelectedRepairsTable(object_repairs);
     sum_price();
+    
     $('#total_price').val(sum_price());
 
+})
+
+// Funcao que exclui o item e o card
+
+$(document).on('click', '.deleteItembtn', function () { 
+
+    var item_Id = $(this).attr("value");
+    
+    itens.splice(item_Id,1);
+
+    $($(this).parents('.card')).fadeOut("slow", function(){
+        Constructor_ServiceList();
+    });
+
+    console.log(itens);
     
 })
 
@@ -736,13 +731,10 @@ function sum_price () {
     return sum;
   }
 
-  
-
 // joga os reparos selecionados no objeto com as informaçoes do item
 
 function AddRepairInfo () {
 
-   
     item["item"] = selectedItem.item;
     item["id_item"] = selectedItem.id_item;
     item["total_price"] = sum_price ();
@@ -800,6 +792,7 @@ function Constructor_ServiceList (){
         <button class="btn btn-primary" type="button" data-bs-toggle="collapse"\
             data-bs-target="#CollapseLinkedObjects' + item_position+'">\
             Objetos Associados</button>\
+        <button class="deleteItembtn btn btn-danger" type="button" value ="'+ item_position+'">Excluir</button>\
         <div class="row">\
             <div class="col">\
                 <div class="collapse multi-collapse" id="CollapseRepairs' + item_position+'">\
