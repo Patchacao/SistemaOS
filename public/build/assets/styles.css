@@ -125,8 +125,6 @@ body{
 
     .selectedRepair{
 
-      background: #0ece1e;
+      background: #82ec8b;
     }
-    .selectedRepair:hover{
-      background: #b10909;
-    }
+    

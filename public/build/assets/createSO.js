@@ -639,7 +639,7 @@ function LoadRepairsTable(response) {
             <td>' + element.service + '</td>\
             <td>' + 'R$' + element.price + '</td>\
             <td><button type="button" value="'+ element.id +'" id="addRepairbtn'+ element.id +'" class="btn btn-primary SelectRepairBtn btn-sm">+</button></td>\
-            <td><button type="button" value="'+ element.id +'" id="deleteRepairbtn'+ element.id +'" class="btn btn-primary DeleteRepairBtn btn-sm" style="display: none;">-</button></td>\
+            <td><button type="button" value="'+ element.id +'" id="deleteRepairbtn'+ element.id +'" class="btn btn-danger DeleteRepairBtn btn-sm" style="display: none;">-</button></td>\
           </tr>');
       }); 
 }
@@ -782,59 +782,75 @@ function Constructor_ServiceList (){
         
         $('#serviceList').append(
             '<div class="card w-90 mb-1">\
-    <div class="card-body">\
-        <h5 class="card-title"><input type="search" name="searchOSI" id="searchOSI"\
-                placeholder="Escaneie o código do Objeto" class="form-control me-2 m-auto"></h5>\
-        <p class="card-text"> ' + element.item + '</p>\
-        <button class="btn btn-primary" type="button" data-bs-toggle="collapse"\
-            data-bs-target="#CollapseRepairs' + item_position+'">\
-            Reparos</button>\
-        <button class="btn btn-primary" type="button" data-bs-toggle="collapse"\
-            data-bs-target="#CollapseLinkedObjects' + item_position+'">\
-            Objetos Associados</button>\
-        <button class="deleteItembtn btn btn-danger" type="button" value ="'+ item_position+'">Excluir</button>\
-        <div class="row">\
-            <div class="col">\
-                <div class="collapse multi-collapse" id="CollapseRepairs' + item_position+'">\
-                    <div class="card card-body">\
-                        <table class="table table-hover">\
-                            <div class="row">\
-                                <div class="col-sm-6">\
-                                    <h5>Reparos</h5>\
-                                </div>\
-                                <div class="col-sm-1">\
-                                    <button type="button" class=" btnAddRepair btn btn-success"\
-                                    data-bs-toggle="modal" data-bs-target="#CreateOsiModal"\
-                                        value="'+ item_position +'">+</button>\
+            <div class="card-body">\
+                <div class="container">\
+                    <div class="row">\
+                        <div class="col-sm-4">\
+                            <input type="search" name="searchOSI" id="searchOSI"\
+                            placeholder="Escaneie o código do Objeto" class="form-control me-2 m-auto">\
+                        </div>\
+                        <div class="col-sm-3">\
+                            <p class="card-text"> ' + element.item + '</p>\
+                        </div>\
+                        <div class="col-sm-2">\
+                            <p class="card-text"> R$ 5,90</p>\
+                        </div>\
+                        <div class="col-sm-1">\
+                            <button class="btn btn-primary" type="button" data-bs-toggle="collapse"\
+                            data-bs-target="#CollapseRepairs' + item_position+'">\
+                            Rep</button>\
+                        </div>\
+                        <div class="col-sm-1">\
+                            <button class="btn btn-primary" type="button" data-bs-toggle="collapse"\
+                            data-bs-target="#CollapseLinkedObjects' + item_position+'">\
+                            Obj</button>\
+                        </div>\
+                        <div class="col-sm-1">\
+                        <button class="deleteItembtn btn btn-danger" type="button" value ="'+ item_position+'">-</button>\
+                        </div>\
+                    </div>\
+                    <div class="row">\
+                        <div class="col">\
+                            <div class="collapse multi-collapse show" id="CollapseRepairs' + item_position+'">\
+                                <div class="card card-body">\
+                                    <table class="table table-hover">\
+                                        <div class="row">\
+                                            <div class="col-sm-6">\
+                                                <h5>Reparos</h5>\
+                                            </div>\
+                                            <div class="col-sm-1">\
+                                                <button type="button" class=" btnAddRepair btn btn-success"\
+                                                data-bs-toggle="modal" data-bs-target="#CreateOsiModal"\
+                                                    value="'+ item_position +'">+</button>\
+                                            </div>\
+                                        </div>\
+                                        <tbody id="CollapseRepairsList'+ item_position +'"></tbody>\
+                                    </table>\
                                 </div>\
                             </div>\
-                            <tbody id="CollapseRepairsList'+ item_position +'"></tbody>\
-                        </table>\
-                    </div>\
-                </div>\
-            </div>\
-            <div class="col">\
-                <div class="collapse multi-collapse" id="CollapseLinkedObjects' + item_position+'">\
-                    <div class="card card-body" id="CollapseLinkedObjectsList">\
-                        <table class="table table-hover">\
-                            <div class="row">\
-                                <div class="col-sm-6">\
-                                    <h5>Objetos Associados</h5>\
-                                </div>\
-                                <div class="col-sm-1">\
-                                    <button type="button" class=" btnAddLinkedObject btn btn-success"\
-                                        data-bs-toggle="offcanvas"\ data-bs-target="#offcanvasObjects"\
-                                        value="'+ item_position +'">+</button>\
+                        </div>\
+                        <div class="col">\
+                            <div class="collapse multi-collapse" id="CollapseLinkedObjects' + item_position+'">\
+                                <div class="card card-body" id="CollapseLinkedObjectsList">\
+                                    <table class="table table-hover">\
+                                        <div class="row">\
+                                            <div class="col-sm-6">\
+                                                <h5>Objetos Associados</h5>\
+                                            </div>\
+                                            <div class="col-sm-1">\
+                                                <button type="button" class=" btnAddLinkedObject btn btn-success"\
+                                                    data-bs-toggle="offcanvas"\ data-bs-target="#offcanvasObjects"\
+                                                    value="'+ item_position +'">+</button>\
+                                            </div>\
+                                        </div>\
+                                        <tbody id="CollapseLinkedObjectsList'+ item_position +'"></tbody>\
+                                    </table>\
                                 </div>\
                             </div>\
-                            <tbody id="CollapseLinkedObjectsList'+ item_position +'"></tbody>\
-                        </table>\
+                        </div>\
                     </div>\
                 </div>\
-            </div>\
-        </div>\
-    </div>\
-</div>');
+            </div>');
 
     Constructor_CollapseRepairsList (repairs,item_position);
     Constructor_CollapseLinkedObjects (lkd_Objects,item_position);
@@ -864,9 +880,13 @@ function Constructor_ServiceList (){
                 '<tr>\
                 <td>' + element.objectNumber + '</td>\
                 <td>' + element.item + '</td>\
-                <td><button type="button" value="' + element.id + '" class="btn btn-primary btn-sm">Edit</button></td>\
+                <td><button type="button" value="' + element.id + '" class="btn btn-danger btn-sm">-</button></td>\
               </tr>');
         });
     }
 
    
+
+
+
+            
