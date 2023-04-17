@@ -563,6 +563,32 @@ $('#btnSaveLinkedObjects').on('click',function(e) {
 })
 
 
+// funçao que exclui os objetos likados
+
+$(document).on('click', '.DeleteLkdObjectBtn', function () { 
+   
+    item = "";
+    item = itens[$($(this).parents('tbody')).attr("value")];
+    
+    searchId = "";
+    searchId = $(this).attr("value");
+
+    selectedLinkedObject = item.linked_objects.find(element => element.id == searchId);
+
+    item.linked_objects.splice(selectedLinkedObject,1);
+
+    $($(this).parents('tr')).fadeOut("slow");
+
+    DeleteBarCodefromArray(selectedLinkedObject.objectNumber);
+    
+    console.log(selectedLinkedObject);
+    item = "";
+    selectedLinkedObject = "";
+    console.log(item);
+    
+
+})
+
 // ----------------------- Lógica Seleçao de Itens e Serviços -----------------------
  
 // Função que zera todas as variaveis e arrays
@@ -576,6 +602,17 @@ function CleanAllValues() {
     selectedItem = {};
     //RepairsList = [];
     selectedRepairs = {};
+}
+
+//Funçao que retira o codigo do item/objeto linkado do array de codigos scaneados
+
+function DeleteBarCodefromArray(barcode) {
+    console.log(ScannedObjectNumbers);
+   ScannedObjectNumbers.splice(ScannedObjectNumbers.barcode,1);
+
+   console.log(ScannedObjectNumbers);
+    
+    
 }
 
 // joga as informaçoes do item selecionado para o objeto
@@ -811,7 +848,7 @@ function Constructor_ServiceList (){
                     </div>\
                     <div class="row">\
                         <div class="col">\
-                            <div class="collapse multi-collapse show" id="CollapseRepairs' + item_position+'">\
+                            <div class="collapse multi-collapse" id="CollapseRepairs' + item_position+'">\
                                 <div class="card card-body">\
                                     <table class="table table-hover">\
                                         <div class="row">\
@@ -843,7 +880,7 @@ function Constructor_ServiceList (){
                                                     value="'+ item_position +'">+</button>\
                                             </div>\
                                         </div>\
-                                        <tbody id="CollapseLinkedObjectsList'+ item_position +'"></tbody>\
+                                        <tbody id="CollapseLinkedObjectsList'+ item_position +'" value="'+ item_position +'"></tbody>\
                                     </table>\
                                 </div>\
                             </div>\
@@ -880,7 +917,7 @@ function Constructor_ServiceList (){
                 '<tr>\
                 <td>' + element.objectNumber + '</td>\
                 <td>' + element.item + '</td>\
-                <td><button type="button" value="' + element.id + '" class="btn btn-danger btn-sm">-</button></td>\
+                <td><button type="button" value="' + element.id + '" class="DeleteLkdObjectBtn btn btn-danger btn-sm">-</button></td>\
               </tr>');
         });
     }
