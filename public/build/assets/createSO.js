@@ -569,22 +569,22 @@ $(document).on('click', '.DeleteLkdObjectBtn', function () {
    
     item = "";
     item = itens[$($(this).parents('tbody')).attr("value")];
-    
+    console.log(item);
     searchId = "";
     searchId = $(this).attr("value");
 
-    selectedLinkedObject = item.linked_objects.find(element => element.id == searchId);
+    selectedLinkedObject = item.linked_objects.find(element => element.objectNumber == searchId);
 
     item.linked_objects.splice(selectedLinkedObject,1);
 
     $($(this).parents('tr')).fadeOut("slow");
 
-    DeleteBarCodefromArray(selectedLinkedObject.objectNumber);
+    DeleteBarCodefromArray(searchId);
     
     console.log(selectedLinkedObject);
     item = "";
     selectedLinkedObject = "";
-    console.log(item);
+    
     
 
 })
@@ -607,8 +607,10 @@ function CleanAllValues() {
 //Funçao que retira o codigo do item/objeto linkado do array de codigos scaneados
 
 function DeleteBarCodefromArray(barcode) {
-    console.log(ScannedObjectNumbers);
-   ScannedObjectNumbers.splice(ScannedObjectNumbers.barcode,1);
+    
+    console.log(ScannedObjectNumbers.indexOf(barcode));
+    console.log(barcode);
+   ScannedObjectNumbers.splice(ScannedObjectNumbers.indexOf(barcode),1);
 
    console.log(ScannedObjectNumbers);
     
@@ -917,7 +919,7 @@ function Constructor_ServiceList (){
                 '<tr>\
                 <td>' + element.objectNumber + '</td>\
                 <td>' + element.item + '</td>\
-                <td><button type="button" value="' + element.id + '" class="DeleteLkdObjectBtn btn btn-danger btn-sm">-</button></td>\
+                <td><button type="button" value="' + element.objectNumber + '" class="DeleteLkdObjectBtn btn btn-danger btn-sm">-</button></td>\
               </tr>');
         });
     }
