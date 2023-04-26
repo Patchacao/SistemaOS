@@ -135,13 +135,9 @@ $(document).on('click', '.SelectClientBtn', function () {
 
     var searchId = $(this).val();
     
-   //console.log(searchId);
-
-      clientinfos = clientsSearchList.find(element => element.id == searchId);
+    clientinfos = clientsSearchList.find(element => element.id == searchId);
       
-        //console.log(clientinfos); 
-      //console.log(clientsSearchList);
-      InsertClientInfo();
+    InsertClientInfo();
       
 })
 
@@ -180,9 +176,7 @@ $('#phone_number').on('focusout',function(s)
    $value=$(this).cleanVal();
   var valueLenght=$value;
   
-  //console.log(valueLenght.length);
-  
-  if (valueLenght.length>9) {
+ if (valueLenght.length>9) {
    
 $.ajax({
     type: "get",
@@ -216,14 +210,12 @@ $.ajax({
                 
 function InsertClientInfo () {
 
-    //console.log(clientinfos);
     $('#nameInput').val(clientinfos.name);
     $('#last-nameInput').val(clientinfos.last_name);
     $('#phone-numberInput').val(clientinfos.phone_number);
     $('#searchOSI').focus();
 
 }
-
 
 // Função que lida com o escaneamento do codigo da OS
 
@@ -240,9 +232,7 @@ $('#searchOS').on('keypress',function(e) {
         $('#searchClient').focus();
         
         ScannedObjectNumbers.push($value);
-        //console.log(ScannedObjectNumbers);
        
-
         } else {
             alert("Esse código já esta em uso. Por favor, escolha outro!");
         }
@@ -251,25 +241,28 @@ $('#searchOS').on('keypress',function(e) {
 
 // Função que lida com o escaneamento do codigo do Objeto
 
-$('#searchOSI').on('keypress',function(e) {
+$(document).on('keypress', '.searchOsiField', function(e) {
     
     $value=$(this).val();
-    
+    item_position = $($(this).parents('.container')).attr('value');
+    item = itens[item_position];
+
     if(e.which == 13) {
 
         if (checkScan($value) == 'notFound') {
             
-        $('#offcanvasSelectItem').offcanvas('show');
-        $('#searchOSI').prop('disabled', true);
+        
+        $('#searchOSI' + item_position+'').prop('disabled', true);
         ScannedObjectNumbers.push($value);
         item["objectNumber"] = $value;
         
-       
         } else {
             alert("Esse código já esta em uso. Por favor, escolha outro!");
-            $('#searchOSI').val('');
+            $('#searchOSI' + item_position+'').val('');
         }
     }  
+
+   
 });
 
 
@@ -320,7 +313,7 @@ function checkObjectNumberScan(r) {
     
 }
 
-function checkScan(r) { //Funçao que verifica se já o codigo escaneado ja está cadastrado no banco
+function checkScan(r) { //Funçao que verifica se o codigo escaneado ja está cadastrado no banco
 
    $checkResult = '';
    
@@ -588,7 +581,6 @@ function DeleteLinkedObjects(e) {
 
     DeleteBarCodefromArray(searchId);
     
-    console.log(selectedLinkedObject);
     item = [];
     selectedLinkedObject = [];
 }
@@ -613,13 +605,8 @@ function CleanAllValues() {
 
 function DeleteBarCodefromArray(barcode) {
     
-    console.log(ScannedObjectNumbers.indexOf(barcode));
-    console.log(barcode);
-    ScannedObjectNumbers.splice(ScannedObjectNumbers.indexOf(barcode),1);
-
-   console.log(ScannedObjectNumbers);
-    
-    
+   ScannedObjectNumbers.splice(ScannedObjectNumbers.indexOf(barcode),1);
+ 
 }
 
 // joga as informaçoes do item selecionado para o objeto
@@ -752,14 +739,21 @@ $(document).on('click', '.deleteItembtn', function () {
 
     var item_Id = $(this).attr("value");
         item = itens[item_Id];
-
-    itens.splice(item_Id,1);
+        linked_objects = item.linked_objects;
+        
+        itens.splice(item_Id,1);
 
     $($(this).parents('.card')).fadeOut("slow", function(){
         Constructor_ServiceList();
     });
     
+    $(linked_objects).each(function(index, element) { // exlui os objectNumber que estao vinculados aos LkdObject do array dos numeros scaneados
     
+        var e = element.objectNumber;
+        
+        DeleteBarCodefromArray(e);
+    
+    });
 })
 
 // Soma do preco dos servicos
@@ -795,14 +789,16 @@ function AddRepairInfo () {
 function EditRepairInfo () {
 
     item = itens[position_on_array];
+    
+    var total_price = sum_price ();
+    total_price = total_price.toLocaleString('pt-br',{style: 'currency', currency: 'BRL'});
+    
     item["repairs"] = object_repairs; // adciona os reparo selecionados ao item
-    item["total_price"] = sum_price ();
+    item["total_price"] = total_price;
     itens[position_on_array] = item;
    
-    console.log(itens[position_on_array]);
-    console.log(object_repairs);
-    console.log(itens);
-
+    $('#total_price' + position_on_array +'').text(total_price); //atualiza o valor total mostrado do card
+  
     Constructor_CollapseRepairsList (object_repairs,position_on_array);
 
     CleanAllValues();
@@ -827,17 +823,17 @@ function Constructor_ServiceList (){
         $('#serviceList').append(
             '<div class="card w-90 mb-1">\
             <div class="card-body">\
-                <div class="container">\
+                <div class="container" value="' + item_position+'">\
                     <div class="row">\
                         <div class="col-sm-4">\
-                            <input type="search" name="searchOSI" id="searchOSI"\
-                            placeholder="Escaneie o código do Objeto" class="form-control me-2 m-auto">\
+                            <input type="search" id="searchOSI' + item_position+'"\
+                            placeholder="Escaneie o código do Objeto" class="searchOsiField form-control me-2 m-auto">\
                         </div>\
                         <div class="col-sm-3">\
                             <p class="card-text"> ' + element.item + '</p>\
                         </div>\
                         <div class="col-sm-2">\
-                            <p class="card-text"> R$ 5,90</p>\
+                            <p class="card-text" id="total_price' + item_position+'">' + element.total_price.toLocaleString('pt-br',{style: 'currency', currency: 'BRL'})+ '</p>\
                         </div>\
                         <div class="col-sm-1">\
                             <button class="btn btn-primary" type="button" data-bs-toggle="collapse"\
@@ -855,7 +851,7 @@ function Constructor_ServiceList (){
                     </div>\
                     <div class="row">\
                         <div class="col">\
-                            <div class="collapse multi-collapse" id="CollapseRepairs' + item_position+'">\
+                            <div class="collapse multi-collapse" value ="' + item_position+'" id="CollapseRepairs' + item_position+'">\
                                 <div class="card card-body">\
                                     <table class="table table-hover">\
                                         <div class="row">\
@@ -911,7 +907,7 @@ function Constructor_ServiceList (){
             $('#CollapseRepairsList'+ item_position +'').append(
             '<tr>\
                 <td>' + element.service + '</td>\
-                <td>' + 'R$' + element.price + '</td>\
+                <td>' + element.price.toLocaleString('pt-br',{style: 'currency', currency: 'BRL'})+ '</td>\
              </tr>');
         });
     }
@@ -927,9 +923,25 @@ function Constructor_ServiceList (){
                 <td><button type="button" value="' + element.objectNumber + '" class="DeleteLkdObjectBtn btn btn-danger btn-sm">-</button></td>\
               </tr>');
         });
-    }
+    }   
 
-   
+// ----------------------- Logica finalizaçao e salvamento da OS  -------------
+
+// Lida com o evento de scanear o código do objeto
+
+$(document).on('focus', '.searchOsiField', function () {  
+        
+    var fieldID = $($(this).parents('.container')).attr('value');
+    $('#CollapseRepairs' + fieldID +'').collapse('show');
+      
+});
+
+$(document).on('blur', '.searchOsiField', function () {  
+        
+    var fieldID = $($(this).parents('.container')).attr('value');
+    $('#CollapseRepairs' + fieldID +'').collapse('hide');
+      
+});
 
 
 
