@@ -474,6 +474,11 @@ $(document).on('click', '.btnAddLinkedObject',function(e) {
     LoadLinkableObjects(item_id);
 });
 
+$(document).on('click', '.DeleteLkdObjectBtn', function () { 
+
+    DeleteLinkedObjects($(this));
+})
+
 //Carrega os objetos relacionaveis
 
 function LoadLinkableObjects(s) 
@@ -565,29 +570,29 @@ $('#btnSaveLinkedObjects').on('click',function(e) {
 
 // funçao que exclui os objetos likados
 
-$(document).on('click', '.DeleteLkdObjectBtn', function () { 
-   
-    item = "";
-    item = itens[$($(this).parents('tbody')).attr("value")];
+
+  
+function DeleteLinkedObjects(e) {
+    
+    item = [];
+    item = itens[$(e.parents('tbody')).attr("value")];
     console.log(item);
     searchId = "";
-    searchId = $(this).attr("value");
+    searchId = e.attr("value"); // recebe o valor barcode
 
     selectedLinkedObject = item.linked_objects.find(element => element.objectNumber == searchId);
 
     item.linked_objects.splice(selectedLinkedObject,1);
 
-    $($(this).parents('tr')).fadeOut("slow");
+    $(e.parents('tr')).fadeOut("slow");
 
     DeleteBarCodefromArray(searchId);
     
     console.log(selectedLinkedObject);
-    item = "";
-    selectedLinkedObject = "";
-    
-    
+    item = [];
+    selectedLinkedObject = [];
+}
 
-})
 
 // ----------------------- Lógica Seleçao de Itens e Serviços -----------------------
  
@@ -610,7 +615,7 @@ function DeleteBarCodefromArray(barcode) {
     
     console.log(ScannedObjectNumbers.indexOf(barcode));
     console.log(barcode);
-   ScannedObjectNumbers.splice(ScannedObjectNumbers.indexOf(barcode),1);
+    ScannedObjectNumbers.splice(ScannedObjectNumbers.indexOf(barcode),1);
 
    console.log(ScannedObjectNumbers);
     
@@ -621,7 +626,7 @@ function DeleteBarCodefromArray(barcode) {
 
 function select_item(e) { 
 
-    selectedItem = "";
+    selectedItem = {};
      selectedItem = {
         'item' :$(e).text().trim(),
         'id_item' : $(e).attr("value"),
@@ -746,14 +751,14 @@ $(document).on('click', '.DeleteRepairBtn', function () {
 $(document).on('click', '.deleteItembtn', function () { 
 
     var item_Id = $(this).attr("value");
-    
+        item = itens[item_Id];
+
     itens.splice(item_Id,1);
 
     $($(this).parents('.card')).fadeOut("slow", function(){
         Constructor_ServiceList();
     });
-
-    console.log(itens);
+    
     
 })
 
@@ -773,7 +778,7 @@ function sum_price () {
 // joga os reparos selecionados no objeto com as informaçoes do item
 
 function AddRepairInfo () {
-
+    item = [];
     item["item"] = selectedItem.item;
     item["id_item"] = selectedItem.id_item;
     item["total_price"] = sum_price ();
