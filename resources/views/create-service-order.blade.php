@@ -175,84 +175,58 @@
         </div>
     </div>
 
-
-    <!----===== Offcanvas Select item ===== -->
-
-    <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasSelectItem"
-        aria-labelledby="offcanvasExampleLabel">
-        <div class="offcanvas-header">
-            <h5 class="offcanvas-title" id="offcanvasExampleLabel">Selecione o item:</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-        </div>
-        <div class="offcanvas-body">
-            <div class="row-cols-auto" id="itens_list"></div>
-        </div>
     </div>
+</div>
 
-    <!----===== Offcanvas linked objects ===== -->
+<!----===== Offcanvas linked objects ===== -->
 
-    <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasObjects" aria-labelledby="offcanvasExampleLabel">
-        <div class="offcanvas-header">
-            <h6 class="offcanvas-title" id="offcanvasExampleLabel">Objetos vinculados</h6>
-            <button type="button" class="btn btn-success" id="btnSaveLinkedObjects" data-bs-dismiss="offcanvas">Salvar</button>
-            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-        </div>
-        <div class="offcanvas-body">
-            <div class="row-cols-auto">
+<div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasObjects" aria-labelledby="offcanvasExampleLabel">
+    <div class="offcanvas-header">
+        <h6 class="offcanvas-title" id="offcanvasExampleLabel">Objetos vinculados</h6>
+        <button type="button" class="btn btn-success" id="btnSaveLinkedObjects" data-bs-dismiss="offcanvas">Salvar</button>
+        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+    <div class="offcanvas-body">
+        <div class="row-cols-auto">
 
-                <div class="d-grid mb-1">
-                    <span class="mb-2">Código do Objeto</span>
-                    <input type="search" id="searchLinkedObjectNumber" placeholder="Escaneie o código"
-                        class="form-control">
-                </div>
-                <select class="form-select mb-1" id="LinkableObjectsList" placeholder="Selecione o Objeto1" hidden>
-                </select>
-
-                <div class="d-grid gap-2">
-                    <button id="addLinkedObject" type="button" class="btn btn-success" hidden> Cadastrar Objeto</button>
-                </div>
-                <table class="table table-hover">
-                    <tbody id="LinkedObjectTable">
-                    </tbody>
-                </table>
+            <div class="d-grid mb-1">
+                <span class="mb-2">Código do Objeto</span>
+                <input type="search" id="searchLinkedObjectNumber" placeholder="Escaneie o código"
+                    class="form-control">
             </div>
-        </div>
-    </div>
+            <select class="form-select mb-1" id="LinkableObjectsList" placeholder="Selecione o Objeto1" hidden>
+            </select>
 
-    <!----===== Offcanvas Select Repair ===== -->
-
-    <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasRepair" aria-labelledby="offcanvasExampleLabel">
-        <div class="offcanvas-header">
-            <h6 class="offcanvas-title" id="offcanvasExampleLabel">Selecione os reparos a serem feitos</h6>
-            <button type="button" class="btn btn-success" id="btnSaveServicesOld">Salvar</button>
-            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-        </div>
-        <div class="offcanvas-body">
-            <div class="container container text-center g-1">
-
-                <div class="row mb-1 g-2">
-                    <div class="col-7">
-                        <button type="button" class="btn btn-success">Apenas Orçamento</button>
-                    </div>
-                    <div class="col-2">
-                        <span>Valor</span>
-                    </div>
-                    <div class="col-3">
-                        <input type="search" name="totalPrice" id="totalPrice" class="form-control" disabled>
-                    </div>
-                </div>
-
-                <table class="table table-hover">
-                    <tbody id="RepairContent1"></tbody>
-                </table>
-
-
+            <div class="d-grid gap-2">
+                <button id="addLinkedObject" type="button" class="btn btn-success" hidden> Cadastrar Objeto</button>
             </div>
+            <table class="table table-hover">
+                <tbody id="LinkedObjectTable">
+                </tbody>
+            </table>
         </div>
     </div>
+</div>
 
+<!-- Modal  Confirm Delete-->
+<div class="modal fade" id="ConfirmItemDeleteModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="staticBackdropLabel">Excluir</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          Deseja excluir esse item?
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Não</button>
+          <button type="button" id ="deleteItemConfirmationbtn" class="btn btn-danger">Excluir</button>
+        </div>
+      </div>
     </div>
-    </div>
+  </div>
+
 
 @endsection
 

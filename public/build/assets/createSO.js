@@ -2,12 +2,15 @@ var clientinfos //variavel que recebe as informaçoes do cliente selecionado
 var clientsSearchList //variavel que recebe a lista de clientes que atendem a busca
 var itens = []; //variavel que recebe os dados dos itens cadastrados
 var item = []; //variavel que recebe os dados do item cadastrado
+var item_Id; // variavel que recebe a posiçao no item no array itens
 var selectedItem; // variavel que receve os dados do item selecionado durante o cadastro
 var linked_objects = []; //variavel que recebe os dados dos objetos relacionados
 var object_repairs = []; //variavel que recebe os dados dos reparos a serem realizados no objeto
 var RepairsList //variavel que recebe a lista de reparos disponiveis para o item selecionado
 const ScannedObjectNumbers = []; // variavel que recebe os codigos de objetos que foram escaneados
 
+
+ 
 // Ajax Jquery create client
 
 
@@ -736,25 +739,44 @@ $(document).on('click', '.DeleteRepairBtn', function () {
 // Funcao que exclui o item e o card
 
 $(document).on('click', '.deleteItembtn', function () { 
+   
+    item_Id = $(this).attr("value");
+   $('#ConfirmItemDeleteModal').modal('show');
+})
 
-    var item_Id = $(this).attr("value");
+$(document).on('click', '#deleteItemConfirmationbtn', function () {
+
+    DeleteItem(item_Id);
+    item_Id = "";
+    $('#ConfirmItemDeleteModal').modal('hide');
+})
+    
+// Função que exclui o item
+
+function DeleteItem(item_Id) {
+        
+        
         item = itens[item_Id];
         linked_objects = item.linked_objects;
-        
+       
         itens.splice(item_Id,1);
-
-    $($(this).parents('.card')).fadeOut("slow", function(){
-        Constructor_ServiceList();
-    });
-    
+        
+    if (item.linked_objects != 'undefined') {
+        
     $(linked_objects).each(function(index, element) { // exlui os objectNumber que estao vinculados aos LkdObject do array dos numeros scaneados
     
         var e = element.objectNumber;
         
         DeleteBarCodefromArray(e);
-    
+        
     });
-})
+    }
+   
+    $('#card' + item_Id +'').fadeOut("slow", function(){
+        Constructor_ServiceList();
+        
+    });
+}
 
 // Soma do preco dos servicos
 
@@ -821,7 +843,7 @@ function Constructor_ServiceList (){
 
         
         $('#serviceList').append(
-            '<div class="card w-90 mb-1">\
+            '<div id="card' + item_position+'" class="card w-90 mb-1">\
             <div class="card-body">\
                 <div class="container" value="' + item_position+'">\
                     <div class="row">\
@@ -891,6 +913,12 @@ function Constructor_ServiceList (){
                     </div>\
                 </div>\
             </div>');
+            
+    if (element.objectNumber != undefined) { // utilzar o undefined talvez cause ERRO em outros navegadores
+
+            $('#searchOSI' + item_position+'').val(element.objectNumber); 
+            $('#searchOSI' + item_position+'').prop('disabled', true);
+    }
 
     Constructor_CollapseRepairsList (repairs,item_position);
     Constructor_CollapseLinkedObjects (lkd_Objects,item_position);
