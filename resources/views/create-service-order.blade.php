@@ -27,39 +27,79 @@
                 <h5>Informações do Cliente</h5>
                 <form action="">
                     <div class="row mb-0 g-1">
-                        <div class="col-sm-3">
+                        <div class="col-sm-2">
                             <div class="form-floating mb-1">
                                 <input type="name" class="form-control" id="nameInput" placeholder="Primeiro Nome"
                                     disabled>
                                 <label for="floatingInput">Primeiro Nome</label>
                             </div>
-
                         </div>
-                        <div class="col-6">
+                        <div class="col-3">
                             <div class="form-floating mb-1">
                                 <input type="name" class="form-control" id="last-nameInput" placeholder="Sobrenome"
                                     disabled>
                                 <label for="floatingInput">Sobrenome</label>
                             </div>
                         </div>
-                        <div class="col-3">
+                        <div class="col-2">
+                            <div class="form-floating mb-1">
+                                <input type="name" class="form-control" id="NickNameInput" placeholder="Apelido"
+                                        disabled>
+                                <label for="floatingInput">Apelido</label>
+                            </div>    
+                        </div>
+                        <div class="col-2">
                             <div class="form-floating mb-1">
                                 <input type="name" class="form-control" id="phone-numberInput" placeholder="Sobrenome"
                                     disabled>
                                 <label for="floatingInput">Telefone</label>
                             </div>
                         </div>
-                    </div>
-
-
+                        <div class="col-sm-2">
+                            <div class="form-floating mb-1">
+                                <input type="name" class="form-control" id="CPFInput" placeholder="CPF"
+                                    disabled>
+                                <label for="floatingInput">CPF</label>
+                            </div>
+                        </div>
+                        <div class="col-1">
+                            <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="collapse"
+                            data-bs-target="#CollapseClientMoreInfo">Mostrar
+                            </button>
+                        </div>
+                     </div>
+                    <div class="row">
+                        <div class="col">
+                            <div class="collapse multi-collapse"
+                            id="CollapseClientMoreInfo">
+                                <div class="card card-body">
+                                    <div class="container">
+                                        <div class="row mb-0 g-1">
+                                            
+                                            <div class="col-4">
+                                                <div class="form-floating mb-1">
+                                                    <input type="name" class="form-control" id="last-nameInput" placeholder="Apelido"
+                                                        disabled>
+                                                    <label for="floatingInput">Apelido</label>
+                                                </div>
+                                            </div>
+                                            <div class="col-3">
+                                                <div class="form-floating mb-1">
+                                                    <input type="name" class="form-control" id="phone-numberInput" placeholder="Sobrenome"
+                                                        disabled>
+                                                    <label for="floatingInput">Telefone</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                 </form>
             </div>
-            <div class="container-service-info">
+            <div class="container-service-info mb-2">
                 <div class="d-flex">
-
                     <h5>Ordens de Serviço Individuais</h5>
-                    <input type="search" name="searchOSI" id="searchOSI" placeholder="Escaneie o código do Objeto"
-                        class="form-control me-2 m-auto" disabled>
                     <button type="button" class="btn btn-success btn-lg" data-bs-toggle="modal"
                         data-bs-target="#CreateOsiModal" aria-controls="offcanvasSelectItem">+
                     </button>
@@ -67,8 +107,7 @@
             </div>
 
             <div class="container-fluid" id="serviceList">
-
-            </div>
+        </div>
         </div>
     </div>
     </div>
@@ -152,16 +191,37 @@
                         <input type="name" class="form-control" name="nickname" id="nickname"
                             oninput="toUpperCase(this)" placeholder="Apelido">
                     </div>
-                    <div class="mb-1">
+                    <div class="mb-2">
                         <label for="exampleFormControlInput1" class="form-label">CPF</label>
                         <input type="string" class="form-control" name="cpf" id="cpf"
                             placeholder="Número do CPF">
                     </div>
-
+                    
+                    <div class = "container" id="adress">
+                       <h5 class="offcanvas-title mb-2">Endereço</h5>
+                        <div class="mb-1">
+                            <label for="exampleFormControlInput1" class="form-label">Rua</label>
+                            <input type="adress" class="form-control" id="street-Name" 
+                                oninput="toUpperCase(this)" placeholder="Nome da Rua">
+                        </div>
+                    
+                            <div class="row">
+                                <div class="col-5">
+                                    <label for="exampleFormControlInput1" class="form-label">Número</label>
+                                    <input type="adress" class="form-control" id="adress-number" 
+                                        placeholder="Número">
+                                </div>
+                                <div class="col-7">
+                                    <label for="exampleFormControlInput1" class="form-label">CEP</label>
+                                    <input type="adress" class="form-control" id="adress-number" 
+                                        placeholder="CEP">
+                                </div>
+                            </div>
+                    </div>
+                    
+                  
                     <input type="submit" class="btn btn-primary add_client" value="Salvar">
-                </div>
             </form>
-
         </div>
     </div>
 

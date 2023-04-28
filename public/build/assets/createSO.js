@@ -13,13 +13,11 @@ const ScannedObjectNumbers = []; // variavel que recebe os codigos de objetos qu
  
 // Ajax Jquery create client
 
-
 $(document).ready(function () {
 
     $(document).on('click', '.add_client', function (e) {
         e.preventDefault();
     
-        
         $(this).text('Sending..');
        
         var data = {
@@ -85,7 +83,9 @@ $(document).ready(function () {
     
     });
 
-// Ajax Jquery Select client
+
+    // Ajax Jquery Select client
+
 var timer;
 $('#searchClient').on('keyup',function(s)
 {
@@ -103,8 +103,6 @@ $('#searchClient').on('keyup',function(s)
     dataType: "json",
     success: function (response){
 
-        console.log(response);
-        
         $('#searchContent').html("");
         $(".searchRow").remove();
         
@@ -141,10 +139,13 @@ $(document).on('click', '.SelectClientBtn', function () {
     clientinfos = clientsSearchList.find(element => element.id == searchId);
       
     InsertClientInfo();
-      
+    
+    $('#phone-numberInput').mask('(00) 0000-00009');
+    
 })
 
 // Jquery Create client
+
 
 // Mascara de Celular
 
@@ -162,6 +163,7 @@ $(document).ready(function(){
             
         } else{
             $('#phone_number').mask('(00) 0000-00009');
+           
         }
     });
 })
@@ -215,9 +217,10 @@ function InsertClientInfo () {
 
     $('#nameInput').val(clientinfos.name);
     $('#last-nameInput').val(clientinfos.last_name);
+    $('#NickNameInput').val(clientinfos.nickname);
     $('#phone-numberInput').val(clientinfos.phone_number);
-    $('#searchOSI').focus();
-
+    $('#CPFInput').val(clientinfos.cpf);
+    
 }
 
 // Função que lida com o escaneamento do codigo da OS
@@ -843,7 +846,7 @@ function Constructor_ServiceList (){
 
         
         $('#serviceList').append(
-            '<div id="card' + item_position+'" class="card w-90 mb-1">\
+            '<div id="card' + item_position+'" class="card w-90 mb-2">\
             <div class="card-body">\
                 <div class="container" value="' + item_position+'">\
                     <div class="row">\
