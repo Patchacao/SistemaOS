@@ -204,20 +204,34 @@
                             <input type="adress" class="form-control" id="street-Name" 
                                 oninput="toUpperCase(this)" placeholder="Nome da Rua">
                         </div>
-                    
-                            <div class="row">
-                                <div class="col-5">
-                                    <label for="exampleFormControlInput1" class="form-label">Número</label>
-                                    <input type="adress" class="form-control" id="adress-number" 
+                        <div class="row">
+                            <div class="col-5">
+                                <label for="exampleFormControlInput1" class="form-label">Número</label>
+                                <input type="adress" class="form-control" id="adress-number" 
                                         placeholder="Número">
-                                </div>
-                                <div class="col-7">
-                                    <label for="exampleFormControlInput1" class="form-label">CEP</label>
-                                    <input type="adress" class="form-control" id="adress-number" 
-                                        placeholder="CEP">
-                                </div>
                             </div>
-                    </div>
+                            <div class="col-7">
+                                <label for="exampleFormControlInput1" class="form-label">CEP</label>
+                                <input type="adress" class="form-control" id="adress-number" 
+                                        placeholder="CEP">
+                            </div>
+                        </div>
+                        <div class="mb-1">
+                            <label for="exampleFormControlInput1" class="form-label">Bairro</label>
+                            <input type="adress" class="form-control" id="neighborhood" 
+                                oninput="toUpperCase(this)">
+                        </div>
+                        <div class="mb-1">
+                            <label for="exampleFormControlInput1" class="form-label">Cidade</label>
+                            <select class="form-select" aria-label="Default select example">
+                                <option selected>Lima Duarte</option>
+                                <option value="1">Olaria</option>
+                                <option value="2">Juiz de Fora</option>
+                                <option value="3">Pedro Teixeira</option>
+                                <option value="4">Bom Jardim de Minas</option>
+                            </select>
+                        </div>
+                   </div>
                     
                   
                     <input type="submit" class="btn btn-primary add_client" value="Salvar">
