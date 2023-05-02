@@ -24,4 +24,9 @@ class Customer extends Model
     {
         return $this->hasMany(ServiceOrder::class,'customer_id','id');
     }
+
+    public function Adresses()
+    {
+        return $this->hasMany(ServiceOrder::class,'customer_id','id');
+    }
 }

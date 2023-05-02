@@ -1,4 +1,5 @@
 var clientinfos //variavel que recebe as informaçoes do cliente selecionado
+var clientAdress // recebe os dados do endereço do cliente
 var clientsSearchList //variavel que recebe a lista de clientes que atendem a busca
 var itens = []; //variavel que recebe os dados dos itens cadastrados
 var item = []; //variavel que recebe os dados do item cadastrado
@@ -51,18 +52,23 @@ $(document).ready(function () {
                 phone_number: $("#phone_number").val(),
                 name:$('#name').val(),
                 last_name:$('#last_name').val(),
+                nickname: $('#nickname').val(),
+                cpf: $('#cpf').val(),
                 };
-            
+            $(clientinfos).push(CreateCustomerAdress(clientinfos.id));
             InsertClientInfo();
+            
+            
                 $('#offcanvasCustomer').offcanvas('hide');
                 $('#createClientToast').toast("show");
+
+            
             return clientinfos;
-             
-        },
+
+       },
         error: function (err) {
             if (err.status == 422) { // when status code is 422, it's a validation issue
                 console.log(err.responseJSON);
-                
                 
                 // you can loop through the errors object and show it to the user
                 console.warn(err.responseJSON.errors);
@@ -79,11 +85,70 @@ $(document).ready(function () {
             }
         }
             })
+
         });
     
     });
 
+                // ------------- Create Customer Adress ------------------
+    
+function CreateCustomerAdress(e) {
+    
 
+                var adress = {
+                    'customer_id': e,
+                    'street': $("#street-Name").val(),
+                    'adress_number': $('#adress-number').val(),
+                    'CEP': $('#cep').val(),
+                    'neighborhood': $('#neighborhood').val(),
+                    'city': $('#city').val(),
+                    'state': $('#state').val(),
+                }
+    
+    
+                $.ajax({
+                    type: "POST",
+                    url: "/clients/Adress-create",
+                    data: adress,
+                    dataType: "json",
+                    success: function(adress){
+                    console.log(adress);
+                    $('span').remove(".error_msg");
+                    //$('#success_message').html(data.message);
+                    
+                        clientAdress = {
+                        street:$("#street-Name").val(),
+                        adress_number: $('#adress-number').val(),
+                        CEP: $('#cep').val(),
+                        neighborhood: $('#neighborhood').val(),
+                        city: $('#city').text(),
+                        state: $('#state').val(),
+    
+                        };
+                    
+                    return clientAdress;
+                    
+                },
+                error: function (err) {
+                    if (err.status == 422) { // when status code is 422, it's a validation issue
+                        console.log(err.responseJSON);
+                        
+                        // you can loop through the errors object and show it to the user
+                        console.warn(err.responseJSON.errors);
+                        // display errors on each form field
+                        $('#success_message').html("");
+                        $('span').remove(".error_msg");
+                        
+                        $.each(err.responseJSON.errors, function (i, error) {
+                            
+                        var el = $(document).find('[name="'+i+'"]');
+                            el.after($('<span class="error_msg" id="error_msg" style="color: red;">'+error[0]+'</span>'));
+                            
+                        });
+                    }
+                }
+                    })
+            }
     // Ajax Jquery Select client
 
 var timer;
@@ -194,7 +259,7 @@ $.ajax({
         
         
        if ($.trim(response) == '' ) {
-        alert("teste");
+        
        } else {
         
         $(response).each(function(index, element) {
@@ -220,7 +285,18 @@ function InsertClientInfo () {
     $('#NickNameInput').val(clientinfos.nickname);
     $('#phone-numberInput').val(clientinfos.phone_number);
     $('#CPFInput').val(clientinfos.cpf);
-    
+
+    //-------- endereço -------
+
+    clientAdress = clientinfos.adress;
+    $('#street-Input').val(clientAdress.street);
+    $('#adress-number-Input').val(clientAdress.adress_number);
+    $('#cep-Input').val(clientAdress.CEP);
+    $('#neighborhood-Input').val(clientAdress.neighborhood);
+    $('#city-number-Input').val(clientAdress.city);
+    $('#state-Input').val(clientAdress.state);
+
+ 
 }
 
 // Função que lida com o escaneamento do codigo da OS

@@ -75,19 +75,44 @@
                                 <div class="card card-body">
                                     <div class="container">
                                         <div class="row mb-0 g-1">
-                                            
-                                            <div class="col-4">
+                                            <div class="col-6">
                                                 <div class="form-floating mb-1">
-                                                    <input type="name" class="form-control" id="last-nameInput" placeholder="Apelido"
+                                                    <input type="adress" class="form-control" id="street-Input"
                                                         disabled>
-                                                    <label for="floatingInput">Apelido</label>
+                                                    <label for="floatingInput">Rua</label>
                                                 </div>
                                             </div>
                                             <div class="col-3">
                                                 <div class="form-floating mb-1">
-                                                    <input type="name" class="form-control" id="phone-numberInput" placeholder="Sobrenome"
+                                                    <input type="adress" class="form-control" id="adress-number-Input" disabled>
+                                                    <label for="floatingInput">Número</label>
+                                                </div>
+                                            </div>
+                                            <div class="col-3">
+                                                <div class="form-floating mb-1">
+                                                    <input type="adress" class="form-control" id="cep-Input" disabled>
+                                                    <label for="floatingInput">Cep</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row mb-0 g-1">
+                                            <div class="col-4">
+                                                <div class="form-floating mb-1">
+                                                    <input type="adress" class="form-control" id="neighborhood-Input"
                                                         disabled>
-                                                    <label for="floatingInput">Telefone</label>
+                                                    <label for="floatingInput">Bairro</label>
+                                                </div>
+                                            </div>
+                                            <div class="col-4">
+                                                <div class="form-floating mb-1">
+                                                    <input type="adress" class="form-control" id="city-number-Input" disabled>
+                                                    <label for="floatingInput">Cidade</label>
+                                                </div>
+                                            </div>
+                                            <div class="col-4">
+                                                <div class="form-floating mb-1">
+                                                    <input type="adress" class="form-control" id="state-Input" disabled>
+                                                    <label for="floatingInput">Estado</label>
                                                 </div>
                                             </div>
                                         </div>
@@ -212,23 +237,33 @@
                             </div>
                             <div class="col-7">
                                 <label for="exampleFormControlInput1" class="form-label">CEP</label>
-                                <input type="adress" class="form-control" id="adress-number" 
+                                <input type="adress" class="form-control" id="cep" 
                                         placeholder="CEP">
                             </div>
                         </div>
                         <div class="mb-1">
                             <label for="exampleFormControlInput1" class="form-label">Bairro</label>
                             <input type="adress" class="form-control" id="neighborhood" 
-                                oninput="toUpperCase(this)">
+                                oninput="toUpperCase(this)" required>
                         </div>
                         <div class="mb-1">
                             <label for="exampleFormControlInput1" class="form-label">Cidade</label>
-                            <select class="form-select" aria-label="Default select example">
+                            <select class="form-select" aria-label="Default select example" id="city" required>
                                 <option selected>Lima Duarte</option>
                                 <option value="1">Olaria</option>
                                 <option value="2">Juiz de Fora</option>
                                 <option value="3">Pedro Teixeira</option>
                                 <option value="4">Bom Jardim de Minas</option>
+                            </select>
+                        </div>
+                        <div class="mb-1">
+                            <label for="exampleFormControlInput1" class="form-label">Estado</label>
+                            <select class="form-select" aria-label="Default select example" id="state" required>
+                                <option selected>Minas Gerais</option>
+                                <option value="1">Rio de Janeiro</option>
+                                <option value="2">São Paulo</option>
+                                <option value="3">Espirito Santo</option>
+                                
                             </select>
                         </div>
                    </div>
