@@ -16,6 +16,37 @@ const ScannedObjectNumbers = []; // variavel que recebe os codigos de objetos qu
 
 $(document).ready(function () {
 
+    $('#createClienteForm').validate({
+        rules:{
+            phone_number: {
+                required: true,
+                minlength: 14,
+                maxlength: 15,
+            },
+            name: {
+                required: true,
+                minlength: 2,
+                maxlength: 50,
+            },
+            last_name: {
+                required: true,
+                minlength: 2,
+                maxlength: 100,
+            },
+            nickname: {
+               
+                minlength: 2,
+                maxlength: 25,
+            },
+            cpf: {
+                
+                cpfBR: true,
+                minlength: 11,
+                maxlength: 11,
+            },
+        }
+    })
+
     $(document).on('click', '.add_client', function (e) {
         e.preventDefault();
     
@@ -41,6 +72,7 @@ $(document).ready(function () {
             type: "POST",
             url: "/clients/create",
             data: data,
+            async: false,
             dataType: "json",
             success: function(data){
              //console.log(data);
@@ -55,15 +87,10 @@ $(document).ready(function () {
                 nickname: $('#nickname').val(),
                 cpf: $('#cpf').val(),
                 };
-            $(clientinfos).push(CreateCustomerAdress(clientinfos.id));
-            InsertClientInfo();
             
-            
-                $('#offcanvasCustomer').offcanvas('hide');
-                $('#createClientToast').toast("show");
-
-            
-            return clientinfos;
+           CreateCustomerAdress(data.id);
+   
+           return clientinfos;
 
        },
         error: function (err) {
@@ -105,27 +132,40 @@ function CreateCustomerAdress(e) {
                     'state': $('#state').val(),
                 }
     
-    
+                $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    }
+                });
+                
                 $.ajax({
                     type: "POST",
                     url: "/clients/Adress-create",
                     data: adress,
                     dataType: "json",
+                    async: false,
                     success: function(adress){
-                    console.log(adress);
+                 
                     $('span').remove(".error_msg");
                     //$('#success_message').html(data.message);
                     
                         clientAdress = {
-                        street:$("#street-Name").val(),
+                        street:$("#street").val(),
                         adress_number: $('#adress-number').val(),
                         CEP: $('#cep').val(),
                         neighborhood: $('#neighborhood').val(),
-                        city: $('#city').text(),
+                        city: $('#city').val(),
                         state: $('#state').val(),
     
                         };
+
+                        InsertClientInfo();
+            
                     
+                        $('#offcanvasCustomer').offcanvas('hide');
+                        $('#createClientToast').toast("show");
+
+                        console.log(clientAdress);
                     return clientAdress;
                     
                 },
@@ -233,6 +273,11 @@ $(document).ready(function(){
     });
 })
 
+function openCreateClientAdressOffcanvas() {
+
+    $('#offcanvasCustomerAdress').offcanvas('show');
+}
+
 //Funçao que coloca o texto do input em caixa alta
 
  function toUpperCase(a) {
@@ -288,15 +333,15 @@ function InsertClientInfo () {
 
     //-------- endereço -------
 
-    clientAdress = clientinfos.adress;
+    
+    console.log( clientAdress);
     $('#street-Input').val(clientAdress.street);
     $('#adress-number-Input').val(clientAdress.adress_number);
     $('#cep-Input').val(clientAdress.CEP);
     $('#neighborhood-Input').val(clientAdress.neighborhood);
-    $('#city-number-Input').val(clientAdress.city);
+    $('#city-Input').val(clientAdress.city);
     $('#state-Input').val(clientAdress.state);
 
- 
 }
 
 // Função que lida com o escaneamento do codigo da OS
@@ -645,8 +690,6 @@ $('#btnSaveLinkedObjects').on('click',function(e) {
 
 // funçao que exclui os objetos likados
 
-
-  
 function DeleteLinkedObjects(e) {
     
     item = [];
@@ -666,7 +709,6 @@ function DeleteLinkedObjects(e) {
     item = [];
     selectedLinkedObject = [];
 }
-
 
 // ----------------------- Lógica Seleçao de Itens e Serviços -----------------------
  

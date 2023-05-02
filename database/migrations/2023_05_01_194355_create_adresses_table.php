@@ -16,10 +16,10 @@ return new class extends Migration
         Schema::create('adresses', function (Blueprint $table) {
             $table->id();
             $table->foreignId('customer_id')->constrained('customers');
-            $table->string('street');
-            $table->string('adress_number');
-            $table->string('CEP');
-            $table->string('neighborhood');
+            $table->string('street')->nullable();
+            $table->string('adress_number')->nullable();
+            $table->string('CEP')->nullable();
+            $table->string('neighborhood')->nullable();
             $table->string('city');
             $table->string('state');
             $table->string('created_by');

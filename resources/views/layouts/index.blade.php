@@ -119,6 +119,11 @@
         <script src="/build/assets/createSO.js"></script>
         <script src="/build/assets/sidebar.js"></script>
 
+        <!-- Validação Jquery -->
+        <script type="text/javascript" src="/jquery.validate.min.js"></script>
+        <script type="text/javascript" src="/additional-methods.min.js"></script>
+        <script type="text/javascript" src="/localization/messages_pt_BR.js"></script>
+
     </body>
    
     

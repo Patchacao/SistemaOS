@@ -105,7 +105,7 @@
                                             </div>
                                             <div class="col-4">
                                                 <div class="form-floating mb-1">
-                                                    <input type="adress" class="form-control" id="city-number-Input" disabled>
+                                                    <input type="adress" class="form-control" id="city-Input" disabled>
                                                     <label for="floatingInput">Cidade</label>
                                                 </div>
                                             </div>
@@ -142,9 +142,9 @@
     <!----===== Offcanvas Select Client ===== -->
 
     <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasSelectCustomer"
-        aria-labelledby="offcanvasSelectCustomer">
+    data-bs-backdrop="false" aria-labelledby="offcanvasSelectCustomer">
         <div class="offcanvas-header">
-            <h5 class="offcanvas-title" id="offcanvasExampleLabel">Selecione o Cliente
+            <h5 class="offcanvas-title" id="offcanvasSelectCustomer">Selecione o Cliente
                 <a class="add-icon" data-bs-toggle="offcanvas" data-bs-target="#offcanvasCustomer">
                     <i class='bx bx-plus-circle'></i>
                 </a>
@@ -175,7 +175,8 @@
 
     <!----===== Offcanvas Create Client ===== -->
 
-    <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasCustomer" aria-labelledby="offcanvasCustomer">
+    <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasCustomer" 
+    data-bs-backdrop="false" aria-labelledby="offcanvasCustomer">
         <div class="offcanvas-header">
             <h5 class="offcanvas-title" id="offcanvasExampleLabel">Dados do Cliente</h5>
             <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
@@ -221,56 +222,11 @@
                         <input type="string" class="form-control" name="cpf" id="cpf"
                             placeholder="Número do CPF">
                     </div>
+
+                    <input type="submit" class="btn btn-primary" id="openCreateAdressOffCanvas" 
+                    oninput= "openCreateClientAdressOffcanvas()" value="Próximo">
                     
-                    <div class = "container" id="adress">
-                       <h5 class="offcanvas-title mb-2">Endereço</h5>
-                        <div class="mb-1">
-                            <label for="exampleFormControlInput1" class="form-label">Rua</label>
-                            <input type="adress" class="form-control" id="street-Name" 
-                                oninput="toUpperCase(this)" placeholder="Nome da Rua">
-                        </div>
-                        <div class="row">
-                            <div class="col-5">
-                                <label for="exampleFormControlInput1" class="form-label">Número</label>
-                                <input type="adress" class="form-control" id="adress-number" 
-                                        placeholder="Número">
-                            </div>
-                            <div class="col-7">
-                                <label for="exampleFormControlInput1" class="form-label">CEP</label>
-                                <input type="adress" class="form-control" id="cep" 
-                                        placeholder="CEP">
-                            </div>
-                        </div>
-                        <div class="mb-1">
-                            <label for="exampleFormControlInput1" class="form-label">Bairro</label>
-                            <input type="adress" class="form-control" id="neighborhood" 
-                                oninput="toUpperCase(this)" required>
-                        </div>
-                        <div class="mb-1">
-                            <label for="exampleFormControlInput1" class="form-label">Cidade</label>
-                            <select class="form-select" aria-label="Default select example" id="city" required>
-                                <option selected>Lima Duarte</option>
-                                <option value="1">Olaria</option>
-                                <option value="2">Juiz de Fora</option>
-                                <option value="3">Pedro Teixeira</option>
-                                <option value="4">Bom Jardim de Minas</option>
-                            </select>
-                        </div>
-                        <div class="mb-1">
-                            <label for="exampleFormControlInput1" class="form-label">Estado</label>
-                            <select class="form-select" aria-label="Default select example" id="state" required>
-                                <option selected>Minas Gerais</option>
-                                <option value="1">Rio de Janeiro</option>
-                                <option value="2">São Paulo</option>
-                                <option value="3">Espirito Santo</option>
-                                
-                            </select>
-                        </div>
-                   </div>
-                    
-                  
-                    <input type="submit" class="btn btn-primary add_client" value="Salvar">
-            </form>
+             </form>
         </div>
     </div>
 
@@ -287,9 +243,87 @@
     </div>
 </div>
 
+
+<!----===== Offcanvas Create Client Adress ===== -->
+
+<div class="offcanvas offcanvas-start" tabindex="-1" data-bs-backdrop="false"
+     id="offcanvasCustomerAdress" aria-labelledby="offcanvasCustomerAdressLabel">
+    <div class="offcanvas-header">
+        <h5 class="offcanvas-title" id="offcanvasCustomerAdressLabel">Endereço do Cliente</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+
+    <span id="success_message-Adress"></span>
+
+    <div class="offcanvas-body">
+
+            <form id="createClienteAdressForm"action="/clients/Adress-create" method="post">
+                <div class = "container" id="adress">
+                  <div class="mb-1">
+                        <label for="exampleFormControlInput1" class="form-label">Rua</label>
+                        <input type="adress" class="form-control" name="street" id="street" 
+                            oninput="toUpperCase(this)" placeholder="Nome da Rua">
+                    </div>
+                    <div class="row">
+                        <div class="col-5">
+                            <label for="exampleFormControlInput1" class="form-label">Número</label>
+                            <input type="adress" class="form-control" name="adress-number" id="adress-number" 
+                                    placeholder="Número">
+                        </div>
+                        <div class="col-7">
+                            <label for="exampleFormControlInput1" class="form-label">CEP</label>
+                            <input type="adress" class="form-control" name="cep" id="cep" 
+                                    placeholder="CEP">
+                        </div>
+                    </div>
+                    <div class="mb-1">
+                        <label for="exampleFormControlInput1" class="form-label">Bairro</label>
+                        <input type="adress" class="form-control"  name="neighborhood" id="neighborhood" 
+                            oninput="toUpperCase(this)" required>
+                    </div>
+                    <div class="mb-1">
+                        <label for="exampleFormControlInput1" class="form-label">Cidade</label>
+                        <select class="form-select" aria-label="Default select example" id="city" required>
+                            <option selected>Lima Duarte</option>
+                            <option value="1">Olaria</option>
+                            <option value="2">Juiz de Fora</option>
+                            <option value="3">Pedro Teixeira</option>
+                            <option value="4">Bom Jardim de Minas</option>
+                        </select>
+                    </div>
+                    <div class="mb-1">
+                        <label for="exampleFormControlInput1" class="form-label">Estado</label>
+                        <select class="form-select" aria-label="Default select example" id="state" required>
+                            <option selected>Minas Gerais</option>
+                            <option value="1">Rio de Janeiro</option>
+                            <option value="2">São Paulo</option>
+                            <option value="3">Espirito Santo</option>
+                            
+                        </select>
+                    </div>
+               </div>
+                <input type="submit" class="btn btn-primary add_client" value="Salvar">
+            </form>
+    </div>
+</div>
+
+<div class="toast bg-success text-white fade" id="createClientToast"
+    style="position: absolute; top: 10px; right: 10px;">
+    <div class="d-flex">
+        <div class="toast-body">
+            Cliente cadastrado com sucesso!
+        </div>
+        <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button>
+    </div>
+</div>
+
+</div>
+</div>
+
 <!----===== Offcanvas linked objects ===== -->
 
-<div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasObjects" aria-labelledby="offcanvasExampleLabel">
+<div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasObjects" 
+    data-bs-backdrop="false" aria-labelledby="offcanvasExampleLabel">
     <div class="offcanvas-header">
         <h6 class="offcanvas-title" id="offcanvasExampleLabel">Objetos vinculados</h6>
         <button type="button" class="btn btn-success" id="btnSaveLinkedObjects" data-bs-dismiss="offcanvas">Salvar</button>

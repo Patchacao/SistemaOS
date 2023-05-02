@@ -27,15 +27,15 @@ class StoreUpdateAdressFormRequest extends FormRequest
             
            
             'street' => [
-                'nullable',
                 'min:2',
                 'max:100',
+                'nullable',
                 
             ],
             'adress_number' => [
-                'nullable',
                 'min:2',
                 'max:10',
+                'nullable',
                 
                 
             ],
