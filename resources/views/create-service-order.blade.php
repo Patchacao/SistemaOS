@@ -223,24 +223,13 @@
                             placeholder="Número do CPF">
                     </div>
 
-                    <input type="submit" class="btn btn-primary" id="openCreateAdressOffCanvas" 
-                    oninput= "openCreateClientAdressOffcanvas()" value="Próximo">
+                    <input type="button" class="btn btn-primary" id="openCreateAdressOffCanvas" 
+                    onclick= "openCreateClientAdressOffcanvas()" value="Próximo">
                     
              </form>
         </div>
     </div>
-
-    <div class="toast bg-success text-white fade" id="createClientToast"
-        style="position: absolute; top: 10px; right: 10px;">
-        <div class="d-flex">
-            <div class="toast-body">
-                Cliente cadastrado com sucesso!
-            </div>
-            <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button>
-        </div>
-    </div>
-
-    </div>
+</div>
 </div>
 
 
@@ -261,29 +250,34 @@
                 <div class = "container" id="adress">
                   <div class="mb-1">
                         <label for="exampleFormControlInput1" class="form-label">Rua</label>
-                        <input type="adress" class="form-control" name="street" id="street" 
+                        <input type="text" class="form-control" name="street" id="street" 
                             oninput="toUpperCase(this)" placeholder="Nome da Rua">
                     </div>
                     <div class="row">
                         <div class="col-5">
                             <label for="exampleFormControlInput1" class="form-label">Número</label>
-                            <input type="adress" class="form-control" name="adress-number" id="adress-number" 
+                            <input type="text" class="form-control" name="adress-number" id="adress-number" 
                                     placeholder="Número">
                         </div>
                         <div class="col-7">
                             <label for="exampleFormControlInput1" class="form-label">CEP</label>
-                            <input type="adress" class="form-control" name="cep" id="cep" 
+                            <input type="text" class="form-control" name="cep" id="cep" 
                                     placeholder="CEP">
                         </div>
                     </div>
                     <div class="mb-1">
+                        <label for="exampleFormControlInput1" class="form-label">Complemento</label>
+                        <input type="text" class="form-control"  name="complement" id="complement" 
+                            oninput="toUpperCase(this)">
+                    </div>
+                    <div class="mb-1">
                         <label for="exampleFormControlInput1" class="form-label">Bairro</label>
-                        <input type="adress" class="form-control"  name="neighborhood" id="neighborhood" 
+                        <input type="text" class="form-control"  name="neighborhood" id="neighborhood" 
                             oninput="toUpperCase(this)" required>
                     </div>
                     <div class="mb-1">
                         <label for="exampleFormControlInput1" class="form-label">Cidade</label>
-                        <select class="form-select" aria-label="Default select example" id="city" required>
+                        <select class="form-select" aria-label="Default select example" name="city" id="city" required>
                             <option selected>Lima Duarte</option>
                             <option value="1">Olaria</option>
                             <option value="2">Juiz de Fora</option>
@@ -291,7 +285,7 @@
                             <option value="4">Bom Jardim de Minas</option>
                         </select>
                     </div>
-                    <div class="mb-1">
+                    <div class="mb-3">
                         <label for="exampleFormControlInput1" class="form-label">Estado</label>
                         <select class="form-select" aria-label="Default select example" id="state" required>
                             <option selected>Minas Gerais</option>
@@ -302,18 +296,14 @@
                         </select>
                     </div>
                </div>
-                <input type="submit" class="btn btn-primary add_client" value="Salvar">
+                <input type="button" class="btn btn-primary add_client" value="Salvar">
             </form>
-    </div>
-</div>
-
-<div class="toast bg-success text-white fade" id="createClientToast"
-    style="position: absolute; top: 10px; right: 10px;">
-    <div class="d-flex">
-        <div class="toast-body">
-            Cliente cadastrado com sucesso!
-        </div>
-        <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button>
+            <div class= "container">
+                <button type="button" class="btn btn-primary" data-bs-toggle="offcanvas" 
+                data-bs-target="#offcanvasCustomer" id= "backToCreateClientsOffcanvas">Voltar</button>
+                <button type="button" class="btn btn-primary" data-bs-toggle="offcanvas" 
+                data-bs-target="#offcanvasCustomer" id= "backToCreateClientsOffcanvas">Voltar</button>
+            </div>
     </div>
 </div>
 

@@ -51,6 +51,7 @@ Route::get('/clients/search', [ClientController::class, 'search'])->middleware([
 Route::get('/clients/phone-verification', [ClientController::class, 'PhoneVerification'])->middleware(['auth', 'verified']);
 Route::post('/clients/create', [ClientController::class, 'store'])->middleware(['auth', 'verified']);
 Route::post('/clients/Adress-create', [AdressController::class, 'store'])->middleware(['auth', 'verified']);
+Route::get('/clients/fetch-adress', [AdressController::class, 'fetch'])->middleware(['auth', 'verified']);
 
 Route::get('/service-order',  function () {
     return view('service-order');

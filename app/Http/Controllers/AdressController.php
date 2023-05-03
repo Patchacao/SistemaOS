@@ -16,6 +16,7 @@ class AdressController extends Controller
         $adress->street = $request->street;
         $adress->adress_number = $request->adress_number;
         $adress->CEP = $request->CEP;
+        $adress->complement = $request->complement;
         $adress->neighborhood = $request->neighborhood;
         $adress->city = $request->city;
         $adress->state = $request->state;
@@ -28,5 +29,18 @@ class AdressController extends Controller
                 'message'=>'Endereço Cadastrado com Sucesso.',
                 
             ]);
+    }
+
+    public function fetch(Request $request)
+    {
+        $Adress = "";
+        
+       if ($request->search!="") {
+            
+            $Adress=Adress::where('customer_id', $request->search)->get();
+        }
+        
+      return response($Adress);
+    
     }
 }

@@ -37,11 +37,15 @@ class StoreUpdateAdressFormRequest extends FormRequest
                 'max:10',
                 'nullable',
                 
-                
             ],
             'CEP' => [
-                'min:8',
-                'max:8',
+                'min:9',
+                'max:9',
+                'nullable',
+                
+            ],
+            'complement' => [
+                'max:50',
                 'nullable',
                 
             ],

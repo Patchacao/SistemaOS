@@ -16,43 +16,47 @@ const ScannedObjectNumbers = []; // variavel que recebe os codigos de objetos qu
 
 $(document).ready(function () {
 
-    $('#createClienteForm').validate({
-        rules:{
-            phone_number: {
-                required: true,
-                minlength: 14,
-                maxlength: 15,
-            },
-            name: {
-                required: true,
-                minlength: 2,
-                maxlength: 50,
-            },
-            last_name: {
-                required: true,
-                minlength: 2,
-                maxlength: 100,
-            },
-            nickname: {
-               
-                minlength: 2,
-                maxlength: 25,
-            },
-            cpf: {
-                
-                cpfBR: true,
-                minlength: 11,
-                maxlength: 11,
-            },
-        }
-    })
+   $(document).on('click', '.add_client', function (e) {
+        
+    e.preventDefault();
 
-    $(document).on('click', '.add_client', function (e) {
-        e.preventDefault();
-    
-        $(this).text('Sending..');
-       
-        var data = {
+        $('#createClienteAdressForm').validate({
+            rules:{
+                street: {
+                    minlength: 2,
+                    maxlength: 100,
+                },
+                adress_number: {
+                   maxlength: 10,
+                },
+                CEP: {
+                    minlength: 8,
+                    maxlength: 8,
+                },
+                complement: {
+                    maxlength: 100,
+                },
+                neighborhood: {
+                    required: true,
+                    minlength: 2,
+                    maxlength: 70,
+                },
+                city: {
+                    required: true,
+                    
+                    maxlength: 70,
+                },
+                state: {
+                    required: true,
+                   
+                    maxlength: 30,
+                },
+            }
+        });
+
+        if ($('#createClienteAdressForm').valid()) {
+
+            var data = {
             'phone_number': $("#phone_number").cleanVal(),
             'whatsapp': $('#whatsapp').val(),
             'name': $('#name').val(),
@@ -112,8 +116,11 @@ $(document).ready(function () {
             }
         }
             })
+        }
 
         });
+
+    
     
     });
 
@@ -127,6 +134,7 @@ function CreateCustomerAdress(e) {
                     'street': $("#street-Name").val(),
                     'adress_number': $('#adress-number').val(),
                     'CEP': $('#cep').val(),
+                    'complement': $('#complement').val(),
                     'neighborhood': $('#neighborhood').val(),
                     'city': $('#city').val(),
                     'state': $('#state').val(),
@@ -153,6 +161,7 @@ function CreateCustomerAdress(e) {
                         street:$("#street").val(),
                         adress_number: $('#adress-number').val(),
                         CEP: $('#cep').val(),
+                        complement: $('#complement').val(),
                         neighborhood: $('#neighborhood').val(),
                         city: $('#city').val(),
                         state: $('#state').val(),
@@ -161,11 +170,10 @@ function CreateCustomerAdress(e) {
 
                         InsertClientInfo();
             
-                    
+                        $('#offcanvasCustomerAdress').offcanvas('hide');
                         $('#offcanvasCustomer').offcanvas('hide');
-                        $('#createClientToast').toast("show");
+                       // $('#createClientToast').toast("show");
 
-                        console.log(clientAdress);
                     return clientAdress;
                     
                 },
@@ -275,8 +283,65 @@ $(document).ready(function(){
 
 function openCreateClientAdressOffcanvas() {
 
-    $('#offcanvasCustomerAdress').offcanvas('show');
+    $('#createClienteForm').validate({
+        rules:{
+            phone_number: {
+                required: true,
+                minlength: 14,
+                maxlength: 15,
+            },
+            name: {
+                required: true,
+                minlength: 2,
+                maxlength: 50,
+            },
+            last_name: {
+                required: true,
+                minlength: 2,
+                maxlength: 100,
+            },
+            nickname: {
+                minlength: 2,
+                maxlength: 25,
+            },
+            cpf: {
+                cpfBR: true,
+                minlength: 11,
+                maxlength: 11,
+            },
+        }
+    })
+
+    if ($('#createClienteForm').valid()) {
+        
+        $('#offcanvasCustomerAdress').offcanvas('show');
+    }
 }
+
+function FetchClientAdress(customer_id) {
+    
+    $value = customer_id;
+
+    $.ajax({
+        type: "get",
+        url: "/clients/fetch-adress",
+        data: {'search':$value},
+        dataType: "json",
+        success: function (response){
+            
+            
+            $("#street").val(response[0].street);
+            $('#adress-number').val(response[0].adress_number);
+            $('#cep').val(response[0].CEP);
+            $('#complement').val(response[0].complement);
+            $('#neighborhood').val(response[0].neighborhood);
+            $('#city').val(response[0].city);
+            $('#state').val(response[0].state);
+            
+        }
+    });
+}
+
 
 //Funçao que coloca o texto do input em caixa alta
 
@@ -300,21 +365,20 @@ $.ajax({
     dataType: "json",
     success: function (response){
 
-        console.log(response);
-        
-        
        if ($.trim(response) == '' ) {
         
        } else {
         
-        $(response).each(function(index, element) {
-
-                $('#whatsapp').val(element.whatsapp);
-                $('#name').val(element.name);
-                $('#last_name').val(element.last_name);
-                $('#nickname').val(element.nickname);
-                $('#cpf').val(element.cpf);
-        });
+        FetchClientAdress(response[0].id);
+       
+        alert("Encontramos um cliente vinculado a esse telefone!");
+      
+            $('#whatsapp').val(response[0].whatsapp);
+            $('#name').val(response[0].name);
+            $('#last_name').val(response[0].last_name);
+            $('#nickname').val(response[0].nickname);
+            $('#cpf').val(response[0].cpf);
+  
         }
     }
     });
