@@ -50,14 +50,14 @@
                         </div>
                         <div class="col-2">
                             <div class="form-floating mb-1">
-                                <input type="name" class="form-control" id="phone-numberInput" placeholder="Sobrenome"
+                                <input type="name" class="form-control phone_number" id="phone-numberInput" placeholder="Sobrenome"
                                     disabled>
                                 <label for="floatingInput">Telefone</label>
                             </div>
                         </div>
                         <div class="col-sm-2">
                             <div class="form-floating mb-1">
-                                <input type="name" class="form-control" id="CPFInput" placeholder="CPF"
+                                <input type="name" class="form-control CPFInput" id="CPFInput" placeholder="CPF"
                                     disabled>
                                 <label for="floatingInput">CPF</label>
                             </div>
@@ -90,7 +90,7 @@
                                             </div>
                                             <div class="col-3">
                                                 <div class="form-floating mb-1">
-                                                    <input type="adress" class="form-control" id="cep-Input" disabled>
+                                                    <input type="adress" class="form-control cepInput" id="cep-Input" disabled>
                                                     <label for="floatingInput">Cep</label>
                                                 </div>
                                             </div>
@@ -191,7 +191,7 @@
                 <div class="row-cols-auto">
                     <div class="mb-1">
                         <label for="exampleFormControlInput1" class="form-label">Telefone*</label>
-                        <input type="tel" class="form-control" name="phone_number" id="phone_number" required
+                        <input type="tel" class="form-control phone_number" name="phone_number" id="phone_number" required
                             placeholder="(00) 00000-0000">
                         <span id="phoneSearchIcon"></span>
                         <div class="form-check">
@@ -219,7 +219,7 @@
                     </div>
                     <div class="mb-2">
                         <label for="exampleFormControlInput1" class="form-label">CPF</label>
-                        <input type="string" class="form-control" name="cpf" id="cpf"
+                        <input type="string" class="form-control CPFInput" name="cpf" id="cpf"
                             placeholder="Número do CPF">
                     </div>
 
@@ -261,7 +261,7 @@
                         </div>
                         <div class="col-7">
                             <label for="exampleFormControlInput1" class="form-label">CEP</label>
-                            <input type="text" class="form-control" name="cep" id="cep" 
+                            <input type="text" class="form-control cepInput" name="cep" id="cep" 
                                     placeholder="CEP">
                         </div>
                     </div>

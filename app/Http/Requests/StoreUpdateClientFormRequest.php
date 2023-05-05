@@ -58,7 +58,7 @@ class StoreUpdateClientFormRequest extends FormRequest
             'cpf' => [
                 'min:11',
                 'max:11',
-                'numeric',
+                
                 'nullable',
             ]
             

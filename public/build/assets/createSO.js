@@ -62,10 +62,11 @@ $(document).ready(function () {
             'name': $('#name').val(),
             'last_name': $('#last_name').val(),
             'nickname': $('#nickname').val(),
-            'cpf': $('#cpf').val(),
+            'cpf': $('#cpf').cleanVal(),
            
         }
-    
+        console.log($('#cpf').cleanVal());
+        console.log($('#cpf').cleanVal().length);
         $.ajaxSetup({
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -89,11 +90,12 @@ $(document).ready(function () {
                 name:$('#name').val(),
                 last_name:$('#last_name').val(),
                 nickname: $('#nickname').val(),
-                cpf: $('#cpf').val(),
+                cpf: $('#cpf').cleanVal(),
                 };
             
+               
            CreateCustomerAdress(data.id);
-   
+                
            return clientinfos;
 
        },
@@ -133,7 +135,7 @@ function CreateCustomerAdress(e) {
                     'customer_id': e,
                     'street': $("#street-Name").val(),
                     'adress_number': $('#adress-number').val(),
-                    'CEP': $('#cep').val(),
+                    'CEP': $('#cep').cleanVal(),
                     'complement': $('#complement').val(),
                     'neighborhood': $('#neighborhood').val(),
                     'city': $('#city').val(),
@@ -160,14 +162,14 @@ function CreateCustomerAdress(e) {
                         clientAdress = {
                         street:$("#street").val(),
                         adress_number: $('#adress-number').val(),
-                        CEP: $('#cep').val(),
+                        CEP: $('#cep').cleanVal(),
                         complement: $('#complement').val(),
                         neighborhood: $('#neighborhood').val(),
                         city: $('#city').val(),
                         state: $('#state').val(),
     
                         };
-
+                    
                         InsertClientInfo();
             
                         $('#offcanvasCustomerAdress').offcanvas('hide');
@@ -248,39 +250,47 @@ $('#searchClient').on('keyup',function(s)
 $(document).on('click', '.SelectClientBtn', function () {
 
     var searchId = $(this).val();
+
+    //InsertClientInfo();
+    LoadClientInfo(searchId);
     
-    clientinfos = clientsSearchList.find(element => element.id == searchId);
-      
-    InsertClientInfo();
+   
     
-    $('#phone-numberInput').mask('(00) 0000-00009');
     
 })
 
 // Jquery Create client
 
 
-// Mascara de Celular
+// Mascaras de input
 
 $(document).ready(function(){
         
-    $('#phone_number').mask('(00) 0000-00009');
+    $('.CPFInput').mask('000.000.000-00', {reverse: true});
+    $('.cepInput').mask('00000-000');
+    $('.phone_number').mask('(00) 0000-00009');
     
-    $('#phone_number').keyup(function(){
+    $('.phone_number').keyup(function(){
         
-        var phone = $('#phone_number').cleanVal();
-        var phoneLength = phone.length;
-       
-        if (phoneLength>10) {
-            $('#phone_number').mask('(00) 00000-0000');
-            
-        } else{
-            $('#phone_number').mask('(00) 0000-00009');
-           
-        }
+        MaskPhoneInputField($(this));
+        
     });
 })
 
+function MaskPhoneInputField(element) {
+
+        var phone = element.cleanVal();
+        var phoneLength = phone.length;
+       
+        if (phoneLength>10) {
+            element.mask('(00) 00000-0000');
+            
+        } else{
+            element.mask('(00) 0000-00009');
+           
+        }
+    
+}
 function openCreateClientAdressOffcanvas() {
 
     $('#createClienteForm').validate({
@@ -305,9 +315,9 @@ function openCreateClientAdressOffcanvas() {
                 maxlength: 25,
             },
             cpf: {
-                cpfBR: true,
-                minlength: 11,
-                maxlength: 11,
+                
+                minlength: 14,
+                maxlength: 14,
             },
         }
     })
@@ -385,6 +395,27 @@ $.ajax({
 }
 })
 
+// Função que carrega  as informaçoes do cliente selecionado
+
+function LoadClientInfo(searchId) {
+    
+    clientinfos = clientsSearchList.find(element => element.id == searchId);
+
+            $('#phone_number').val(clientinfos.phone_number);
+            $('#whatsapp').val(clientinfos.whatsapp);
+            $('#name').val(clientinfos.name);
+            $('#last_name').val(clientinfos.last_name);
+            $('#nickname').val(clientinfos.nickname);
+            $('#cpf').val(clientinfos.cpf);
+
+            $('#phone_number').mask('(99) 99999-9999')
+
+     //FetchClientAdress(clientinfos.id);
+    
+     $('#offcanvasCustomer').offcanvas('show');
+     
+}
+
 // Função que insere os as informaçoes do cliente na OS
                 
 function InsertClientInfo () {
@@ -395,9 +426,10 @@ function InsertClientInfo () {
     $('#phone-numberInput').val(clientinfos.phone_number);
     $('#CPFInput').val(clientinfos.cpf);
 
+    $('#phone-numberInput').mask('(00) 0000-00009');
+
     //-------- endereço -------
 
-    
     console.log( clientAdress);
     $('#street-Input').val(clientAdress.street);
     $('#adress-number-Input').val(clientAdress.adress_number);
@@ -442,7 +474,6 @@ $(document).on('keypress', '.searchOsiField', function(e) {
 
         if (checkScan($value) == 'notFound') {
             
-        
         $('#searchOSI' + item_position+'').prop('disabled', true);
         ScannedObjectNumbers.push($value);
         item["objectNumber"] = $value;
@@ -452,8 +483,6 @@ $(document).on('keypress', '.searchOsiField', function(e) {
             $('#searchOSI' + item_position+'').val('');
         }
     }  
-
-   
 });
 
 

@@ -21,7 +21,7 @@ class ClientController extends Controller
         $customer->nickname = $request->nickname;
         $customer->cpf = $request->cpf;
         $customer->created_by = auth()->user()->name;
-        
+       
         $customer->save();
          
             return response()->json([
