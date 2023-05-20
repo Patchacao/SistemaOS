@@ -191,11 +191,11 @@
                 <div class="row-cols-auto">
                     <div class="mb-1">
                         <label for="exampleFormControlInput1" class="form-label">Telefone*</label>
-                        <input type="tel" class="form-control phone_number" name="phone_number" id="phone_number" required
+                        <input type="tel" class="form-control phone_number client-form" name="phone_number" id="phone_number" required
                             placeholder="(00) 00000-0000">
                         <span id="phoneSearchIcon"></span>
                         <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="1" name="whatsapp"
+                            <input class="form-check-input client-form" type="checkbox" value="1" name="whatsapp"
                                 id="whatsapp" checked>
                             <label class="form-check-label" for="flexCheckDefault">
                                 Whatsapp
@@ -204,29 +204,29 @@
                     </div>
                     <div class="mb-1">
                         <label for="exampleFormControlInput1" class="form-label">Nome*</label>
-                        <input type="name" class="form-control" name="name" id="name" required
+                        <input type="name" class="form-control client-form" name="name" id="name" required
                             oninput="toUpperCase(this)" placeholder="Primeiro Nome">
                     </div>
                     <div class="mb-1">
                         <label for="exampleFormControlInput1" class="form-label">Sobrenome*</label>
-                        <input type="name" class="form-control" name="last_name" id="last_name" required
+                        <input type="name" class="form-control client-form" name="last_name" id="last_name" required
                             oninput="toUpperCase(this)" placeholder="Sobrenome">
                     </div>
                     <div class="mb-1">
                         <label for="exampleFormControlInput1" class="form-label">Apelido</label>
-                        <input type="name" class="form-control" name="nickname" id="nickname"
+                        <input type="name" class="form-control client-form" name="nickname" id="nickname"
                             oninput="toUpperCase(this)" placeholder="Apelido">
                     </div>
                     <div class="mb-2">
                         <label for="exampleFormControlInput1" class="form-label">CPF</label>
-                        <input type="string" class="form-control CPFInput" name="cpf" id="cpf"
+                        <input type="string" class="form-control CPFInput client-form" name="cpf" id="cpf"
                             placeholder="Número do CPF">
                     </div>
 
                     <input type="button" class="btn btn-primary" id="openCreateAdressOffCanvas" 
                     onclick= "openCreateClientAdressOffcanvas()" value="Próximo">
-                    
-             </form>
+                    <button type="button" class="btn btn-primary edit_clientBtn" style="display: none;">Editar</button>
+              </form>
         </div>
     </div>
 </div>
@@ -238,6 +238,8 @@
 <div class="offcanvas offcanvas-start" tabindex="-1" data-bs-backdrop="false"
      id="offcanvasCustomerAdress" aria-labelledby="offcanvasCustomerAdressLabel">
     <div class="offcanvas-header">
+        <button type="button" class="btn btn-primary" data-bs-toggle="offcanvas" 
+                data-bs-target="#offcanvasCustomer" id= "backToCreateClientsOffcanvas">Voltar</button>
         <h5 class="offcanvas-title" id="offcanvasCustomerAdressLabel">Endereço do Cliente</h5>
         <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
     </div>
@@ -250,34 +252,34 @@
                 <div class = "container" id="adress">
                   <div class="mb-1">
                         <label for="exampleFormControlInput1" class="form-label">Rua</label>
-                        <input type="text" class="form-control" name="street" id="street" 
+                        <input type="text" class="form-control client-form" name="street" id="street" 
                             oninput="toUpperCase(this)" placeholder="Nome da Rua">
                     </div>
                     <div class="row">
                         <div class="col-5">
                             <label for="exampleFormControlInput1" class="form-label">Número</label>
-                            <input type="text" class="form-control" name="adress-number" id="adress-number" 
+                            <input type="text" class="form-control client-form" name="adress-number" id="adress-number" 
                                     placeholder="Número">
                         </div>
                         <div class="col-7">
                             <label for="exampleFormControlInput1" class="form-label">CEP</label>
-                            <input type="text" class="form-control cepInput" name="cep" id="cep" 
+                            <input type="text" class="form-control cepInput client-form" name="cep" id="cep" 
                                     placeholder="CEP">
                         </div>
                     </div>
                     <div class="mb-1">
                         <label for="exampleFormControlInput1" class="form-label">Complemento</label>
-                        <input type="text" class="form-control"  name="complement" id="complement" 
+                        <input type="text" class="form-control client-form"  name="complement" id="complement" 
                             oninput="toUpperCase(this)">
                     </div>
                     <div class="mb-1">
                         <label for="exampleFormControlInput1" class="form-label">Bairro</label>
-                        <input type="text" class="form-control"  name="neighborhood" id="neighborhood" 
+                        <input type="text" class="form-control client-form"  name="neighborhood" id="neighborhood" 
                             oninput="toUpperCase(this)" required>
                     </div>
                     <div class="mb-1">
                         <label for="exampleFormControlInput1" class="form-label">Cidade</label>
-                        <select class="form-select" aria-label="Default select example" name="city" id="city" required>
+                        <select class="form-select client-form" aria-label="Default select example" name="city" id="city" required>
                             <option selected>Lima Duarte</option>
                             <option value="1">Olaria</option>
                             <option value="2">Juiz de Fora</option>
@@ -287,7 +289,7 @@
                     </div>
                     <div class="mb-3">
                         <label for="exampleFormControlInput1" class="form-label">Estado</label>
-                        <select class="form-select" aria-label="Default select example" id="state" required>
+                        <select class="form-select client-form" aria-label="Default select example" id="state" required>
                             <option selected>Minas Gerais</option>
                             <option value="1">Rio de Janeiro</option>
                             <option value="2">São Paulo</option>
@@ -296,15 +298,13 @@
                         </select>
                     </div>
                </div>
-                <input type="button" class="btn btn-primary add_client" value="Salvar">
+                <input type="button"  id = "save_clientBtn"class="btn btn-primary add_client" value="Cadastrar">
+                <input type="button"  id = "saveEdit_clientBtn"class="btn btn-primary save_edit_client" 
+                    style="display: none;" value="Salvar">
             </form>
-            <div class= "container">
-                <button type="button" class="btn btn-primary" data-bs-toggle="offcanvas" 
-                data-bs-target="#offcanvasCustomer" id= "backToCreateClientsOffcanvas">Voltar</button>
-                <button type="button" class="btn btn-primary" data-bs-toggle="offcanvas" 
-                data-bs-target="#offcanvasCustomer" id= "backToCreateClientsOffcanvas">Voltar</button>
-            </div>
-    </div>
+            <button type="button" class="btn btn-primary edit_clientBtn" style="display: none;">Editar</button>
+            <button type="button" class="btn btn-primary" id="insertClientBtn"  onclick= "InsertClientInfo ()">Próximo</button>
+     </div>
 </div>
 
 </div>

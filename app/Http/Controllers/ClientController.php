@@ -10,7 +10,7 @@ class ClientController extends Controller
 {
     
 
-    public function store(StoreUpdateClientFormRequest $request)
+    public function Oldstore(StoreUpdateClientFormRequest $request)
     {
         $customer = new Customer;
         
@@ -23,6 +23,33 @@ class ClientController extends Controller
         $customer->created_by = auth()->user()->name;
        
         $customer->save();
+         
+            return response()->json([
+                'status'=>200,
+                'message'=>'Cliente Cadastrado com Sucesso.',
+                'id'=>$customer->id,
+            ]);
+    }
+
+    public function store(StoreUpdateClientFormRequest $request)
+    {
+        
+        Customer::upsert([
+            
+            // Valores a serem salvos
+            ['phone_number' => $request->phone_number,
+            'whatsapp' => $request->whatsapp,
+            'name' => $request->name,
+            'last_name' => $request->last_name,
+            'nickname' => $request->nickname,
+            'cpf' => $request->cpf,
+            'created_by' => auth()->user()->name
+            ], 
+             // Valores que serão localizados na tabela
+            ['id' => $request->id], 
+            // colunas que serão editadas se já existir um cliente cadastrado
+            ['phone_number', 'whatsapp', 'name', 'last_name', 'nickname', 'cpf']]
+        ); 
          
             return response()->json([
                 'status'=>200,

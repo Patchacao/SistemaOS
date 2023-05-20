@@ -65,8 +65,7 @@ $(document).ready(function () {
             'cpf': $('#cpf').cleanVal(),
            
         }
-        console.log($('#cpf').cleanVal());
-        console.log($('#cpf').cleanVal().length);
+        
         $.ajaxSetup({
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -80,7 +79,7 @@ $(document).ready(function () {
             async: false,
             dataType: "json",
             success: function(data){
-             //console.log(data);
+             
              $('span').remove(".error_msg");
              $('#success_message').html(data.message);
              
@@ -93,7 +92,6 @@ $(document).ready(function () {
                 cpf: $('#cpf').cleanVal(),
                 };
             
-               
            CreateCustomerAdress(data.id);
                 
            return clientinfos;
@@ -121,9 +119,6 @@ $(document).ready(function () {
         }
 
         });
-
-    
-    
     });
 
                 // ------------- Create Customer Adress ------------------
@@ -157,7 +152,7 @@ function CreateCustomerAdress(e) {
                     success: function(adress){
                  
                     $('span').remove(".error_msg");
-                    //$('#success_message').html(data.message);
+                    
                     
                         clientAdress = {
                         street:$("#street").val(),
@@ -172,10 +167,6 @@ function CreateCustomerAdress(e) {
                     
                         InsertClientInfo();
             
-                        $('#offcanvasCustomerAdress').offcanvas('hide');
-                        $('#offcanvasCustomer').offcanvas('hide');
-                       // $('#createClientToast').toast("show");
-
                     return clientAdress;
                     
                 },
@@ -199,7 +190,8 @@ function CreateCustomerAdress(e) {
                 }
                     })
             }
-    // Ajax Jquery Select client
+    
+// Ajax Jquery Select client
 
 var timer;
 $('#searchClient').on('keyup',function(s)
@@ -229,8 +221,9 @@ $('#searchClient').on('keyup',function(s)
        } else {
         
         clientsSearchList = response;
+        
         $('#noClientFound').html("");
-        $('#createClienteBtn').hide();
+        $('#save_clientBtn').hide();
         
         $(response).each(function(index, element) {
             
@@ -251,13 +244,21 @@ $(document).on('click', '.SelectClientBtn', function () {
 
     var searchId = $(this).val();
 
-    //InsertClientInfo();
-    LoadClientInfo(searchId);
-    
-   
-    
-    
+   LoadClientInfo(searchId);
+
+   $('#save_clientBtn').hide();
+   $('.edit_clientBtn').show();
+
 })
+
+$(document).on('click', '.edit_clientBtn', function () {
+
+    $('.client-form').prop('disabled', false); //habilita os campos do formulario de criaçao do cliente
+    $('.edit_clientBtn').hide();
+    $('#insertClientBtn').hide();
+    $('#saveEdit_clientBtn').show();
+    
+ })
 
 // Jquery Create client
 
@@ -328,6 +329,20 @@ function openCreateClientAdressOffcanvas() {
     }
 }
 
+function FetchClientInfo(response) {
+    
+            $('#whatsapp').val(response.whatsapp);
+            $('#name').val(response.name);
+            $('#last_name').val(response.last_name);
+            $('#nickname').val(response.nickname);
+            $('#cpf').val(response.cpf);
+            
+            $('#save_clientBtn').hide();
+
+            $('.edit_clientBtn').show();
+    
+}
+
 function FetchClientAdress(customer_id) {
     
     $value = customer_id;
@@ -339,7 +354,10 @@ function FetchClientAdress(customer_id) {
         dataType: "json",
         success: function (response){
             
-            
+            clientAdress = response[0];
+
+            if (response.length>0) {
+             
             $("#street").val(response[0].street);
             $('#adress-number').val(response[0].adress_number);
             $('#cep').val(response[0].CEP);
@@ -347,7 +365,7 @@ function FetchClientAdress(customer_id) {
             $('#neighborhood').val(response[0].neighborhood);
             $('#city').val(response[0].city);
             $('#state').val(response[0].state);
-            
+            }
         }
     });
 }
@@ -375,21 +393,17 @@ $.ajax({
     dataType: "json",
     success: function (response){
 
-       if ($.trim(response) == '' ) {
-        
-       } else {
-        
-        FetchClientAdress(response[0].id);
-       
-        alert("Encontramos um cliente vinculado a esse telefone!");
-      
-            $('#whatsapp').val(response[0].whatsapp);
-            $('#name').val(response[0].name);
-            $('#last_name').val(response[0].last_name);
-            $('#nickname').val(response[0].nickname);
-            $('#cpf').val(response[0].cpf);
-  
-        }
+       if ($.trim(response) != '' ) {
+         
+        var confirmResponse = confirm("Já existe um cliente com esse telefone! Deseja buscar as informações?"); 
+
+        if (confirmResponse == true) {
+    
+                FetchClientInfo(response[0]);
+                FetchClientAdress(response[0].id);
+
+            }
+     }
     }
     });
 }
@@ -408,11 +422,21 @@ function LoadClientInfo(searchId) {
             $('#nickname').val(clientinfos.nickname);
             $('#cpf').val(clientinfos.cpf);
 
-            $('#phone_number').mask('(99) 99999-9999')
+            if ($('#phone_number').cleanVal().length<11) {
+                $('#phone_number').mask('(99) 9999-9999');
+            } else{
+                $('#phone_number').mask('(99) 99999-9999');
+            }
 
-     //FetchClientAdress(clientinfos.id);
-    
-     $('#offcanvasCustomer').offcanvas('show');
+            $('#cpf').mask('000.000.000-00');
+            
+            $('.client-form').prop('disabled', true); //desabilita os campos do formulario de criaçao do cliente
+     
+        FetchClientAdress(clientinfos.id);
+
+        $('#cep').mask('00000-000');
+
+        $('#offcanvasCustomer').offcanvas('show');
      
 }
 
@@ -429,8 +453,10 @@ function InsertClientInfo () {
     $('#phone-numberInput').mask('(00) 0000-00009');
 
     //-------- endereço -------
+ console.log( clientAdress);
+    if (clientAdress != undefined) {
 
-    console.log( clientAdress);
+        
     $('#street-Input').val(clientAdress.street);
     $('#adress-number-Input').val(clientAdress.adress_number);
     $('#cep-Input').val(clientAdress.CEP);
@@ -438,6 +464,10 @@ function InsertClientInfo () {
     $('#city-Input').val(clientAdress.city);
     $('#state-Input').val(clientAdress.state);
 
+    }
+   
+    $('#offcanvasCustomerAdress').offcanvas('hide');
+    $('#offcanvasCustomer').offcanvas('hide');
 }
 
 // Função que lida com o escaneamento do codigo da OS
