@@ -23,15 +23,7 @@ class StoreUpdateClientFormRequest extends FormRequest
      */
     public function rules()
     {
-        return [
-            
-            'phone_number' => [
-                'required',
-                'unique:customers',
-                'min:10',
-                'max:11',
-                
-            ],
+        $rules = [
             'whatsapp' => [
                 'required',
                 'boolean',
@@ -40,28 +32,36 @@ class StoreUpdateClientFormRequest extends FormRequest
                 'required',
                 'min:2',
                 'max:50',
-                
             ],
             'last_name' => [
                 'required',
                 'min:2',
                 'max:100',
-                
             ],
             'nickname' => [
                 'min:2',
                 'max:25',
                 'nullable',
-                
-                
-            ],
-            'cpf' => [
-                'min:11',
-                'max:11',
-                
-                'nullable',
-            ]
-            
+             ]
         ];
+
+        if ($this->getMethod() == 'POST') {
+            $rules += [
+                'cpf' => [
+                    'min:11',
+                    'max:11',
+                    'unique:customers',
+                    'nullable',
+                ],
+                'phone_number' => [
+                    'required',
+                    'unique:customers',
+                    'min:10',
+                    'max:11',
+                ]
+            ];
+        }
+        
+        return $rules;
     }
 }

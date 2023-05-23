@@ -223,8 +223,7 @@
                             placeholder="Número do CPF">
                     </div>
 
-                    <input type="button" class="btn btn-primary" id="openCreateAdressOffCanvas" 
-                    onclick= "openCreateClientAdressOffcanvas()" value="Próximo">
+                    <input type="button" class="btn btn-primary" id="openCreateAdressOffCanvas" value="Próximo">
                     <button type="button" class="btn btn-primary edit_clientBtn" style="display: none;">Editar</button>
               </form>
         </div>
@@ -299,7 +298,7 @@
                     </div>
                </div>
                 <input type="button"  id = "save_clientBtn"class="btn btn-primary add_client" value="Cadastrar">
-                <input type="button"  id = "saveEdit_clientBtn"class="btn btn-primary save_edit_client" 
+                <input type="button"  id = "saveEdit_clientBtn"class="btn btn-primary add_client" 
                     style="display: none;" value="Salvar">
             </form>
             <button type="button" class="btn btn-primary edit_clientBtn" style="display: none;">Editar</button>

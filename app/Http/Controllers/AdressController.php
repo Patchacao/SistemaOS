@@ -11,7 +11,7 @@ class AdressController extends Controller
     public function store(StoreUpdateAdressFormRequest $request)
     {
         $adress = new Adress;
-        
+
         $adress->customer_id = $request->customer_id;
         $adress->street = $request->street;
         $adress->adress_number = $request->adress_number;
@@ -23,24 +23,23 @@ class AdressController extends Controller
         $adress->created_by = auth()->user()->name;
 
         $adress->save();
-         
-            return response()->json([
-                'status'=>200,
-                'message'=>'Endereço Cadastrado com Sucesso.',
-                
-            ]);
+
+        return response()->json([
+            'status' => 200,
+            'message' => 'Endereço Cadastrado com Sucesso.',
+
+        ]);
     }
 
     public function fetch(Request $request)
     {
         $Adress = "";
-        
-       if ($request->search!="") {
-            
-            $Adress=Adress::where('customer_id', $request->search)->get();
+
+        if ($request->search != "") {
+
+            $Adress = Adress::where('customer_id', $request->search)->get();
         }
-        
-      return response($Adress);
-    
+
+        return response($Adress);
     }
 }

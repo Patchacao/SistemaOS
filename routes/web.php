@@ -50,6 +50,8 @@ Route::get('/clients/create',  function () {
 Route::get('/clients/search', [ClientController::class, 'search'])->middleware(['auth', 'verified']);
 Route::get('/clients/phone-verification', [ClientController::class, 'PhoneVerification'])->middleware(['auth', 'verified']);
 Route::post('/clients/create', [ClientController::class, 'store'])->middleware(['auth', 'verified']);
+Route::put('/clients/update/{id}', [ClientController::class, 'update'])->middleware(['auth', 'verified']);
+
 Route::post('/clients/Adress-create', [AdressController::class, 'store'])->middleware(['auth', 'verified']);
 Route::get('/clients/fetch-adress', [AdressController::class, 'fetch'])->middleware(['auth', 'verified']);
 
