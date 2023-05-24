@@ -93,11 +93,12 @@ function ClientFormValidation() { // Valida o formulario dos dados do cliente
 
 $(document).ready(function () {
 
-    $(document).on('click', '.add_client', function (e) {
+    $(document).on('click', '#create_clientBtn', function (e) {
 
         e.preventDefault();
 
         if (ClientFormValidation() && ClientAdressFormValidation()) {
+            
             CreateClient();
 
         }
@@ -241,12 +242,15 @@ function CreateClientAdress(e) { // Cadastra o endereço do cliente
 }
 
 // -------------------------Edição das informações do cliente ---------------
-$(document).on('click', '#saveEdit_clientBtn', function () {
+
+$(document).on('click', '#update_clientBtn', function () {
     UpdateClient();
 });
+
 function UpdateClient() { // Atualiza as informações do cliente
 
     var id = clientinfos.id;
+    console.log(id);
     var data = {
         'phone_number': $("#phone_number").cleanVal(),
         'whatsapp': $('#whatsapp').val(),
@@ -261,10 +265,10 @@ function UpdateClient() { // Atualiza as informações do cliente
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         }
     });
-
+    
     $.ajax({
         type: "PUT",
-        url: "/clients/update" + id,
+        url: "/clients/update/" + id,
         data: data,
         async: false,
         dataType: "json",
@@ -280,12 +284,62 @@ function UpdateClient() { // Atualiza as informações do cliente
             };
            
 
-           // if (ClientAdressFormValidation()) {
+           if (ClientAdressFormValidation()) {
 
-              //  CreateClientAdress(data.id);
-           // }
+                UpdateClientAdress();
+            }
 
             return clientinfos;
+
+        },
+    })
+}
+
+function UpdateClientAdress() { // Atualiza as informações do cliente
+
+    var id = clientAdress.id;
+    console.log(id);
+    var data = {
+        
+        'street': $("#street").val(),
+        'adress_number': $('#adress-number').val(),
+        'CEP': $('#cep').cleanVal(),
+        'complement': $('#complement').val(),
+        'neighborhood': $('#neighborhood').val(),
+        'city': $('#city').val(),
+        'state': $('#state').val(),
+    }
+
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+    
+    $.ajax({
+        type: "PUT",
+        url: "/clients/Adress-update/" + id,
+        data: data,
+        async: false,
+        dataType: "json",
+        success: function (data) {
+
+            clientAdress = {
+                id: data.id,
+                street: $("#street").val(),
+                adress_number: $('#adress-number').val(),
+                CEP: $('#cep').cleanVal(),
+                complement: $('#complement').val(),
+                neighborhood: $('#neighborhood').val(),
+                city: $('#city').val(),
+                state: $('#state').val(),
+
+            };
+            InsertClientInfo();
+            $('#offcanvasCustomerAdress').offcanvas('hide');
+            $('#offcanvasCustomer').offcanvas('hide');
+
+            return clientAdress;
 
         },
     })
@@ -323,7 +377,7 @@ $('#searchClient').on('keyup', function (s) {
                     clientsSearchList = response;
 
                     $('#noClientFound').html("");
-                    $('#save_clientBtn').hide();
+                    $('#create_clientBtn').hide();
 
                     $(response).each(function (index, element) {
 
@@ -356,7 +410,7 @@ $(document).on('click', '.edit_clientBtn', function () {
     $('.client-form').prop('disabled', false); //habilita os campos do formulario de criaçao do cliente
     $('.edit_clientBtn').hide();
     $('#insertClientBtn').hide();
-    $('#saveEdit_clientBtn').show();
+    $('#update_clientBtn').show();
 
 })
 
@@ -424,7 +478,7 @@ function FetchClientAdress(customer_id) {
         success: function (response) {
 
             clientAdress = response[0];
-
+            console.log(clientAdress);
             if (response.length > 0) {
 
                 $("#street").val(response[0].street);
@@ -666,6 +720,9 @@ $('#btnSaveServices').click(function () {
         refreshModal();
 
         CleanAllValues();
+
+        console.log(itens);
+
 
     } else {
         alert("Selecione pelo menos um reparo antes de salvar.");
@@ -1099,6 +1156,17 @@ function sum_price() {
     return sum;
 }
 
+function sum_Total_price() {
+
+    var sum = 0;
+
+    for (var i = 0; i < itens.length; i++) {
+        sum += itens[i].total_price;
+    }
+
+    return sum;
+}
+
 // joga os reparos selecionados no objeto com as informaçoes do item
 
 function AddRepairInfo() {
@@ -1140,6 +1208,8 @@ function Constructor_ServiceList() {
     object_repairs = [];
     linked_objects = [];
 
+    $('#OS_total_price').val((sum_Total_price()).toLocaleString(
+        'pt-br', { style: 'currency', currency: 'BRL' })); // soma o valor total da OS
     $('#serviceList').html("");  // limpa o html da lista de itens selecionados
 
 

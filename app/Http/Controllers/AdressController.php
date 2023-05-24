@@ -27,8 +27,38 @@ class AdressController extends Controller
         return response()->json([
             'status' => 200,
             'message' => 'Endereço Cadastrado com Sucesso.',
-
+            'id' => $adress->id,
         ]);
+    }
+
+    public function update(StoreUpdateAdressFormRequest $request, $id)
+    {
+        $adress = Adress::find($id);
+
+        if ($adress) {
+
+           
+            $adress->street = $request->street;
+            $adress->adress_number = $request->adress_number;
+            $adress->CEP = $request->CEP;
+            $adress->complement = $request->complement;
+            $adress->neighborhood = $request->neighborhood;
+            $adress->city = $request->city;
+            $adress->state = $request->state;
+
+            $adress->update();
+
+            return response()->json([
+                'status' => 200,
+                'message' => 'Endereço Atualizado com Sucesso.',
+                'id' => $adress->id,
+            ]);
+        } else {
+            return response()->json([
+                'status' => 404,
+                'error' => 'Endereço Não Localizado.',
+            ]);
+        }
     }
 
     public function fetch(Request $request)
